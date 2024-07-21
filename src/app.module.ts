@@ -3,7 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { AuthModule } from './modules/auth/auth.module';
-import { PrismaService } from './prisma/prisma.service';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -13,6 +13,10 @@ import { PrismaService } from './prisma/prisma.service';
       typePaths: ['./src/modules/**/*.graphql'],
     }),
     AuthModule,
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET,
+    }),
   ],
   providers: [],
   controllers: [],
