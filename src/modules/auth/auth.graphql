@@ -21,10 +21,11 @@ type User {
 
 # QUERY
 type Query {
-  login(loginUserData: LoginUserInput): User
+  test: String
 }
 
 # MUTATION
 type Mutation {
+  login(loginUserData: LoginUserInput): User
   register(registerUserData: RegisterUserInput): User
 }

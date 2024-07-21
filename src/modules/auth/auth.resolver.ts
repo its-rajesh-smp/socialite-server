@@ -1,8 +1,8 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { AuthService } from './auth.service';
-import { LoginUserDto, RegisterUserDto } from './auth.dto';
 import { JwtService } from '@nestjs/jwt';
-import { hash, compare } from 'bcrypt';
+import { compare, hash } from 'bcrypt';
+import { LoginUserDto, RegisterUserDto } from './auth.dto';
+import { AuthService } from './auth.service';
 
 @Resolver('User')
 export class AuthorsResolver {
@@ -11,7 +11,7 @@ export class AuthorsResolver {
     private jwtService: JwtService,
   ) {}
 
-  @Query('login')
+  @Mutation('login')
   async loginUser(@Args('loginUserData') loginUserData: LoginUserDto) {
     // Checking if user exists
     const user = await this.authService.findOne({ email: loginUserData.email });

@@ -12,11 +12,11 @@ import { JwtModule } from '@nestjs/jwt';
       driver: ApolloDriver,
       typePaths: ['./src/modules/**/*.graphql'],
     }),
-    AuthModule,
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,
     }),
+    AuthModule,
   ],
   providers: [],
   controllers: [],
