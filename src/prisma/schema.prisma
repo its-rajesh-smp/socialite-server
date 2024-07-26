@@ -7,10 +7,75 @@ generator client {
     provider = "prisma-client-js"
 }
 
-model User {
+
+
+enum PostReactions{
+    LIKE
+    HAHA
+    DISLIKE
+}
+
+
+model Users {
     id        String   @id @default(cuid())
     email     String   @unique
     password  String
     name      String?
     createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    NewsFeedPosts NewsFeedPosts[]
+    NewsPostReactions NewsPostReactions[]
+    NewsPostComments NewsPostComments[]
+    NewsFeedStatus NewsFeedStatus[]
+}
+
+
+model NewsFeedStatus{
+    id String @id @default(cuid())
+    picture_URL String?
+    text String?
+    backgroundImage_URL String? 
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    UserId    String
+    User      Users             @relation(fields: [UserId], references: [id])
+}
+
+
+model NewsFeedPosts{
+    id String @id @default(cuid())
+    UserId    String
+    NewsPostReactions NewsPostReactions[]
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    User      Users             @relation(fields: [UserId], references: [id])
+}
+
+
+model NewsPostReactions{
+    id String @id @default(cuid())
+    UserId    String
+    NewsFeedPostsId String
+    reactionType PostReactions
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+ 
+    User      Users             @relation(fields: [UserId], references: [id])
+    NewsFeedPosts NewsFeedPosts @relation(fields: [NewsFeedPostsId] , references: [id])
+}
+
+
+model NewsPostComments{
+    id String @id @default(cuid())
+    UserId    String
+    picture_URL String?
+    text String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    User      Users             @relation(fields: [UserId], references: [id])
 }

@@ -6,13 +6,13 @@ export class AuthService {
   constructor(private prisma: PrismaService) {}
 
   async findOne(condition) {
-    return await this.prisma.user.findFirst({
+    return await this.prisma.users.findFirst({
       where: condition,
     });
   }
 
   async create(data) {
-    return await this.prisma.user.create({
+    return await this.prisma.users.create({
       data,
     });
   }

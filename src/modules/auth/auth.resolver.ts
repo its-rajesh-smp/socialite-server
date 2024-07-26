@@ -1,7 +1,10 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { UseGuards } from '@nestjs/common';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
 import { compare, hash } from 'bcrypt';
+import { Request } from 'express';
 import { LoginUserDto, RegisterUserDto } from './auth.dto';
+import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 
 @Resolver('User')
@@ -79,5 +82,11 @@ export class AuthorsResolver {
       password: registerUserData.password,
       access_token,
     };
+  }
+
+  @Query('fetchUser')
+  @UseGuards(AuthGuard)
+  async fetchUserWithAccessToken(@Context('req') req: Request) {
+    return req.user;
   }
 }
