@@ -36,6 +36,7 @@ export class AuthGuard implements CanActivate {
       if (!payload?.email) {
         throw new UnauthorizedException();
       }
+      console.log(payload);
 
       // Checking if user exists
       const user = await this.authService.findOne({ email: payload.email });

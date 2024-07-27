@@ -10,11 +10,16 @@ generator client {
 
 
 enum PostReactions{
-    LIKE
-    HAHA
-    DISLIKE
+    like
+    haha
+    dislike
 }
 
+enum Visibility{
+   private
+   public
+   friends
+}
 
 model Users {
     id        String   @id @default(cuid())
@@ -46,6 +51,7 @@ model NewsFeedStatus{
 
 model NewsFeedPosts{
     id String @id @default(cuid())
+    visibility Visibility
     UserId    String
     NewsPostReactions NewsPostReactions[]
     createdAt DateTime @default(now())

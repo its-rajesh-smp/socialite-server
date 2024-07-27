@@ -1,0 +1,19 @@
+# INPUTS
+input NewPostInput {
+  text: String
+  visibility: String
+}
+
+# TYPES
+type Post {
+  id: String!
+  text: String
+  visibility: String
+  createdAt: String
+  updatedAt: String
+}
+
+#MUTATIONS
+type Mutation {
+  createPost(newPostInput: NewPostInput): Post
+}

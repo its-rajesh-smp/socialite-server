@@ -36,7 +36,7 @@ export class AuthorsResolver {
     // Creating access token
     const access_token = this.jwtService.sign({
       email: user.email,
-      password: user.password,
+      password: loginUserData.password,
     });
 
     return {
@@ -76,6 +76,8 @@ export class AuthorsResolver {
       email: user.email,
       password: registerUserData.password,
     });
+
+    console.log(registerUserData);
 
     return {
       ...user,
