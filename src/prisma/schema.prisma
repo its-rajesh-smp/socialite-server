@@ -53,6 +53,7 @@ model NewsFeedPosts{
     id String @id @default(cuid())
     visibility Visibility
     UserId    String
+    text      String
     NewsPostReactions NewsPostReactions[]
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

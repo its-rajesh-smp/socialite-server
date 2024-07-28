@@ -1,5 +1,5 @@
 # INPUTS
-input NewPostInput {
+input CreatePostInput {
   text: String
   visibility: String
 }
@@ -15,5 +15,5 @@ type Post {
 
 #MUTATIONS
 type Mutation {
-  createPost(newPostInput: NewPostInput): Post
+  createPost(createPostInput: CreatePostInput): Post
 }

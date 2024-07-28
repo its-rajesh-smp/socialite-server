@@ -17,7 +17,7 @@ export class FeedResolver {
   ) {
     const payload = {
       ...createPostInput,
-      UserId: req.user,
+      UserId: req.user.id,
     };
 
     console.log(payload);

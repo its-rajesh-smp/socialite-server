@@ -6,6 +6,8 @@ export class FeedService {
   constructor(private prisma: PrismaService) {}
 
   async createOne(postData) {
-    return await this.prisma.newsFeedPosts.create(postData);
+    return await this.prisma.newsFeedPosts.create({
+      data: postData,
+    });
   }
 }
