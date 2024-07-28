@@ -17,3 +17,8 @@ type Post {
 type Mutation {
   createPost(createPostInput: CreatePostInput): Post
 }
+
+#SUBSCRIPTION
+type Subscription {
+  onPostAdded: Post
+}

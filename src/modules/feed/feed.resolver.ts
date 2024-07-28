@@ -1,13 +1,24 @@
-import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Context,
+  Mutation,
+  Resolver,
+  Subscription,
+} from '@nestjs/graphql';
 import { CreatePostDto } from './feed.dto';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth/auth.guard';
 import { FeedService } from './feed.service';
 import { Request } from 'express';
+import { PubSub } from 'graphql-subscriptions';
 
 @Resolver('Feed')
 export class FeedResolver {
-  constructor(private feedService: FeedService) {}
+  private pubSub: PubSub;
+
+  constructor(private feedService: FeedService) {
+    this.pubSub = new PubSub();
+  }
 
   @Mutation('createPost')
   @UseGuards(AuthGuard)
@@ -20,8 +31,14 @@ export class FeedResolver {
       UserId: req.user.id,
     };
 
-    console.log(payload);
+    const data = await this.feedService.createOne(payload);
+    this.pubSub.publish('onPostAdded', { onPostAdded: data });
+    return data;
+  }
 
-    return this.feedService.createOne(payload);
+  @Subscription('onPostAdded')
+  @UseGuards(AuthGuard)
+  onPostAdded() {
+    return this.pubSub.asyncIterator('onPostAdded');
   }
 }

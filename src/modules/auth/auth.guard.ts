@@ -20,8 +20,11 @@ export class AuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = GqlExecutionContext.create(context);
     const request = ctx.getContext().req as Request;
+    const connection = ctx.getContext().req;
 
-    const token = this.extractTokenFromHeader(request);
+    const token =
+      this.extractTokenFromHeader(request) ||
+      this.extractTokenFromConnection(connection);
 
     if (!token) {
       throw new UnauthorizedException();
@@ -36,7 +39,6 @@ export class AuthGuard implements CanActivate {
       if (!payload?.email) {
         throw new UnauthorizedException();
       }
-      console.log(payload);
 
       // Checking if user exists
       const user = await this.authService.findOne({ email: payload.email });
@@ -56,8 +58,13 @@ export class AuthGuard implements CanActivate {
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
+    const [type, token] = request?.headers?.authorization?.split(' ') ?? [];
+    return type === 'Bearer' ? token : undefined;
+  }
 
+  private extractTokenFromConnection(request: any): string | undefined {
+    const [type, token] =
+      request?.connectionParams?.authorization?.split(' ') ?? [];
     return type === 'Bearer' ? token : undefined;
   }
 }

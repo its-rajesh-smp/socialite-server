@@ -12,6 +12,10 @@ import { FeedModule } from './modules/feed/feed.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       typePaths: ['./src/modules/**/*.graphql'],
+      subscriptions: {
+        'graphql-ws': true,
+        'subscriptions-transport-ws': true,
+      },
     }),
     JwtModule.register({
       global: true,
