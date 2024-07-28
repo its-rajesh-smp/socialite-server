@@ -8,6 +8,7 @@ input CreatePostInput {
 type Post {
   id: String!
   text: String
+  User: User
   visibility: String
   createdAt: String
   updatedAt: String
