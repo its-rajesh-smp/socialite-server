@@ -4,22 +4,46 @@ input CreatePostInput {
   visibility: String
 }
 
+input ReactPostInput {
+  postId: String
+  reactionType: String
+  operationType: String
+}
+
 # TYPES
 type Post {
-  id: String!
+  id: String
   text: String
   User: User
+  like: Int
+  comment: Int
   visibility: String
   createdAt: String
   updatedAt: String
+  isCurrentUserReacted: Boolean
+}
+
+type Reaction {
+  id: String
+  User: User
+  operationType: String
+  reactionType: String
+}
+
+#QUERY
+type Query {
+  getFeedPosts: [Post]
 }
 
 #MUTATIONS
 type Mutation {
   createPost(createPostInput: CreatePostInput): Post
+  reactPost(reactPostInput: ReactPostInput): Reaction
 }
 
 #SUBSCRIPTION
 type Subscription {
   onPostAdded: Post
+  onPostUpdate: Post
+  onPostReact: Post
 }

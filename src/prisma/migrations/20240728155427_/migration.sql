@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "NewsFeedPosts" ALTER COLUMN "comment" SET DEFAULT 0,
+ALTER COLUMN "like" SET DEFAULT 0;
