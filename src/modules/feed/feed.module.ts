@@ -3,9 +3,10 @@ import { FeedService } from './feed.service';
 import { FeedResolver } from './feed.resolver';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthService } from '../auth/auth.service';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
-  imports: [],
+  imports: [CommentModule],
   providers: [FeedService, FeedResolver, PrismaService, AuthService],
   exports: [],
 })

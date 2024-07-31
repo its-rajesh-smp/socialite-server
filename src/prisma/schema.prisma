@@ -55,6 +55,7 @@ model NewsFeedPosts{
     UserId    String
     text      String
     NewsPostReactions NewsPostReactions[]
+    NewsPostComments NewsPostComments[]
     like Int @default(0)
     comment Int @default(0)
     createdAt DateTime @default(now())
@@ -82,9 +83,10 @@ model NewsPostComments{
     UserId    String
     picture_URL String?
     text String?
-
+    NewsFeedPostsId String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
     User      Users             @relation(fields: [UserId], references: [id])
+    NewsFeedPosts NewsFeedPosts @relation(fields: [NewsFeedPostsId] , references: [id])
 }

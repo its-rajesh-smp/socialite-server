@@ -21,6 +21,7 @@ type Post {
   createdAt: String
   updatedAt: String
   isCurrentUserReacted: Boolean
+  NewsPostComments: [Comment]
 }
 
 type Reaction {

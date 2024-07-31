@@ -29,6 +29,11 @@ export class FeedResolver {
     const options = {
       include: {
         User: true,
+        NewsPostComments: {
+          include: {
+            User: true,
+          },
+        },
       },
       orderBy: {
         createdAt: 'desc',
@@ -37,6 +42,8 @@ export class FeedResolver {
 
     // Getting all posts with pagination
     const allPosts = await this.feedService.getAllPosts({}, options);
+
+    console.log(allPosts);
 
     // Extracting post ids
     const postIds = allPosts.map((post) => post.id);
@@ -104,9 +111,12 @@ export class FeedResolver {
       case OperationTypes.CREATE:
         let [createdReaction] = await Promise.all([
           await this.feedService.createOneReaction(payload),
-          await this.feedService.incrementReactionCount({
-            id: reactPostInput.postId,
-          }),
+          await this.feedService.increment(
+            {
+              id: reactPostInput.postId,
+            },
+            'like',
+          ),
         ]);
         reaction = createdReaction;
         break;
@@ -118,17 +128,34 @@ export class FeedResolver {
           await this.feedService.deleteReactions({
             id: currentReaction.id,
           }),
-          await this.feedService.decrementReactionCount({
-            id: reactPostInput.postId,
-          }),
+          await this.feedService.decrement(
+            {
+              id: reactPostInput.postId,
+            },
+            'like',
+          ),
         ]);
         reaction = currentReaction;
         break;
     }
 
-    const post = await this.feedService.getOnePost({
-      id: reactPostInput.postId,
-    });
+    const option = {
+      include: {
+        User: true,
+        NewsPostComments: {
+          include: {
+            User: true,
+          },
+        },
+      },
+    };
+
+    const post = await this.feedService.getOnePost(
+      {
+        id: reactPostInput.postId,
+      },
+      option,
+    );
 
     // PUBLISHING EVENT FOR POST UPDATE
     this.pubSub.publish('onPostUpdate', {
@@ -164,6 +191,4 @@ export class FeedResolver {
   onPostReact() {
     return this.pubSub.asyncIterator('onPostReact');
   }
-
-  // COMMENT ON POST
 }

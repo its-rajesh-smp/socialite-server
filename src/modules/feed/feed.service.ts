@@ -6,7 +6,6 @@ export class FeedService {
   constructor(private prisma: PrismaService) {}
 
   async getAllPosts(condition = {}, option = {}) {
-    // Getting all posts
     const allPosts = await this.prisma.newsFeedPosts.findMany({
       where: condition,
       ...option,
@@ -15,9 +14,10 @@ export class FeedService {
     return allPosts;
   }
 
-  async getOnePost(condition) {
+  async getOnePost(condition, option = {}) {
     return await this.prisma.newsFeedPosts.findUnique({
       where: condition,
+      ...option,
     });
   }
 
@@ -41,22 +41,22 @@ export class FeedService {
     return await this.prisma.newsPostReactions.deleteMany({ where: condition });
   }
 
-  async incrementReactionCount(condition) {
+  async increment(condition, field) {
     return await this.prisma.newsFeedPosts.update({
       where: condition,
       data: {
-        like: {
+        [field]: {
           increment: 1,
         },
       },
     });
   }
 
-  async decrementReactionCount(condition) {
+  async decrement(condition, field) {
     return await this.prisma.newsFeedPosts.update({
       where: condition,
       data: {
-        like: {
+        [field]: {
           decrement: 1,
         },
       },

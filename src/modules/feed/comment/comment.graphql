@@ -1,0 +1,21 @@
+# INPUTS
+input CreateCommentInput {
+  text: String
+  postId: String
+}
+
+type Comment {
+  id: String
+  text: String
+  User: User
+}
+
+#MUTATIONS
+type Mutation {
+  createComment(createCommentInput: CreateCommentInput): Comment
+}
+
+#SUBSCRIPTION
+type Subscription {
+  onCommentAdded: Comment
+}

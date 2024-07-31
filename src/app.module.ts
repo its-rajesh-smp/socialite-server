@@ -5,6 +5,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { AuthModule } from './modules/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { FeedModule } from './modules/feed/feed.module';
+import { CommentModule } from './modules/feed/comment/comment.module';
 
 @Module({
   imports: [
