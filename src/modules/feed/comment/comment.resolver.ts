@@ -39,21 +39,47 @@ export class CommentResolver {
       NewsFeedPostsId: createCommentInput.postId,
     };
 
-    console.log(payload);
-
     const [comment] = await Promise.all([
       this.commentService.createOneComment(payload),
       this.feedService.increment({ id: createCommentInput.postId }, 'comment'),
     ]);
 
+    const option = {
+      include: {
+        User: true,
+        NewsPostComments: {
+          include: {
+            User: true,
+          },
+          take: 2,
+          orderBy: {
+            createdAt: 'desc',
+          },
+        },
+      },
+    };
+
+    const post = await this.feedService.getOnePost(
+      {
+        id: createCommentInput.postId,
+      },
+      option,
+    );
+
+    // PUBLISHING EVENT FOR COMMENT CREATION
     this.pubSub.publish('onCommentAdded', {
-      onCommentAdded: { ...comment, User: user },
+      onCommentAdded: {
+        ...post,
+        User: req.user,
+      },
     });
 
     return { ...comment, User: user };
   }
 
+  // SUBSCRIPTION TO UPDATE A POST
   @Subscription('onCommentAdded')
+  @UseGuards(AuthGuard)
   onCommentAdded() {
     return this.pubSub.asyncIterator('onCommentAdded');
   }

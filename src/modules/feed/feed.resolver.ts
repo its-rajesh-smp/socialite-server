@@ -33,6 +33,10 @@ export class FeedResolver {
           include: {
             User: true,
           },
+          orderBy: {
+            createdAt: 'desc',
+          },
+          take: 2,
         },
       },
       orderBy: {
@@ -42,8 +46,6 @@ export class FeedResolver {
 
     // Getting all posts with pagination
     const allPosts = await this.feedService.getAllPosts({}, options);
-
-    console.log(allPosts);
 
     // Extracting post ids
     const postIds = allPosts.map((post) => post.id);
@@ -145,6 +147,10 @@ export class FeedResolver {
         NewsPostComments: {
           include: {
             User: true,
+          },
+          take: 2,
+          orderBy: {
+            createdAt: 'desc',
           },
         },
       },
