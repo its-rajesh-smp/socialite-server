@@ -77,7 +77,7 @@ export class CommentResolver {
     return { ...comment, User: user };
   }
 
-  // SUBSCRIPTION TO UPDATE A POST
+  // SUBSCRIPTION TO ADD A COMMENT
   @Subscription('onCommentAdded')
   @UseGuards(AuthGuard)
   onCommentAdded() {

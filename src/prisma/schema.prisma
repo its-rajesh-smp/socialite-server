@@ -33,8 +33,14 @@ model Users {
     NewsPostReactions NewsPostReactions[]
     NewsPostComments NewsPostComments[]
     NewsFeedStatus NewsFeedStatus[]
+    PracticeSets PracticeSets[]
+    PracticeSetTasks PracticeSetTasks[]
+    PracticeSetUserSubmitTasks PracticeSetUserSubmitTasks[]
 }
 
+// -------------------------------------------------------------------------- //
+//                                  NEWS FEED                                 //
+// -------------------------------------------------------------------------- //
 
 model NewsFeedStatus{
     id String @id @default(cuid())
@@ -89,4 +95,56 @@ model NewsPostComments{
 
     User      Users             @relation(fields: [UserId], references: [id])
     NewsFeedPosts NewsFeedPosts @relation(fields: [NewsFeedPostsId] , references: [id])
+}
+
+
+// -------------------------------------------------------------------------- //
+//                                  PRACTICE                                  //
+// -------------------------------------------------------------------------- //
+model PracticeSets{
+    id String @id @default(cuid())
+    UserId String
+    title String
+    description String
+    visibility Visibility
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    User Users @relation(fields: [UserId],references: [id],onDelete: Cascade)
+
+    PracticeSetTasks PracticeSetTasks[]
+    PracticeSetUserSubmitTasks PracticeSetUserSubmitTasks[]
+}
+
+
+model PracticeSetTasks{
+    id String @id @default(cuid())
+    UserId String
+    title String
+    description String
+    visibility Visibility
+    PracticeSetId String
+    
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    User Users @relation(fields: [UserId],references: [id],onDelete: Cascade)
+    PracticeSet PracticeSets @relation(fields: [PracticeSetId],references: [id],onDelete: Cascade)
+
+    PracticeSetUserSubmitTasks PracticeSetUserSubmitTasks[]
+}
+
+
+model PracticeSetUserSubmitTasks{
+    id String @id @default(cuid())
+    UserId String
+    PracticeSetId String
+    PracticeSetTaskId String
+    
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    
+    User Users @relation(fields: [UserId],references: [id],onDelete: Cascade)
+    PracticeSet PracticeSets @relation(fields: [PracticeSetId],references: [id],onDelete: Cascade)
+    PracticeSetTask PracticeSetTasks @relation(fields: [PracticeSetTaskId],references: [id],onDelete: Cascade)
 }
