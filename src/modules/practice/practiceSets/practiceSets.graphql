@@ -1,0 +1,22 @@
+# INPUTS
+input PracticeSetInput {
+  name: String
+  description: String
+  visibility: String
+}
+
+type PracticeSet {
+  id: String
+  name: String
+  description: String
+  visibility: String
+  createdAt: String
+  updatedAt: String
+  User:{
+    id
+    name
+    email
+  }
+}
+
+
