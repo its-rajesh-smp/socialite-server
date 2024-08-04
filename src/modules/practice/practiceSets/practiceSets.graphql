@@ -12,11 +12,18 @@ type PracticeSet {
   visibility: String
   createdAt: String
   updatedAt: String
-  User:{
-    id
-    name
-    email
-  }
+  User: User
 }
 
+# QUERY
+type Query {
+  getAllPracticeSets: [PracticeSet]
+  getAPracticeSet: PracticeSet
+}
 
+# MUTATION
+type Mutation {
+  createPracticeSet: PracticeSet
+  updatePracticeSet: PracticeSet
+  deletePracticeSet: PracticeSet
+}
