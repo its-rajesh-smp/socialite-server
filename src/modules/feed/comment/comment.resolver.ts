@@ -15,6 +15,9 @@ import { AuthService } from 'src/modules/auth/auth.service';
 import { FeedService } from '../feed.service';
 import { CreateCommentDto } from './comment.dto';
 
+/**
+ * Resolver for comment
+ */
 @Resolver('Comment')
 export class CommentResolver {
   private pubSub: PubSub;
@@ -25,6 +28,12 @@ export class CommentResolver {
     this.pubSub = new PubSub();
   }
 
+  /**
+   * Function to create comment
+   * @param req
+   * @param createCommentInput
+   * @returns
+   */
   @Mutation('createComment')
   @UseGuards(AuthGuard)
   async createComment(
@@ -66,7 +75,7 @@ export class CommentResolver {
       option,
     );
 
-    // PUBLISHING EVENT FOR COMMENT CREATION
+    // triggering onCommentAdded event
     this.pubSub.publish('onCommentAdded', {
       onCommentAdded: {
         ...post,
@@ -77,7 +86,10 @@ export class CommentResolver {
     return { ...comment, User: user };
   }
 
-  // SUBSCRIPTION TO ADD A COMMENT
+  /**
+   * Subscribing to onCommentAdded event
+   * @returns
+   */
   @Subscription('onCommentAdded')
   @UseGuards(AuthGuard)
   onCommentAdded() {

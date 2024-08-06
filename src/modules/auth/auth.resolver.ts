@@ -7,6 +7,9 @@ import { LoginUserDto, RegisterUserDto } from './auth.dto';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 
+/**
+ * Resolver for user
+ */
 @Resolver('User')
 export class AuthorsResolver {
   constructor(
@@ -14,6 +17,11 @@ export class AuthorsResolver {
     private jwtService: JwtService,
   ) {}
 
+  /**
+   * function for login user
+   * @param loginUserData
+   * @returns
+   */
   @Mutation('login')
   async loginUser(@Args('loginUserData') loginUserData: LoginUserDto) {
     // Checking if user exists
@@ -46,6 +54,11 @@ export class AuthorsResolver {
     };
   }
 
+  /**
+   * function for register user
+   * @param registerUserData
+   * @returns
+   */
   @Mutation('register')
   async registerUser(
     @Args('registerUserData') registerUserData: RegisterUserDto,
@@ -86,6 +99,11 @@ export class AuthorsResolver {
     };
   }
 
+  /**
+   * Fetch user with access token
+   * @param req
+   * @returns
+   */
   @Query('fetchUser')
   @UseGuards(AuthGuard)
   async fetchUserWithAccessToken(@Context('req') req: Request) {

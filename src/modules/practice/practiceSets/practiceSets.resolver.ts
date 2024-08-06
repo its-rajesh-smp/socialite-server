@@ -14,6 +14,9 @@ import { AuthService } from 'src/modules/auth/auth.service';
 import { PracticeSetService } from './practiceSets.service';
 import { CreatePracticeSetDto } from './practiceSets.dto';
 
+/**
+ * Resolver for practice set
+ */
 @Resolver('PracticeSet')
 export class PracticeSetResolver {
   constructor(
@@ -21,12 +24,23 @@ export class PracticeSetResolver {
     private readonly practiceSetsService: PracticeSetService,
   ) {}
 
+  /**
+   * function to get all practice sets
+   * @param req
+   * @returns
+   */
   @UseGuards(AuthGuard)
   @Query('getAllPracticeSets')
   async getAllPracticeSets(@Context('req') req: Request) {
     return await this.practiceSetsService.findAll({ UserId: req.user.id });
   }
 
+  /**
+   * function to get a practice set
+   * @param req
+   * @param id
+   * @returns
+   */
   @UseGuards(AuthGuard)
   @Query('getAPracticeSet')
   async getAPracticeSet(
@@ -36,6 +50,12 @@ export class PracticeSetResolver {
     return await this.practiceSetsService.findOne({ id });
   }
 
+  /**
+   * function to create a practice set
+   * @param practiceSetInput
+   * @param req
+   * @returns
+   */
   @UseGuards(AuthGuard)
   @Mutation('createPracticeSet')
   async createPracticeSet(
@@ -48,6 +68,11 @@ export class PracticeSetResolver {
     });
   }
 
+  /**
+   * function to delete a practice set
+   * @param id
+   * @returns
+   */
   @UseGuards(AuthGuard)
   @Mutation('deletePracticeSet')
   async deletePracticeSet(@Args('deletePracticeSet') id: string) {

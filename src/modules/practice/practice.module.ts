@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
+import { PracticeSetTasksModule } from './practiceSetTasks/practice-set-tasks.module';
 
 @Module({
   exports: [],
-  imports: [],
+  imports: [PracticeSetTasksModule],
   providers: [],
 })
 export class PracticeModule {}
