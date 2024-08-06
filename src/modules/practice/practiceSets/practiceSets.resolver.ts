@@ -12,7 +12,7 @@ import { AuthGuard } from 'src/modules/auth/auth.guard';
 import { Request } from 'express';
 import { AuthService } from 'src/modules/auth/auth.service';
 import { PracticeSetService } from './practiceSets.service';
-import { CreatePracticeSetDto } from './dto/practiceSets.dto';
+import { CreatePracticeSetDto } from './practiceSets.dto';
 
 @Resolver('PracticeSet')
 export class PracticeSetResolver {
