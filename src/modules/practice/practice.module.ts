@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { PracticeSetTasksModule } from './practiceSetTasks/practice-set-tasks.module';
+import { PracticeSetsModule } from './practiceSets/practiceSets.module';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Module({
-  exports: [],
-  imports: [PracticeSetTasksModule],
+  imports: [PracticeSetsModule],
   providers: [],
+  exports: [],
 })
 export class PracticeModule {}

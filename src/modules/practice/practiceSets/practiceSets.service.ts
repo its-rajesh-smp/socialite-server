@@ -35,9 +35,10 @@ export class PracticeSetService {
    * @param condition
    * @returns
    */
-  async findOne(condition) {
+  async findOne(condition, options = {}) {
     return await this.prisma.practiceSets.findFirst({
       where: condition,
+      ...options,
     });
   }
 

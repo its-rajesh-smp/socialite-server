@@ -5,7 +5,8 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { AuthModule } from './modules/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { FeedModule } from './modules/feed/feed.module';
-import { CommentModule } from './modules/feed/comment/comment.module';
+import { PracticeModule } from './modules/practice/practice.module';
+import { PrismaService } from './prisma/prisma.service';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { CommentModule } from './modules/feed/comment/comment.module';
     }),
     AuthModule,
     FeedModule,
+    PracticeModule,
   ],
   providers: [],
   controllers: [],

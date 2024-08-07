@@ -1,13 +1,13 @@
 # INPUTS
-input PracticeSetInput {
-  name: String
+input CreatePracticeSetInput {
+  title: String
   description: String
   visibility: String
 }
 
 type PracticeSet {
   id: String
-  name: String
+  title: String
   description: String
   visibility: String
   createdAt: String
@@ -23,7 +23,7 @@ type Query {
 
 # MUTATION
 type Mutation {
-  createPracticeSet: PracticeSet
+  createPracticeSet(createPracticeSetInput: CreatePracticeSetInput): PracticeSet
   updatePracticeSet: PracticeSet
   deletePracticeSet: PracticeSet
 }

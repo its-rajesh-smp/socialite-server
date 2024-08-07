@@ -59,13 +59,20 @@ export class PracticeSetResolver {
   @UseGuards(AuthGuard)
   @Mutation('createPracticeSet')
   async createPracticeSet(
-    @Args('practiceSetInput') practiceSetInput: CreatePracticeSetDto,
+    @Args('createPracticeSetInput') practiceSetInput: CreatePracticeSetDto,
     @Context('req') req: Request,
   ) {
-    return await this.practiceSetsService.create({
+    const createdPracticeSet = await this.practiceSetsService.create({
       ...practiceSetInput,
-      userId: req.user.id,
+      UserId: req.user.id,
     });
+
+    return await this.practiceSetsService.findOne(
+      {
+        id: createdPracticeSet.id,
+      },
+      { include: { User: true } },
+    );
   }
 
   /**
