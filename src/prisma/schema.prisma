@@ -121,6 +121,7 @@ model PracticeSetTasks{
     id String @id @default(cuid())
     UserId String
     title String
+    link String
     description String
     visibility Visibility
     PracticeSetId String
