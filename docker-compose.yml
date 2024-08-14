@@ -1,0 +1,11 @@
+services:
+  socialite-backend:
+    image: 'socialite-server'
+    ports:
+      - 8080:8080
+    environment:
+      - PORT=8080
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://postgres:postgres@host.docker.internal:5432/socialite
+      - JWT_SECRET=rmsdiwo2dn***1d3j2
+      - SALT_ROUNDS=10
