@@ -9,3 +9,7 @@ services:
       - DATABASE_URL=postgresql://postgres:postgres@host.docker.internal:5432/socialite
       - JWT_SECRET=rmsdiwo2dn***1d3j2
       - SALT_ROUNDS=10
+    volumes:
+      - 'C:/Users/Rajesh SMP/Desktop/Docker-Practice:/cluster' # Mounts the current directory into /cluster inside the container
+      # - /cluster/node_modules # Ensures node_modules inside container is used
+    command: ls -la /cluster

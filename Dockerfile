@@ -11,18 +11,15 @@ RUN apt install nodejs
 RUN node -v
 RUN npm -v
 
+WORKDIR /cluster
+
 COPY package.json package.json
 COPY package-lock.json package-lock.json
-
-COPY tsconfig.json tsconfig.json
-COPY tsconfig.build.json tsconfig.build.json
-COPY nest-cli.json nest-cli.json
-COPY src src
-COPY constants constants
-COPY utils utils
-
-
 RUN npm install
+
+
+COPY . .
+
 RUN npm run prisma:generate
 
 ENTRYPOINT [ "npm", "run", "start:dev" ]
