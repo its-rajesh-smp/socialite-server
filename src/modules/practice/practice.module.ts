@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { PracticeSetsModule } from './practiceSets/practiceSets.module';
-import { PracticeSetTaskModule } from './practiceSetTasks/practiceSetTasks.module';
-import { PracticeSetUserSubmitTasks } from './practiceSetUserSubmitTasks/practiceSetUserSubmitTasks.module';
+import { PracticeSetsModule } from './practiceSet/practiceSets.module';
+import { PracticeSetTaskModule } from './practiceSetTask/practiceSetTasks.module';
+import { PracticeSetUserSubmitTasks } from './userPracticeTask/userPracticeTasks.module';
 
 @Module({
   imports: [

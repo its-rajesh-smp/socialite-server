@@ -2,9 +2,9 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
 import { Request } from 'express';
 import { AuthGuard } from 'src/modules/auth/auth.guard';
-import { PracticeSetTaskService } from '../practiceSetTasks/practiceSetTasks.service';
-import { CreatePracticeSetUserSubmitTaskDto } from './practiceSetUserSubmitTasks.dto';
-import { PracticeSetUserSubmitTaskService } from './practiceSetUserSubmitTasks.service';
+import { PracticeSetTaskService } from '../practiceSetTask/practiceSetTasks.service';
+import { CreatePracticeSetUserSubmitTaskDto } from './userPracticeTasks.dto';
+import { PracticeSetUserSubmitTaskService } from './userPracticeTasks.service';
 
 /**
  * Resolver for practice set
