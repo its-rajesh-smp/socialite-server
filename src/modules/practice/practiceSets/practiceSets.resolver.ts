@@ -1,11 +1,4 @@
-import {
-  Args,
-  Context,
-  Mutation,
-  Resolver,
-  Subscription,
-  Query,
-} from '@nestjs/graphql';
+import { Args, Context, Mutation, Resolver, Query } from '@nestjs/graphql';
 
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/modules/auth/auth.guard';

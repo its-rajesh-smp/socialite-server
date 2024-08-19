@@ -17,6 +17,11 @@ input UpdatePracticeTaskInput {
   visibility: String
 }
 
+input GetPracticeSetTaskInput {
+  PracticeSetId: String
+  practiceSetTaskType: String
+}
+
 # --------------------------------------------------------------------------
 #                                    TYPES
 # --------------------------------------------------------------------------
@@ -50,5 +55,7 @@ type Mutation {
 #                                    QUERY
 # --------------------------------------------------------------------------
 type Query {
-  getAllPracticeTasks(practiceSetId: String): [PracticeSetTask]
+  getAllPracticeTasks(
+    getPracticeSetTaskInput: GetPracticeSetTaskInput
+  ): [PracticeSetTask]
 }

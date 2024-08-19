@@ -1,14 +1,19 @@
-import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { PracticeSetService } from '../practiceSets/practiceSets.service';
 import { UseGuards } from '@nestjs/common';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Request } from 'express';
 import { AuthGuard } from 'src/modules/auth/auth.guard';
 import {
   CreatePracticeSetTaskDto,
   DeletePracticeSetTaskDto,
+  GetPracticeSetTasksDto,
   UpdatePracticeSetTaskDto,
 } from './practiceSetTasks.dto';
-import { Request } from 'express';
 import { PracticeSetTaskService } from './practiceSetTasks.service';
+
+const PracticeSetTaskType = {
+  All: 'All',
+  Current: 'Current',
+};
 
 /**
  * Resolver for practice set task
@@ -26,8 +31,16 @@ export class PracticeSetTaskResolver {
    */
   @Query('getAllPracticeTasks')
   @UseGuards(AuthGuard)
-  async getAllPracticeSetTasks(@Args('id') id: string) {
-    return await this.practiceSetTaskService.findAll();
+  async getAllPracticeSetTasks(
+    @Args('getPracticeSetTaskInput') data: GetPracticeSetTasksDto,
+  ) {
+    const { PracticeSetId, practiceSetTaskType } = data;
+
+    const condition = {
+      PracticeSetId,
+    };
+
+    return await this.practiceSetTaskService.findAll(condition);
   }
 
   /**
@@ -92,4 +105,9 @@ export class PracticeSetTaskResolver {
 
     return await this.practiceSetTaskService.deleteOne({ id });
   }
+
+  /* -------------------------------------------------------------------------- */
+  /*                                UTIL FUNCTION                               */
+  /* -------------------------------------------------------------------------- */
+  async getCurrentPracticeSetTask(PracticeSetId: string) {}
 }

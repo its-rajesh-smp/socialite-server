@@ -1,5 +1,12 @@
 import { IsNotEmpty } from 'class-validator';
 
+export class GetPracticeSetTasksDto {
+  @IsNotEmpty()
+  PracticeSetId: string;
+
+  practiceSetTaskType: string = 'All';
+}
+
 export class CreatePracticeSetTaskDto {
   @IsNotEmpty()
   PracticeSetId: string;
