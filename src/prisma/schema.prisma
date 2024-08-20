@@ -8,20 +8,27 @@ generator client {
 }
 
 
-
-enum PostReactions{
-    like
-    haha
-    dislike
+// Enums
+enum PostReaction {
+    LIKE
+    HAHA
+    DISLIKE
 }
 
-enum Visibility{
-   private
-   public
-   friends
+enum Visibility {
+    PRIVATE
+    PUBLIC
+    FRIENDS
 }
 
-model Users {
+enum Status {
+    LIVE
+    ACHIEVED
+}
+
+
+// Models
+model User {
     id        String   @id @default(cuid())
     email     String   @unique
     password  String
@@ -29,123 +36,156 @@ model Users {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    NewsFeedPosts NewsFeedPosts[]
-    NewsPostReactions NewsPostReactions[]
-    NewsPostComments NewsPostComments[]
-    NewsFeedStatus NewsFeedStatus[]
-    PracticeSets PracticeSets[]
-    PracticeSetTasks PracticeSetTasks[]
-    PracticeSetUserSubmitTasks PracticeSetUserSubmitTasks[]
+    posts Post[]
+    reactions Reaction[]
+    comments Comment[]
+    userStatuses UserStatus[]
+    practiceSets PracticeSet[]
+    practiceTasks PracticeTask[]
+    userSubmitTasks UserSubmitTask[]
+    userPracticeSets UserPracticeSet[]
+    userTaskMetadatas UserTaskMetadata[]
 }
 
-// -------------------------------------------------------------------------- //
-//                                  NEWS FEED                                 //
-// -------------------------------------------------------------------------- //
-
-model NewsFeedStatus{
+model UserStatus {
     id String @id @default(cuid())
-    picture_URL String?
+    userId    String
+
+    pictureUrl String?
     text String?
-    backgroundImage_URL String? 
+    backgroundImageUrl String? 
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    UserId    String
-    User      Users             @relation(fields: [UserId], references: [id])
+    user      User @relation(fields: [userId], references: [id])
 }
 
-
-model NewsFeedPosts{
+model Post {
     id String @id @default(cuid())
+    userId    String
+
     visibility Visibility
-    UserId    String
-    text      String
-    NewsPostReactions NewsPostReactions[]
-    NewsPostComments NewsPostComments[]
-    like Int @default(0)
-    comment Int @default(0)
+    text      Json
+    totalLikeCount Int @default(0)
+    totalCommentCount Int @default(0)
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    User      Users             @relation(fields: [UserId], references: [id])
+    reactions Reaction[]
+    comments Comment[]
+    user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-
-model NewsPostReactions{
+model Reaction {
     id String @id @default(cuid())
-    UserId    String
-    NewsFeedPostsId String
-    reactionType PostReactions
+    userId    String
+    postId String
+
+    reactionType PostReaction
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
- 
-    User      Users             @relation(fields: [UserId], references: [id])
-    NewsFeedPosts NewsFeedPosts @relation(fields: [NewsFeedPostsId] , references: [id])
+
+    user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    post Post @relation(fields: [postId] , references: [id], onDelete: Cascade)
 }
 
-
-model NewsPostComments{
+model Comment {
     id String @id @default(cuid())
-    UserId    String
-    picture_URL String?
+    userId    String
+
+    pictureUrl String?
     text String?
-    NewsFeedPostsId String
+    postId String
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    User      Users             @relation(fields: [UserId], references: [id])
-    NewsFeedPosts NewsFeedPosts @relation(fields: [NewsFeedPostsId] , references: [id])
+    user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    post Post @relation(fields: [postId] , references: [id], onDelete: Cascade)
 }
 
-
-// -------------------------------------------------------------------------- //
-//                                  PRACTICE                                  //
-// -------------------------------------------------------------------------- //
-model PracticeSets{
+model PracticeSet {
     id String @id @default(cuid())
-    UserId String
+    userId String
+
     title String
-    description String
+    description Json
     visibility Visibility
+    enrollmentCount Int @default(0)
+    totalTaskCount Int @default(0)
+    config Json
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    User Users @relation(fields: [UserId],references: [id],onDelete: Cascade)
 
-    PracticeSetTasks PracticeSetTasks[]
-    PracticeSetUserSubmitTasks PracticeSetUserSubmitTasks[]
+    practiceTasks PracticeTask[]
+    userSubmitTasks UserSubmitTask[]
+    userPracticeSets UserPracticeSet[]
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-
-model PracticeSetTasks{
+model UserPracticeSet {
     id String @id @default(cuid())
-    UserId String
+    practiceSetId String
+    userId String
+
+    status Status
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    practiceSet PracticeSet @relation(fields: [practiceSetId], references: [id], onDelete: Cascade)
+    userSubmitTasks UserSubmitTask[]
+}
+
+model PracticeTask {
+    id String @id @default(cuid())
+    userId String
+    practiceSetId String
+
     title String
-    link String
-    description String
+    description Json
     visibility Visibility
-    PracticeSetId String
-    
+    completionCount Int @default(0)
+    status Status
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    User Users @relation(fields: [UserId],references: [id],onDelete: Cascade)
-    PracticeSet PracticeSets @relation(fields: [PracticeSetId],references: [id],onDelete: Cascade)
-
-    PracticeSetUserSubmitTasks PracticeSetUserSubmitTasks[]
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    practiceSet PracticeSet @relation(fields: [practiceSetId], references: [id], onDelete: Cascade)
+    userSubmitTasks UserSubmitTask[]
+    userTaskMetadatas UserTaskMetadata[]
 }
 
-
-model PracticeSetUserSubmitTasks{
+model UserTaskMetadata {
     id String @id @default(cuid())
-    UserId String
-    PracticeSetId String
-    PracticeSetTaskId String
+    userId String
+    practiceTaskId String
+
+    note Json
+    isBookmarked Boolean @default(false)
+    isIgnored Boolean @default(false)
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    practiceTask PracticeTask @relation(fields: [practiceTaskId], references: [id], onDelete: Cascade)
+}
+
+model UserSubmitTask {
+    id String @id @default(cuid())
+    userId String
+    practiceSetId String
+    practiceSetTaskId String
+    userPracticeSetId String
+    userResponse Json
     
     createdAt DateTime @default(now())
+    submittedAt DateTime
     updatedAt DateTime @updatedAt
     
-    User Users @relation(fields: [UserId],references: [id],onDelete: Cascade)
-    PracticeSet PracticeSets @relation(fields: [PracticeSetId],references: [id],onDelete: Cascade)
-    PracticeSetTask PracticeSetTasks @relation(fields: [PracticeSetTaskId],references: [id],onDelete: Cascade)
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    practiceSet PracticeSet @relation(fields: [practiceSetId], references: [id], onDelete: Cascade)
+    practiceTask PracticeTask @relation(fields: [practiceSetTaskId], references: [id], onDelete: Cascade)
+    userPracticeSet UserPracticeSet @relation(fields: [userPracticeSetId], references: [id], onDelete: Cascade)
 }
