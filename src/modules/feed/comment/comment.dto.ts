@@ -8,5 +8,5 @@ export class CreateCommentDto {
   text: string;
 
   @IsNotEmpty()
-  postId: string;
+  PostId: string;
 }

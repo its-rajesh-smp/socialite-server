@@ -2,14 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 /**
- *  Service for authentication
+ *  Service for Auth
  */
 @Injectable()
 export class AuthService {
   constructor(private prisma: PrismaService) {}
 
   /**
-   * Function to get user
+   * Function to get an user with condition
    * @param condition
    * @returns
    */
@@ -20,7 +20,7 @@ export class AuthService {
   }
 
   /**
-   * Function to create user
+   * Function to create an user
    * @param data
    * @returns
    */

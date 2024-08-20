@@ -6,13 +6,7 @@ import { AuthService } from 'src/modules/auth/auth.service';
 import { FeedService } from '../feed.service';
 
 @Module({
-  providers: [
-    CommentService,
-    CommentResolver,
-    PrismaService,
-    AuthService,
-    FeedService,
-  ],
+  providers: [CommentService, CommentResolver, AuthService, FeedService],
   imports: [],
   exports: [],
 })

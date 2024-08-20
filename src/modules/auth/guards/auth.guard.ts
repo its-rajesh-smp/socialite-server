@@ -8,7 +8,7 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
 import { Request } from 'express';
-import { AuthService } from './auth.service';
+import { AuthService } from '../auth.service';
 
 /**
  * Guard for authentication

@@ -1,21 +1,22 @@
-# INPUTS
+# Inputs
 input CreateCommentInput {
   text: String
-  postId: String
+  PostId: String
 }
 
+# Types
 type Comment {
   id: String
   text: String
   User: User
 }
 
-#MUTATIONS
+# Mutations
 type Mutation {
-  createComment(createCommentInput: CreateCommentInput): Comment
+  createComment(commentData: CreateCommentInput): Comment
 }
 
-# SUBSCRIPTION
+# Subscriptions
 type Subscription {
   onCommentAdded: Post
 }

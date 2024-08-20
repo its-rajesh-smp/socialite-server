@@ -1,4 +1,4 @@
-# INPUTS
+# Inputs
 input RegisterUserInput {
   name: String
   email: String
@@ -10,7 +10,7 @@ input LoginUserInput {
   password: String
 }
 
-# TYPES
+# Types
 type User {
   id: String!
   name: String
@@ -19,14 +19,13 @@ type User {
   access_token: String
 }
 
-# QUERY
+# Queries
 type Query {
-  test: String
   fetchUser: User
 }
 
-# MUTATION
+# Mutations
 type Mutation {
-  login(loginUserData: LoginUserInput): User
-  register(registerUserData: RegisterUserInput): User
+  loginUser(loginUserData: LoginUserInput): User
+  registerUser(registerUserData: RegisterUserInput): User
 }

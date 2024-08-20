@@ -1,0 +1,19 @@
+# Inputs
+input ReactPostInput {
+  postId: String
+  reactionType: String
+  operationType: String
+}
+
+# Types
+type Reaction {
+  id: String
+  User: User
+  operationType: String
+  reactionType: String
+}
+
+#Mutations
+type Mutation {
+  reactPost(reactPostData: ReactPostInput): Reaction
+}

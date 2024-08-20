@@ -1,0 +1,35 @@
+# Inputs
+input CreatePostInput {
+  text: String
+  visibility: String
+}
+
+# Types
+type Post {
+  id: String
+  text: String
+  User: User
+  like: Int
+  comment: Int
+  visibility: String
+  createdAt: String
+  updatedAt: String
+  isCurrentUserReacted: Boolean
+  NewsPostComments: [Comment]
+}
+
+#Queries
+type Query {
+  getAllPosts: [Post]
+}
+
+#Mutations
+type Mutation {
+  createPost(postData: CreatePostInput): Post
+}
+
+#Subscriptions
+type Subscription {
+  onPostAdded: Post
+  onPostUpdate: Post
+}

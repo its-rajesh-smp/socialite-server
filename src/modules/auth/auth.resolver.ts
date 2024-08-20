@@ -1,16 +1,17 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
 import { compare, hash } from 'bcrypt';
-import { Request } from 'express';
+import { User } from 'src/common/decorators/user.decorator';
+import IUser from 'src/common/types/user';
 import { LoginUserDto, RegisterUserDto } from './auth.dto';
-import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
+import { AuthGuard } from './guards/auth.guard';
 
 /**
  * Resolver for user
  */
-@Resolver('User')
+@Resolver('Auth')
 export class AuthorsResolver {
   constructor(
     private authService: AuthService,
@@ -18,11 +19,11 @@ export class AuthorsResolver {
   ) {}
 
   /**
-   * function for login user
+   * function for login an user
    * @param loginUserData
    * @returns
    */
-  @Mutation('login')
+  @Mutation('loginUser')
   async loginUser(@Args('loginUserData') loginUserData: LoginUserDto) {
     // Checking if user exists
     const user = await this.authService.findOne({ email: loginUserData.email });
@@ -55,11 +56,11 @@ export class AuthorsResolver {
   }
 
   /**
-   * function for register user
+   * function for register an user
    * @param registerUserData
    * @returns
    */
-  @Mutation('register')
+  @Mutation('registerUser')
   async registerUser(
     @Args('registerUserData') registerUserData: RegisterUserDto,
   ) {
@@ -90,8 +91,6 @@ export class AuthorsResolver {
       password: registerUserData.password,
     });
 
-    console.log(registerUserData);
-
     return {
       ...user,
       password: registerUserData.password,
@@ -100,13 +99,13 @@ export class AuthorsResolver {
   }
 
   /**
-   * Fetch user with access token
+   * Function for fetching an user with access token
    * @param req
    * @returns
    */
   @Query('fetchUser')
   @UseGuards(AuthGuard)
-  async fetchUserWithAccessToken(@Context('req') req: Request) {
-    return req.user;
+  async fetchUserWithAccessToken(@User() user: IUser) {
+    return user;
   }
 }
