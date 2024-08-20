@@ -3,8 +3,8 @@ import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
 import { Request } from 'express';
 import { AuthGuard } from 'src/modules/auth/auth.guard';
 import { PracticeSetTaskService } from '../practiceSetTask/practiceSetTasks.service';
-import { CreatePracticeSetUserSubmitTaskDto } from './userPracticeTasks.dto';
-import { PracticeSetUserSubmitTaskService } from './userPracticeTasks.service';
+import { CreatePracticeSetUserSubmitTaskDto } from './userSubmitTask.dto';
+import { PracticeSetUserSubmitTaskService } from './userSubmitTask.service';
 
 /**
  * Resolver for practice set

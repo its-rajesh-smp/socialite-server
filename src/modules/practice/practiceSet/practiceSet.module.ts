@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { PracticeSetService } from './practiceSets.service';
-import { PracticeSetResolver } from './practiceSets.resolver';
+import { PracticeSetService } from './practiceSet.service';
+import { PracticeSetResolver } from './practiceSet.resolver';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthService } from 'src/modules/auth/auth.service';
 

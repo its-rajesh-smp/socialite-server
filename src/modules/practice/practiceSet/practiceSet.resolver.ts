@@ -3,7 +3,7 @@ import { Args, Context, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/modules/auth/auth.guard';
 import { Request } from 'express';
-import { PracticeSetService } from './practiceSets.service';
+import { PracticeSetService } from './practiceSet.service';
 import { CreatePracticeSetDto } from './practiceSets.dto';
 
 /**

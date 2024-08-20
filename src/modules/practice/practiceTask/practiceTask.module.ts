@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { AuthService } from 'src/modules/auth/auth.service';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { PracticeSetTaskResolver } from './practiceSetTasks.resolver';
-import { PracticeSetTaskService } from './practiceSetTasks.service';
+import { PracticeSetTaskResolver } from './practiceTask.resolver';
+import { PracticeSetTaskService } from './practiceTask.service';
 
 @Module({
   imports: [],
