@@ -1,3 +1,4 @@
+import { UseGuards } from '@nestjs/common';
 import {
   Args,
   Context,
@@ -5,15 +6,14 @@ import {
   Resolver,
   Subscription,
 } from '@nestjs/graphql';
-import { CommentService } from './comment.service';
-import { PubSub } from 'graphql-subscriptions';
-import { UseGuards } from '@nestjs/common';
-import { AuthGuard } from 'src/modules/auth/auth.guard';
-import { CreatePostDto } from '../feed.dto';
 import { Request } from 'express';
-import { AuthService } from 'src/modules/auth/auth.service';
+import { PubSub } from 'graphql-subscriptions';
+import { AuthGuard } from 'src/modules/auth/guards/auth.guard';
 import { FeedService } from '../feed.service';
 import { CreateCommentDto } from './comment.dto';
+import { CommentService } from './comment.service';
+import { User } from 'src/common/decorators/user.decorator';
+import IUser from 'src/common/types/user';
 
 /**
  * Resolver for comment
@@ -37,20 +37,20 @@ export class CommentResolver {
   @Mutation('createComment')
   @UseGuards(AuthGuard)
   async createComment(
-    @Context('req') req: Request,
-    @Args('createCommentInput') createCommentInput: CreateCommentDto,
+    @User() user: IUser,
+    @Args('commentData') commentData: CreateCommentDto,
   ) {
-    const user = req.user;
+    const { PostId, text } = commentData;
 
     const payload = {
-      text: createCommentInput.text,
+      text,
       UserId: user.id,
-      NewsFeedPostsId: createCommentInput.postId,
+      PostId,
     };
 
     const [comment] = await Promise.all([
       this.commentService.createOneComment(payload),
-      this.feedService.increment({ id: createCommentInput.postId }, 'comment'),
+      this.feedService.increment({ id: PostId }, 'comment'),
     ]);
 
     const option = {
@@ -70,7 +70,7 @@ export class CommentResolver {
 
     const post = await this.feedService.getOnePost(
       {
-        id: createCommentInput.postId,
+        id: PostId,
       },
       option,
     );
@@ -79,7 +79,7 @@ export class CommentResolver {
     this.pubSub.publish('onCommentAdded', {
       onCommentAdded: {
         ...post,
-        User: req.user,
+        User: user,
       },
     });
 

@@ -20,7 +20,7 @@ export class CommentService {
   }
 
   /**
-   * Function to get comments
+   * Function to get comments using condition
    * @param condition
    * @param option
    * @returns
