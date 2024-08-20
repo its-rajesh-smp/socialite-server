@@ -7,8 +7,8 @@ import {
   DeletePracticeSetTaskDto,
   GetPracticeSetTasksDto,
   UpdatePracticeSetTaskDto,
-} from './practiceTask.dto';
-import { PracticeSetTaskService } from './practiceTask.service';
+} from './task.dto';
+import { PracticeSetTaskService } from './task.service';
 
 const PracticeSetTaskType = {
   All: 'All',
