@@ -1,14 +1,14 @@
 # Inputs
 input CreateCommentInput {
   text: String
-  PostId: String
+  postId: String
 }
 
 # Types
 type Comment {
   id: String
   text: String
-  User: User
+  user: User
 }
 
 # Mutations

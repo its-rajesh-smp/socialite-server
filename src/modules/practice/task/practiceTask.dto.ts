@@ -1,9 +1,12 @@
 import { IsNotEmpty } from 'class-validator';
 
 /**
- * Dto for create practice set
+ * Dto for create practice task
  */
-export class CreatePracticeSetDto {
+export class CreatePracticeTaskDto {
+  @IsNotEmpty()
+  practiceSetId: string;
+
   @IsNotEmpty()
   title: string;
 
@@ -13,15 +16,17 @@ export class CreatePracticeSetDto {
 }
 
 /**
- * Dto for update practice set
+ * Dto for update practice task
  */
-export class UpdatePracticeSetDto {
+export class UpdatePracticeTaskDto {
   @IsNotEmpty()
   id: string;
 
   title: string;
 
   description: string;
+
+  link: string;
 
   visibility: string;
 }

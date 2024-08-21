@@ -1,10 +1,10 @@
-import { Args, Context, Mutation, Resolver, Query } from '@nestjs/graphql';
-
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
-import { AuthGuard } from 'src/modules/auth/auth.guard';
-import { Request } from 'express';
+import { User } from 'src/common/decorators/user.decorator';
+import IUser from 'src/common/types/user';
+import { AuthGuard } from 'src/modules/auth/guards/auth.guard';
+import { CreatePracticeSetDto } from './practiceSet.dto';
 import { PracticeSetService } from './practiceSet.service';
-import { CreatePracticeSetDto } from './practiceSets.dto';
 
 /**
  * Resolver for practice set
@@ -20,8 +20,8 @@ export class PracticeSetResolver {
    */
   @UseGuards(AuthGuard)
   @Query('getAllPracticeSets')
-  async getAllPracticeSets(@Context('req') req: Request) {
-    return await this.practiceSetsService.findAll({ UserId: req.user.id });
+  async getAllPracticeSets(@User() user: IUser) {
+    return await this.practiceSetsService.findAll({ userId: user.id });
   }
 
   /**
@@ -32,10 +32,7 @@ export class PracticeSetResolver {
    */
   @UseGuards(AuthGuard)
   @Query('getAPracticeSet')
-  async getAPracticeSet(
-    @Context('req') req: Request,
-    @Args('deletePracticeSet') id: string,
-  ) {
+  async getAPracticeSet(@Args('id') id: string) {
     return await this.practiceSetsService.findOne({ id });
   }
 
@@ -48,19 +45,19 @@ export class PracticeSetResolver {
   @UseGuards(AuthGuard)
   @Mutation('createPracticeSet')
   async createPracticeSet(
-    @Args('createPracticeSetInput') practiceSetInput: CreatePracticeSetDto,
-    @Context('req') req: Request,
+    @Args('practiceSetData') practiceSetData: CreatePracticeSetDto,
+    @User() user: IUser,
   ) {
     const createdPracticeSet = await this.practiceSetsService.create({
-      ...practiceSetInput,
-      UserId: req.user.id,
+      ...practiceSetData,
+      userId: user.id,
     });
 
     return await this.practiceSetsService.findOne(
       {
         id: createdPracticeSet.id,
       },
-      { include: { User: true } },
+      { include: { user: true } },
     );
   }
 
@@ -71,7 +68,7 @@ export class PracticeSetResolver {
    */
   @UseGuards(AuthGuard)
   @Mutation('deletePracticeSet')
-  async deletePracticeSet(@Args('deletePracticeSet') id: string) {
+  async deletePracticeSet(@Args('id') id: string) {
     return await this.practiceSetsService.deleteOne({ id });
   }
 }

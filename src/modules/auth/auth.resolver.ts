@@ -20,53 +20,48 @@ export class AuthorsResolver {
 
   /**
    * function for login an user
-   * @param loginUserData
+   * @param userData
    * @returns
    */
   @Mutation('loginUser')
-  async loginUser(@Args('loginUserData') loginUserData: LoginUserDto) {
+  async loginUser(@Args('userData') userData: LoginUserDto) {
     // Checking if user exists
-    const user = await this.authService.findOne({ email: loginUserData.email });
+    const user = await this.authService.findOne({ email: userData.email });
 
     if (!user) {
       throw new Error('User not found');
     }
 
     // Checking if password is valid
-    const isPasswordValid = await compare(
-      loginUserData.password,
-      user.password,
-    );
+    const isPasswordValid = await compare(userData.password, user.password);
 
     if (!isPasswordValid) {
       throw new Error('Invalid password');
     }
 
     // Creating access token
-    const access_token = this.jwtService.sign({
+    const accessToken = this.jwtService.sign({
       email: user.email,
-      password: loginUserData.password,
+      password: userData.password,
     });
 
     return {
       ...user,
-      password: loginUserData.password,
-      access_token,
+      password: userData.password,
+      accessToken,
     };
   }
 
   /**
    * function for register an user
-   * @param registerUserData
+   * @param userData
    * @returns
    */
   @Mutation('registerUser')
-  async registerUser(
-    @Args('registerUserData') registerUserData: RegisterUserDto,
-  ) {
+  async registerUser(@Args('userData') userData: RegisterUserDto) {
     // Checking if user already exists
     const userExists = await this.authService.findOne({
-      email: registerUserData.email,
+      email: userData.email,
     });
 
     if (userExists) {
@@ -75,26 +70,26 @@ export class AuthorsResolver {
 
     // Hashing password
     const hashedPassword = await hash(
-      registerUserData.password,
+      userData.password,
       Number(process.env.SALT_ROUNDS),
     );
 
     // Creating user
     const user = await this.authService.create({
-      ...registerUserData,
+      ...userData,
       password: hashedPassword,
     });
 
     // Creating access token
-    const access_token = this.jwtService.sign({
+    const accessToken = this.jwtService.sign({
       email: user.email,
-      password: registerUserData.password,
+      password: userData.password,
     });
 
     return {
       ...user,
-      password: registerUserData.password,
-      access_token,
+      password: userData.password,
+      accessToken,
     };
   }
 

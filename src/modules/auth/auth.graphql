@@ -13,10 +13,11 @@ input LoginUserInput {
 # Types
 type User {
   id: String!
+
   name: String
   password: String
   email: String
-  access_token: String
+  accessToken: String
 }
 
 # Queries
@@ -26,6 +27,6 @@ type Query {
 
 # Mutations
 type Mutation {
-  loginUser(loginUserData: LoginUserInput): User
-  registerUser(registerUserData: RegisterUserInput): User
+  loginUser(userData: LoginUserInput): User
+  registerUser(userData: RegisterUserInput): User
 }

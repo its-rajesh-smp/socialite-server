@@ -9,23 +9,12 @@ export class PracticeSetService {
   constructor(private prisma: PrismaService) {}
 
   /**
-   * Function to create practice set
-   * @param data
-   * @returns
-   */
-  async create(data) {
-    return await this.prisma.practiceSets.create({
-      data,
-    });
-  }
-
-  /**
    * Function to get all practice sets
    * @param condition
    * @returns
    */
   async findAll(condition = {}) {
-    return await this.prisma.practiceSets.findMany({
+    return await this.prisma.practiceSet.findMany({
       where: condition,
     });
   }
@@ -36,9 +25,20 @@ export class PracticeSetService {
    * @returns
    */
   async findOne(condition, options = {}) {
-    return await this.prisma.practiceSets.findFirst({
+    return await this.prisma.practiceSet.findFirst({
       where: condition,
       ...options,
+    });
+  }
+
+  /**
+   * Function to create practice set
+   * @param data
+   * @returns
+   */
+  async create(practiceSetData) {
+    return await this.prisma.practiceSet.create({
+      data: practiceSetData,
     });
   }
 
@@ -48,10 +48,10 @@ export class PracticeSetService {
    * @param data
    * @returns
    */
-  async updateOne(condition, data) {
-    return await this.prisma.practiceSets.update({
+  async updateOne(condition, practiceSetData) {
+    return await this.prisma.practiceSet.update({
       where: condition,
-      data,
+      data: practiceSetData,
     });
   }
 
@@ -61,7 +61,7 @@ export class PracticeSetService {
    * @returns
    */
   async deleteOne(condition) {
-    return await this.prisma.practiceSets.delete({
+    return await this.prisma.practiceSet.delete({
       where: condition,
     });
   }

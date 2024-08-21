@@ -1,4 +1,4 @@
-# INPUTS
+# Inputs
 input CreatePracticeSetInput {
   title: String
   description: String
@@ -12,18 +12,16 @@ type PracticeSet {
   visibility: String
   createdAt: String
   updatedAt: String
-  User: User
+  user: User
 }
 
-# QUERY
+# Queries
 type Query {
   getAllPracticeSets: [PracticeSet]
   getAPracticeSet: PracticeSet
 }
 
-# MUTATION
+# Mutations
 type Mutation {
-  createPracticeSet(createPracticeSetInput: CreatePracticeSetInput): PracticeSet
-  updatePracticeSet: PracticeSet
-  deletePracticeSet: PracticeSet
+  createPracticeSet(practiceSetData: CreatePracticeSetInput): PracticeSet
 }

@@ -1,13 +1,11 @@
 import { Module } from '@nestjs/common';
-import { FeedService } from './feed.service';
-import { FeedResolver } from './feed.resolver';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { AuthService } from '../auth/auth.service';
 import { CommentModule } from './comment/comment.module';
+import { PostModule } from './post/post.module';
+import { ReactionModule } from './reaction/reaction.module';
 
 @Module({
-  imports: [CommentModule],
-  providers: [FeedService, FeedResolver, PrismaService, AuthService],
+  imports: [CommentModule, PostModule, ReactionModule],
+  providers: [],
   exports: [],
 })
 export class FeedModule {}

@@ -1,17 +1,11 @@
 import { Module } from '@nestjs/common';
-import { PracticeSetService } from './practiceSet.service';
-import { PracticeSetResolver } from './practiceSet.resolver';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthService } from 'src/modules/auth/auth.service';
+import { PracticeSetResolver } from './practiceSet.resolver';
+import { PracticeSetService } from './practiceSet.service';
 
 @Module({
   imports: [],
-  providers: [
-    PracticeSetService,
-    PracticeSetResolver,
-    PrismaService,
-    AuthService,
-  ],
+  providers: [PracticeSetService, PracticeSetResolver, AuthService],
   exports: [],
 })
 export class PracticeSetsModule {}

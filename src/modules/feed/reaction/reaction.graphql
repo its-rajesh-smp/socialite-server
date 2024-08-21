@@ -8,7 +8,7 @@ input ReactPostInput {
 # Types
 type Reaction {
   id: String
-  User: User
+  user: User
   operationType: String
   reactionType: String
 }

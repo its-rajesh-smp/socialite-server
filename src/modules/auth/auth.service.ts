@@ -14,7 +14,7 @@ export class AuthService {
    * @returns
    */
   async findOne(condition) {
-    return await this.prisma.users.findFirst({
+    return await this.prisma.user.findFirst({
       where: condition,
     });
   }
@@ -24,9 +24,9 @@ export class AuthService {
    * @param data
    * @returns
    */
-  async create(data) {
-    return await this.prisma.users.create({
-      data,
+  async create(userData) {
+    return await this.prisma.user.create({
+      data: userData,
     });
   }
 }

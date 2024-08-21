@@ -13,8 +13,8 @@ export class CommentService {
    * @param commentData
    * @returns
    */
-  async createOneComment(commentData) {
-    return await this.prisma.newsPostComments.create({
+  async createAComment(commentData) {
+    return await this.prisma.comment.create({
       data: commentData,
     });
   }
@@ -26,7 +26,7 @@ export class CommentService {
    * @returns
    */
   async getComment(condition = {}, option = {}) {
-    return await this.prisma.newsPostComments.findMany({
+    return await this.prisma.comment.findMany({
       where: condition,
       ...option,
     });

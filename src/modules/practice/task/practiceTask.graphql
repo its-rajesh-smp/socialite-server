@@ -1,0 +1,40 @@
+# Inputs
+input CreatePracticeTaskInput {
+  practiceSetId: String
+  title: String
+  link: String
+  description: String
+  visibility: String
+}
+
+input UpdatePracticeTaskInput {
+  id: String
+  title: String
+  link: String
+  description: String
+  visibility: String
+}
+
+# Types
+type PracticeTask {
+  id: String
+  practiceSetId: String
+  title: String
+  link: String
+  description: String
+  visibility: String
+  createdAt: String
+  updatedAt: String
+}
+
+# Queries
+type Query {
+  getAllPracticeTasks(practiceSetId: String): [PracticeSetTask]
+}
+
+# Mutations
+type Mutation {
+  createPracticeTask(practiceTaskData: CreatePracticeTaskInput): PracticeTask
+  updatePracticeTask(practiceTaskData: UpdatePracticeTaskInput): PracticeTask
+  deletePracticeTask(id: String): String
+}

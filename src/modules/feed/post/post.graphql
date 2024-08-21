@@ -8,14 +8,14 @@ input CreatePostInput {
 type Post {
   id: String
   text: String
-  User: User
-  like: Int
-  comment: Int
+  user: User
+  totalLikeCount: Int
+  totalCommentCount: Int
   visibility: String
   createdAt: String
   updatedAt: String
   isCurrentUserReacted: Boolean
-  NewsPostComments: [Comment]
+  comments: [Comment]
 }
 
 #Queries
