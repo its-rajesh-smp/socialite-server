@@ -1,0 +1,5 @@
+{
+  "watch": ["src", "src/**/*.graphql", "./src/modules/**/*.graphql"],
+  "ext": "ts,graphql",
+  "ignore": ["dist", "node_modules"]
+}
