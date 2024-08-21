@@ -17,3 +17,7 @@ type Reaction {
 type Mutation {
   reactPost(reactPostData: ReactPostInput): Reaction
 }
+
+type Subscription {
+  onPostReact: Post
+}

@@ -29,7 +29,7 @@ type PracticeTask {
 
 # Queries
 type Query {
-  getAllPracticeTasks(practiceSetId: String): [PracticeSetTask]
+  getAllPracticeTasks(practiceSetId: String): [PracticeTask]
 }
 
 # Mutations

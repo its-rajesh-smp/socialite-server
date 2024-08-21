@@ -48,7 +48,7 @@ export class PracticeTaskResolver {
   }
 
   /**
-   * function to update practice set task
+   * function to update practice task
    * @param req
    * @param data
    * @returns
@@ -60,12 +60,12 @@ export class PracticeTaskResolver {
   ) {
     const { id } = practiceTaskData;
 
-    const practiceSetTask = await this.practiceTaskService.findOne({
+    const practiceTask = await this.practiceTaskService.findOne({
       id,
     });
 
     // if task not found
-    if (!practiceSetTask) {
+    if (!practiceTask) {
       throw new Error('Task not found');
     }
 
@@ -73,7 +73,7 @@ export class PracticeTaskResolver {
   }
 
   /**
-   * function to a delete practice set task
+   * function to a delete practice  task
    * @param req
    * @param data
    * @returns
@@ -81,12 +81,12 @@ export class PracticeTaskResolver {
   @Mutation('deletePracticeTask')
   @UseGuards(AuthGuard)
   async deletePracticeTask(@Args('id') id: string) {
-    const practiceSetTask = await this.practiceTaskService.findOne({
+    const practiceTask = await this.practiceTaskService.findOne({
       id,
     });
 
     // if task not found
-    if (!practiceSetTask) {
+    if (!practiceTask) {
       throw new Error('Task not found');
     }
 

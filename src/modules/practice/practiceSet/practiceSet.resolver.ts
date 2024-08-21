@@ -69,6 +69,7 @@ export class PracticeSetResolver {
   @UseGuards(AuthGuard)
   @Mutation('deletePracticeSet')
   async deletePracticeSet(@Args('id') id: string) {
-    return await this.practiceSetsService.deleteOne({ id });
+    await this.practiceSetsService.deleteOne({ id });
+    return id;
   }
 }

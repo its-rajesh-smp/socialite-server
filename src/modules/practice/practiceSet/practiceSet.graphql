@@ -24,4 +24,5 @@ type Query {
 # Mutations
 type Mutation {
   createPracticeSet(practiceSetData: CreatePracticeSetInput): PracticeSet
+  deletePracticeSet(id: String): String
 }
