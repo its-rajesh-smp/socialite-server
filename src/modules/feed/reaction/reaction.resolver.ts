@@ -1,4 +1,4 @@
-import { UseGuards } from '@nestjs/common';
+import { Inject, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver, Subscription } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
 import { OperationTypes } from 'src/common/constants/common';
@@ -11,13 +11,11 @@ import { ReactionService } from './reaction.service';
 
 @Resolver('Reaction')
 export class ReactionResolver {
-  private pubSub: PubSub;
   constructor(
     private readonly reactionService: ReactionService,
     private readonly postService: PostService,
-  ) {
-    this.pubSub = new PubSub();
-  }
+    @Inject('PUB_SUB') private pubSub: PubSub,
+  ) {}
 
   /**
    *  Resolver for react post

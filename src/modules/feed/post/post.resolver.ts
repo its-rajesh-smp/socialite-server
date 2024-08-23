@@ -1,4 +1,4 @@
-import { UseGuards } from '@nestjs/common';
+import { Inject, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
 import { User } from 'src/common/decorators/user.decorator';
@@ -13,13 +13,11 @@ import { ReactionService } from '../reaction/reaction.service';
  */
 @Resolver('post')
 export class PostResolver {
-  private pubSub: PubSub;
   constructor(
     private postService: PostService,
     private reactionService: ReactionService,
-  ) {
-    this.pubSub = new PubSub();
-  }
+    @Inject('PUB_SUB') private pubSub: PubSub,
+  ) {}
 
   /**
    * Function to get all feed posts

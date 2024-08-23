@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { FeedModule } from './modules/feed/feed.module';
 import { PracticeModule } from './modules/practice/practice.module';
 import { PrismaModule } from './modules/prisma/prisma.module';
+import { PubSubModule } from './modules/pubSub/pubSub.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { PrismaModule } from './modules/prisma/prisma.module';
       secret: process.env.JWT_SECRET,
     }),
     PrismaModule,
+    PubSubModule,
     AuthModule,
     FeedModule,
     PracticeModule,
