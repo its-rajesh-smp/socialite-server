@@ -26,10 +26,10 @@ export class ReactionResolver {
   @Mutation('reactPost')
   @UseGuards(AuthGuard)
   async reactPost(
-    @Args('reactPostData') reactPostInput: ReactPostDto,
+    @Args('reactPostData') reactPostData: ReactPostDto,
     @User() user: IUser,
   ) {
-    const { postId, operationType, reactionType } = reactPostInput;
+    const { postId, operationType, reactionType } = reactPostData;
 
     const payload = {
       userId: user.id,
@@ -38,7 +38,7 @@ export class ReactionResolver {
     };
 
     // Handling the reaction logic
-    const reaction = await this.handleReaction(reactPostInput, payload);
+    const reaction = await this.handleReaction(reactPostData, payload);
 
     const option = {
       include: {
@@ -67,7 +67,7 @@ export class ReactionResolver {
     this.pubSub.publish('onPostUpdate', {
       onPostUpdate: {
         ...updatePost,
-        user: user,
+        deviceId: user.id,
       },
     });
 
@@ -86,11 +86,11 @@ export class ReactionResolver {
   private async handleReaction(reactPostInput: ReactPostDto, payload: any) {
     // Handling the reaction logic
     // Performing action based on operation type
-    // if create: creating reaction and sending created reaction
-    // if delete: deleting reaction and sending deleted reaction
     switch (reactPostInput.operationType) {
+      // if create: creating reaction and sending created reaction
       case OperationTypes.CREATE:
         return this.handleCreateReaction(payload, reactPostInput.postId);
+      // if delete: deleting reaction and sending deleted reaction
       case OperationTypes.DELETE:
         return this.handleDeleteReaction(payload, reactPostInput.postId);
       default:
