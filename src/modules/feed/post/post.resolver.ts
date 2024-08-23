@@ -94,21 +94,21 @@ export class PostResolver {
 
     const createdPost = await this.postService.createOnePost(payload);
 
-    this.pubSub.publish('onPostAdded', {
-      onPostAdded: { ...createdPost, User: user },
+    this.pubSub.publish('onPostAdd', {
+      onPostAdd: { ...createdPost, user },
     });
 
-    return { ...createdPost, User: user };
+    return { ...createdPost, user };
   }
 
   /**
    * Subscription to post added
    * @returns
    */
-  @Subscription('onPostAdded')
+  @Subscription('onPostAdd')
   @UseGuards(AuthGuard)
-  onPostAdded() {
-    return this.pubSub.asyncIterator('onPostAdded');
+  onPostAdd() {
+    return this.pubSub.asyncIterator('onPostAdd');
   }
 
   /**

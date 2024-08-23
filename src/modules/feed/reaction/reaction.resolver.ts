@@ -44,7 +44,7 @@ export class ReactionResolver {
 
     const option = {
       include: {
-        User: true,
+        user: true,
         comments: {
           include: {
             user: true,

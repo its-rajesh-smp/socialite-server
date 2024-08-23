@@ -58,7 +58,7 @@ export class AuthGuard implements CanActivate {
         throw new UnauthorizedException();
       }
       // Adding user to request
-      request['user'] = { ...user, access_token: token };
+      request['user'] = { ...user, accessToken: token };
     } catch {
       throw new UnauthorizedException();
     }

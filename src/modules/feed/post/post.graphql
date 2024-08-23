@@ -30,6 +30,6 @@ type Mutation {
 
 #Subscriptions
 type Subscription {
-  onPostAdded: Post
+  onPostAdd: Post
   onPostUpdate: Post
 }
