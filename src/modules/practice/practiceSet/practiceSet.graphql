@@ -18,6 +18,7 @@ type PracticeSet {
 # Queries
 type Query {
   getAllPracticeSets: [PracticeSet]
+  getMyPracticeSets: [PracticeSet]
   getAPracticeSet: PracticeSet
 }
 

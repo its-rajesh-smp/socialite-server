@@ -114,6 +114,7 @@ model PracticeSet {
     title String
     description Json
     visibility Visibility
+    status Status @default(LIVE)
     enrollmentCount Int @default(0)
     totalTaskCount Int @default(0)
     config Json?

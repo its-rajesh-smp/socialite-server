@@ -5,6 +5,7 @@ import IUser from 'src/common/types/user';
 import { AuthGuard } from 'src/modules/auth/guards/auth.guard';
 import { CreatePracticeSetDto } from './practiceSet.dto';
 import { PracticeSetService } from './practiceSet.service';
+import { status } from 'constants/common.const';
 
 /**
  * Resolver for practice set
@@ -21,7 +22,22 @@ export class PracticeSetResolver {
   @UseGuards(AuthGuard)
   @Query('getAllPracticeSets')
   async getAllPracticeSets(@User() user: IUser) {
-    return await this.practiceSetsService.findAll({ userId: user.id });
+    return await this.practiceSetsService.findAll({ status: status.LIVE });
+  }
+
+  /**
+   * function to get all practice sets of a user
+   * @param req
+   * @param id
+   * @returns
+   */
+  @UseGuards(AuthGuard)
+  @Query('getMyPracticeSets')
+  async getMyPracticeSets(@User() user: IUser) {
+    return await this.practiceSetsService.findAll({
+      userId: user.id,
+      status: status.LIVE,
+    });
   }
 
   /**
@@ -33,7 +49,7 @@ export class PracticeSetResolver {
   @UseGuards(AuthGuard)
   @Query('getAPracticeSet')
   async getAPracticeSet(@Args('id') id: string) {
-    return await this.practiceSetsService.findOne({ id });
+    return await this.practiceSetsService.findOne({ id, status: status.LIVE });
   }
 
   /**
@@ -68,8 +84,19 @@ export class PracticeSetResolver {
    */
   @UseGuards(AuthGuard)
   @Mutation('deletePracticeSet')
-  async deletePracticeSet(@Args('id') id: string) {
-    await this.practiceSetsService.deleteOne({ id });
+  async deletePracticeSet(@Args('id') id: string, @User() user: IUser) {
+    const practiceSet = await this.practiceSetsService.findOne({ id });
+
+    if (practiceSet?.userId !== user.id) {
+      throw new Error('You are not authorized to delete this practice set');
+    }
+
+    await this.practiceSetsService.updateOne(
+      { id },
+      {
+        status: status.ACHIEVED,
+      },
+    );
     return id;
   }
 }

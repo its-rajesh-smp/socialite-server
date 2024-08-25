@@ -16,6 +16,7 @@ export class PracticeSetService {
   async findAll(condition = {}) {
     return await this.prisma.practiceSet.findMany({
       where: condition,
+      include: { user: true },
     });
   }
 
