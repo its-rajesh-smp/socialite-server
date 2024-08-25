@@ -28,6 +28,7 @@ export class PracticeSetService {
   async findOne(condition, options = {}) {
     return await this.prisma.practiceSet.findFirst({
       where: condition,
+      include: { user: true },
       ...options,
     });
   }

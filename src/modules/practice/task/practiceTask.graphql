@@ -18,6 +18,7 @@ input UpdatePracticeTaskInput {
 # Types
 type PracticeTask {
   id: String
+  index: String
   practiceSetId: String
   title: String
   link: String

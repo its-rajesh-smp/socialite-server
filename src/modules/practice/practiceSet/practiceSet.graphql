@@ -19,7 +19,7 @@ type PracticeSet {
 type Query {
   getAllPracticeSets: [PracticeSet]
   getMyPracticeSets: [PracticeSet]
-  getAPracticeSet: PracticeSet
+  getAPracticeSet(id: String): PracticeSet
 }
 
 # Mutations
