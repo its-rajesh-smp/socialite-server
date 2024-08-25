@@ -1,0 +1,13 @@
+# Types
+type UserPracticeSet {
+  id: String
+  practiceSetId: String
+  userId: String
+}
+
+# Queries
+
+# Mutations
+type Mutation {
+  forkPracticeSet(practiceSetId: String): UserPracticeSet
+}
