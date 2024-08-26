@@ -31,6 +31,7 @@ type PracticeTask {
 # Queries
 type Query {
   getAllPracticeTasks(practiceSetId: String): [PracticeTask]
+  getAPracticeTask(id: String): PracticeTask
 }
 
 # Mutations

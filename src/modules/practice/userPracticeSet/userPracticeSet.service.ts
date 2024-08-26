@@ -24,9 +24,31 @@ export class UserPracticeSetService {
    * @param data
    * @returns
    */
-  async create(usePracticeSetData) {
+  async create(practiceSetData) {
     return await this.prisma.userPracticeSet.create({
-      data: usePracticeSetData,
+      data: practiceSetData,
     });
+  }
+
+  /**
+   * Function to get or create a user practice set
+   * @param condition
+   * @param data
+   * @returns
+   */
+  async findOneOrCreate(condition, practiceSetData) {
+    let userPracticeSet;
+
+    // check if user practice set exists
+    userPracticeSet = await this.prisma.userPracticeSet.findFirst({
+      where: condition,
+    });
+
+    // if not exists, create
+    if (!userPracticeSet) {
+      userPracticeSet = await this.create(practiceSetData);
+    }
+
+    return userPracticeSet;
   }
 }

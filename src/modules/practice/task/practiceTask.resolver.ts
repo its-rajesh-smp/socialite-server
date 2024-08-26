@@ -36,6 +36,20 @@ export class PracticeTaskResolver {
   }
 
   /**
+   * function to get a practice task of a practice set
+   * @param req
+   * @returns
+   */
+  @Query('getAPracticeTask')
+  @UseGuards(AuthGuard)
+  async getAPracticeTask(@Args('id') id: string) {
+    return await this.practiceTaskService.findOne({
+      id,
+      status: status.LIVE,
+    });
+  }
+
+  /**
    * function to create practice task
    * @param req
    * @param data

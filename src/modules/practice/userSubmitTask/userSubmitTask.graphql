@@ -1,0 +1,28 @@
+# inputs
+input UserSubmitTaskInput {
+  practiceTaskId: String
+  userResponse: String
+  submittedAt: String
+}
+
+# types
+type UserSubmitTask {
+  id: String
+  userId: String
+  practiceSetId: String
+  practiceSetTaskId: String
+  userPracticeSetId: String
+  userResponse: String
+  submittedAt: String
+  user: User
+  practiceSet: PracticeSet
+  userPracticeSet: UserPracticeSet
+  practiceTask: PracticeTask
+}
+
+# queries
+
+# mutations
+type Mutation {
+  submitUserTask(submitTaskData: UserSubmitTaskInput): UserSubmitTask
+}

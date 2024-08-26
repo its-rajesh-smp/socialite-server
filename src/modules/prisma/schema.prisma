@@ -178,7 +178,7 @@ model UserSubmitTask {
     id String @id @default(cuid())
     userId String
     practiceSetId String 
-    practiceSetTaskId String
+    practiceTaskId String
     userPracticeSetId String
     userResponse Json
     
@@ -188,6 +188,6 @@ model UserSubmitTask {
     
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
     practiceSet PracticeSet @relation(fields: [practiceSetId], references: [id], onDelete: Cascade)
-    practiceTask PracticeTask @relation(fields: [practiceSetTaskId], references: [id], onDelete: Cascade)
+    practiceTask PracticeTask @relation(fields: [practiceTaskId], references: [id], onDelete: Cascade)
     userPracticeSet UserPracticeSet @relation(fields: [userPracticeSetId], references: [id], onDelete: Cascade)
 }
