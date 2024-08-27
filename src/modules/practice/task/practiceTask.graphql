@@ -26,6 +26,7 @@ type PracticeTask {
   visibility: String
   createdAt: String
   updatedAt: String
+  submittedAt: String
 }
 
 # Queries

@@ -13,6 +13,7 @@ type PracticeSet {
   createdAt: String
   updatedAt: String
   user: User
+  isCurrentUserForked: Boolean
 }
 
 # Queries

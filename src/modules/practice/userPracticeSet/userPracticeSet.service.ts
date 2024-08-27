@@ -9,7 +9,18 @@ export class UserPracticeSetService {
   constructor(private prisma: PrismaService) {}
 
   /**
-   * Function to get user practice set
+   * Function to get user practice sets
+   * @param condition
+   * @returns
+   */
+  async findMany(condition) {
+    return await this.prisma.userPracticeSet.findMany({
+      where: condition,
+    });
+  }
+
+  /**
+   * Function to get an user practice set
    * @param condition
    * @returns
    */

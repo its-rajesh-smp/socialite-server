@@ -13,9 +13,10 @@ export class UserSubmitTaskService {
    * @param condition
    * @returns
    */
-  async findOne(condition) {
+  async findOne(condition, options = {}) {
     return await this.prisma.userSubmitTask.findFirst({
       where: condition,
+      ...options,
     });
   }
 

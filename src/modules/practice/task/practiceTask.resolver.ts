@@ -5,6 +5,7 @@ import { User } from 'src/common/decorators/user.decorator';
 import IUser from 'src/common/types/user';
 import { AuthGuard } from 'src/modules/auth/guards/auth.guard';
 import { PracticeSetService } from '../practiceSet/practiceSet.service';
+import { UserSubmitTaskService } from '../userSubmitTask/userSubmitTask.service';
 import {
   CreatePracticeTaskDto,
   UpdatePracticeTaskDto,
@@ -19,6 +20,7 @@ export class PracticeTaskResolver {
   constructor(
     private readonly practiceTaskService: PracticeTaskService,
     private readonly practiceSetService: PracticeSetService,
+    private readonly userSubmitTaskService: UserSubmitTaskService,
   ) {}
 
   /**
@@ -28,10 +30,46 @@ export class PracticeTaskResolver {
    */
   @Query('getAllPracticeTasks')
   @UseGuards(AuthGuard)
-  async getAllPracticeTasks(@Args('practiceSetId') practiceSetId: string) {
-    return await this.practiceTaskService.findAll({
+  async getAllPracticeTasks(
+    @Args('practiceSetId') practiceSetId: string,
+    @User() user: IUser,
+  ) {
+    // Getting all practice tasks
+    const allPracticeTasks = await this.practiceTaskService.findAll({
       practiceSetId,
       status: status.LIVE,
+    });
+
+    // Extracting practiceTask Ids
+    const practiceTaskIds = allPracticeTasks.map((set) => set.id);
+    const promises = [];
+
+    // For each practiceTask getting the userSubmitTask
+    practiceTaskIds.forEach((taskId) => {
+      promises.push(
+        this.userSubmitTaskService.findOne(
+          {
+            practiceTaskId: taskId,
+            userId: user.id,
+          },
+          {
+            orderBy: {
+              submittedAt: 'desc',
+            },
+          },
+        ),
+      );
+    });
+
+    const practiceTasks = await Promise.all(promises);
+
+    // Mapping practiceTask with userSubmitTask
+    // If user has submitted the practiceTask then isCurrentUserSubmitted will be the submittedAt date
+    return allPracticeTasks.map((set, index) => {
+      return {
+        ...set,
+        submittedAt: practiceTasks[index]?.submittedAt,
+      };
     });
   }
 
@@ -42,11 +80,31 @@ export class PracticeTaskResolver {
    */
   @Query('getAPracticeTask')
   @UseGuards(AuthGuard)
-  async getAPracticeTask(@Args('id') id: string) {
-    return await this.practiceTaskService.findOne({
-      id,
-      status: status.LIVE,
-    });
+  async getAPracticeTask(@Args('id') id: string, @User() user: IUser) {
+    // Getting practice task and user submit task
+    const [practiceTask, userSubmitTask] = await Promise.all([
+      await this.practiceTaskService.findOne({
+        id,
+        status: status.LIVE,
+      }),
+      await this.userSubmitTaskService.findOne(
+        {
+          practiceTaskId: id,
+          userId: user.id,
+        },
+        {
+          orderBy: {
+            submittedAt: 'desc',
+          },
+        },
+      ),
+    ]);
+
+    // If user has submitted the practice task then isCurrentUserSubmitted will be the submittedAt date
+    return {
+      ...practiceTask,
+      submittedAt: userSubmitTask?.submittedAt,
+    };
   }
 
   /**
