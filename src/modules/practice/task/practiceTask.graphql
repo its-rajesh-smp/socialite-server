@@ -5,14 +5,15 @@ input CreatePracticeTaskInput {
   link: String
   description: String
   visibility: String
+  taskType: String
 }
 
 input UpdatePracticeTaskInput {
   id: String
   title: String
-  link: String
   description: String
   visibility: String
+  taskType: String
 }
 
 # Types
@@ -21,8 +22,8 @@ type PracticeTask {
   index: String
   practiceSetId: String
   title: String
-  link: String
   description: String
+  taskType: String
   visibility: String
   createdAt: String
   updatedAt: String

@@ -26,7 +26,6 @@ export class UserSubmitTaskService {
    * @returns
    */
   async create(submitTaskData) {
-    console.log(submitTaskData);
     return await this.prisma.userSubmitTask.create({
       data: submitTaskData,
     });

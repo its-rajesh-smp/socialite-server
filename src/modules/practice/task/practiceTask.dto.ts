@@ -10,6 +10,9 @@ export class CreatePracticeTaskDto {
   @IsNotEmpty()
   title: string;
 
+  @IsNotEmpty()
+  taskType: string;
+
   description: string;
 
   visibility: string;
@@ -26,7 +29,7 @@ export class UpdatePracticeTaskDto {
 
   description: string;
 
-  link: string;
-
   visibility: string;
+
+  taskType: string;
 }
