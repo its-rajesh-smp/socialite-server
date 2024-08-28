@@ -155,10 +155,13 @@ export class PracticeTaskResolver {
     const practiceTask = await this.practiceTaskService.findOne({
       id,
     });
+
     // check if practice task belongs to user
     if (practiceTask?.userId !== user.id) {
       throw new Error('You are not authorized to update this practice task');
     }
+
+    console.log(practiceTaskData);
 
     return await this.practiceTaskService.updateOne({ id }, practiceTaskData);
   }

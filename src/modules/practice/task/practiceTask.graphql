@@ -28,6 +28,7 @@ type PracticeTask {
   createdAt: String
   updatedAt: String
   submittedAt: String
+  user: User
 }
 
 # Queries

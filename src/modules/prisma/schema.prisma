@@ -117,7 +117,7 @@ model PracticeSet {
     userId String
 
     title String
-    description Json
+    description Json?
     visibility Visibility
     status Status @default(LIVE)
     enrollmentCount Int @default(0)
@@ -152,7 +152,7 @@ model PracticeTask {
     practiceSetId String
 
     title String
-    description Json
+    description Json?
     visibility Visibility
     completionCount Int @default(0)
     status Status  @default(LIVE)
@@ -172,7 +172,7 @@ model UserTaskMetadata {
     userId String
     practiceTaskId String
 
-    note Json
+    note Json?
     isBookmarked Boolean @default(false)
     isIgnored Boolean @default(false)
 

@@ -16,6 +16,7 @@ export class PracticeTaskService {
   async findAll(condition = {}) {
     return await this.prisma.practiceTask.findMany({
       where: condition,
+      include: { user: true },
     });
   }
 
@@ -27,6 +28,7 @@ export class PracticeTaskService {
   async findOne(condition) {
     return await this.prisma.practiceTask.findFirst({
       where: condition,
+      include: { user: true },
     });
   }
 
