@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "npx prisma db push && npx prisma generate && next build",
+    "build": "npx prisma generate --schema=./src/modules/prisma/schema.prisma && next build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "dev": "nodemon --exec ts-node -r tsconfig-paths/register src/main.ts",
