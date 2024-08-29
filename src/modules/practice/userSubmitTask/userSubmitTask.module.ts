@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from 'src/modules/auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { PracticeTaskService } from '../task/practiceTask.service';
 import { UserPracticeSetService } from '../userPracticeSet/userPracticeSet.service';
 import { UserSubmitTaskResolver } from './userSubmitTask.resolver';

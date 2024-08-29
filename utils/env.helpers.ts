@@ -1,4 +1,4 @@
-import envConstant from 'constants/env.const';
+import envConstant from '../constants/env.const';
 
 type EnvValue = string | number;
 

@@ -1,9 +1,9 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { status } from 'constants/common.const';
-import { User } from 'src/common/decorators/user.decorator';
-import IUser from 'src/common/types/user';
-import { AuthGuard } from 'src/modules/auth/guards/auth.guard';
+import { status } from '../../../common/constants/common';
+import { User } from '../../../common/decorators/user.decorator';
+import IUser from '../../../common/types/user';
+import { AuthGuard } from '../../auth/guards/auth.guard';
 import { UserPracticeSetService } from '../userPracticeSet/userPracticeSet.service';
 import { CreatePracticeSetDto } from './practiceSet.dto';
 import { PracticeSetService } from './practiceSet.service';

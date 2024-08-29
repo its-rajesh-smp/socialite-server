@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ReactionResolver } from './reaction.resolver';
 import { ReactionService } from './reaction.service';
-import { AuthService } from 'src/modules/auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { PostService } from '../post/post.service';
 
 @Module({

@@ -1,10 +1,10 @@
 import { Inject, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver, Subscription } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
-import { OperationTypes } from 'src/common/constants/common';
-import { User } from 'src/common/decorators/user.decorator';
-import IUser from 'src/common/types/user';
-import { AuthGuard } from 'src/modules/auth/guards/auth.guard';
+import { OperationTypes } from '../../../common/constants/common';
+import { User } from '../../../common/decorators/user.decorator';
+import IUser from '../../../common/types/user';
+import { AuthGuard } from '../../auth/guards/auth.guard';
 import { PostService } from '../post/post.service';
 import { ReactPostDto } from './reaction.dto';
 import { ReactionService } from './reaction.service';

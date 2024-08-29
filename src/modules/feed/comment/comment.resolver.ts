@@ -1,9 +1,9 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver, Subscription } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
-import { User } from 'src/common/decorators/user.decorator';
-import IUser from 'src/common/types/user';
-import { AuthGuard } from 'src/modules/auth/guards/auth.guard';
+import { User } from '../../../common/decorators/user.decorator';
+import IUser from '../../../common/types/user';
+import { AuthGuard } from '../../auth/guards/auth.guard';
 import { PostService } from '../post/post.service';
 import { CreateCommentDto } from './comment.dto';
 import { CommentService } from './comment.service';

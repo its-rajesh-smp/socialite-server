@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
+import { AuthService } from '../../auth/auth.service';
 import { PracticeSetService } from '../practiceSet/practiceSet.service';
 import { UserPracticeSetResolver } from './userPracticeSet.resolver';
 import { UserPracticeSetService } from './userPracticeSet.service';
-import { AuthService } from 'src/modules/auth/auth.service';
 
 @Module({
   imports: [],
