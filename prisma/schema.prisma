@@ -1,6 +1,5 @@
 datasource db {
-      url = "postgres://default:MocUZ7Ch3ruF@ep-noisy-sky-a16sbttg-pooler.ap-southeast-1.aws.neon.tech:5432/verceldb?sslmode=require&pgbouncer=true&connect_timeout=15" // uses connection pooling
-    directUrl = "postgres://default:MocUZ7Ch3ruF@ep-noisy-sky-a16sbttg.ap-southeast-1.aws.neon.tech:5432/verceldb?sslmode=require" // uses a direct connection
+    url = env("DATABASE_URL") 
     provider = "postgresql"
 }
 
