@@ -1,12 +1,12 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import getEnv from '../utils/env.helpers';
+import getEnv from './utils/env.helpers';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: '*',
+    origin: 'https://socialite-client-rho.vercel.app',
   });
   app.useGlobalPipes(new ValidationPipe());
   const appPort = getEnv('PORT') || 3000;
