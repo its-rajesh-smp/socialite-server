@@ -7,6 +7,7 @@ import IUser from '../../common/types/user';
 import { LoginUserDto, RegisterUserDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './guards/auth.guard';
+import getEnv from 'src/utils/env.helpers';
 
 /**
  * Resolver for user
@@ -71,7 +72,7 @@ export class AuthorsResolver {
     // Hashing password
     const hashedPassword = await hash(
       userData.password,
-      Number(process.env.SALT_ROUNDS),
+      Number(getEnv('SALT_ROUNDS')),
     );
 
     // Creating user
