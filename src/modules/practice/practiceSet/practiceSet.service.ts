@@ -13,10 +13,10 @@ export class PracticeSetService {
    * @param condition
    * @returns
    */
-  async findAll(condition = {}) {
+  async findAll(condition = {}, options = {}) {
     return await this.prisma.practiceSet.findMany({
       where: condition,
-      include: { user: true },
+      ...options,
     });
   }
 
@@ -28,7 +28,6 @@ export class PracticeSetService {
   async findOne(condition, options = {}) {
     return await this.prisma.practiceSet.findFirst({
       where: condition,
-      include: { user: true },
       ...options,
     });
   }

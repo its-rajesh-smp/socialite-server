@@ -26,32 +26,29 @@ export class PracticeSetResolver {
   @UseGuards(AuthGuard)
   @Query('getAllPracticeSets')
   async getAllPracticeSets(@User() user: IUser) {
-    const allPracticeSets = await this.practiceSetsService.findAll({
-      status: status.LIVE,
-    });
-
-    // Extracting practiceSet Ids
-    const practiceSetIds = allPracticeSets.map((set) => set.id);
-    const promises = [];
-
-    // For each practiceSet getting the userPracticeSet
-    practiceSetIds.forEach((setId) => {
-      promises.push(
-        this.userPracticeSetService.findOne({
-          practiceSetId: setId,
-          userId: user.id,
-        }),
-      );
-    });
-
-    const practiceSets = await Promise.all(promises);
+    const allPracticeSets = await this.practiceSetsService.findAll(
+      {
+        status: status.LIVE,
+      },
+      {
+        include: {
+          userPracticeSets: {
+            where: {
+              userId: user.id,
+            },
+          },
+          user: true,
+        },
+      },
+    );
 
     // Mapping practiceSet with userPracticeSet
     // If user has forked the practiceSet then isCurrentUserForked will be true
-    return allPracticeSets.map((set, index) => {
+    return allPracticeSets.map((set: any) => {
+      const isCurrentUserForked = set.userPracticeSets.length > 0;
       return {
         ...set,
-        isCurrentUserForked: practiceSets[index] ? true : false,
+        isCurrentUserForked,
       };
     });
   }
@@ -65,17 +62,63 @@ export class PracticeSetResolver {
   @UseGuards(AuthGuard)
   @Query('getMyPracticeSets')
   async getMyPracticeSets(@User() user: IUser) {
-    const allPracticeSetsOfUser = await this.practiceSetsService.findAll({
-      userId: user.id,
-      status: status.LIVE,
-    });
+    const allPracticeSetsOfUser = await this.practiceSetsService.findAll(
+      {
+        userId: user.id,
+        status: status.LIVE,
+      },
+      {
+        include: {
+          userPracticeSets: {
+            where: {
+              userId: user.id,
+            },
+          },
+          user: true,
+        },
+      },
+    );
 
-    return allPracticeSetsOfUser.map((set) => {
+    return allPracticeSetsOfUser.map((set: any) => {
+      return {
+        ...set,
+        isCurrentUserForked: set.userPracticeSets.length > 0,
+      };
+    });
+  }
+
+  /**
+   * function to get all forked practice sets of a user
+   * @param user
+   * @returns
+   */
+  @UseGuards(AuthGuard)
+  @Query('getMyForkedPracticeSets')
+  async getMyForkedPracticeSets(@User() user: IUser) {
+    const allPracticeSetsOfUser = await this.practiceSetsService.findAll(
+      {
+        status: status.LIVE,
+        userPracticeSets: {
+          some: {
+            userId: user.id,
+          },
+        },
+      },
+      {
+        include: {
+          user: true,
+        },
+      },
+    );
+
+    const response = allPracticeSetsOfUser.map((set) => {
       return {
         ...set,
         isCurrentUserForked: true,
       };
     });
+
+    return response;
   }
 
   /**
@@ -87,17 +130,26 @@ export class PracticeSetResolver {
   @UseGuards(AuthGuard)
   @Query('getAPracticeSet')
   async getAPracticeSet(@Args('id') id: string, @User() user: IUser) {
-    const [practiceSet, userPracticeSet] = await Promise.all([
-      await this.practiceSetsService.findOne({ id, status: status.LIVE }),
-      await this.userPracticeSetService.findOne({
-        practiceSetId: id,
-        userId: user.id,
-      }),
-    ]);
+    const practiceSet: any = await this.practiceSetsService.findOne(
+      {
+        status: status.LIVE,
+        id,
+      },
+      {
+        include: {
+          userPracticeSets: {
+            where: {
+              userId: user.id,
+            },
+          },
+          user: true,
+        },
+      },
+    );
 
     return {
       ...practiceSet,
-      isCurrentUserForked: userPracticeSet ? true : false,
+      isCurrentUserForked: practiceSet.userPracticeSets.length > 0,
     };
   }
 
