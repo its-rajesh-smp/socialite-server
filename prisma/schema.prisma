@@ -177,6 +177,8 @@ model UserTaskMetadata {
     isBookmarked Boolean @default(false)
     isIgnored Boolean @default(false)
 
+    submissionCount Int @default(0)    
+
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
     practiceTask PracticeTask @relation(fields: [practiceTaskId], references: [id], onDelete: Cascade)
 }

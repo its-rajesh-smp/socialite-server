@@ -210,7 +210,8 @@ exports.Prisma.UserTaskMetadataScalarFieldEnum = {
   practiceTaskId: 'practiceTaskId',
   note: 'note',
   isBookmarked: 'isBookmarked',
-  isIgnored: 'isIgnored'
+  isIgnored: 'isIgnored',
+  submissionCount: 'submissionCount'
 };
 
 exports.Prisma.UserSubmitTaskScalarFieldEnum = {

@@ -10448,8 +10448,18 @@ export namespace Prisma {
 
   export type AggregateUserTaskMetadata = {
     _count: UserTaskMetadataCountAggregateOutputType | null
+    _avg: UserTaskMetadataAvgAggregateOutputType | null
+    _sum: UserTaskMetadataSumAggregateOutputType | null
     _min: UserTaskMetadataMinAggregateOutputType | null
     _max: UserTaskMetadataMaxAggregateOutputType | null
+  }
+
+  export type UserTaskMetadataAvgAggregateOutputType = {
+    submissionCount: number | null
+  }
+
+  export type UserTaskMetadataSumAggregateOutputType = {
+    submissionCount: number | null
   }
 
   export type UserTaskMetadataMinAggregateOutputType = {
@@ -10458,6 +10468,7 @@ export namespace Prisma {
     practiceTaskId: string | null
     isBookmarked: boolean | null
     isIgnored: boolean | null
+    submissionCount: number | null
   }
 
   export type UserTaskMetadataMaxAggregateOutputType = {
@@ -10466,6 +10477,7 @@ export namespace Prisma {
     practiceTaskId: string | null
     isBookmarked: boolean | null
     isIgnored: boolean | null
+    submissionCount: number | null
   }
 
   export type UserTaskMetadataCountAggregateOutputType = {
@@ -10475,9 +10487,18 @@ export namespace Prisma {
     note: number
     isBookmarked: number
     isIgnored: number
+    submissionCount: number
     _all: number
   }
 
+
+  export type UserTaskMetadataAvgAggregateInputType = {
+    submissionCount?: true
+  }
+
+  export type UserTaskMetadataSumAggregateInputType = {
+    submissionCount?: true
+  }
 
   export type UserTaskMetadataMinAggregateInputType = {
     id?: true
@@ -10485,6 +10506,7 @@ export namespace Prisma {
     practiceTaskId?: true
     isBookmarked?: true
     isIgnored?: true
+    submissionCount?: true
   }
 
   export type UserTaskMetadataMaxAggregateInputType = {
@@ -10493,6 +10515,7 @@ export namespace Prisma {
     practiceTaskId?: true
     isBookmarked?: true
     isIgnored?: true
+    submissionCount?: true
   }
 
   export type UserTaskMetadataCountAggregateInputType = {
@@ -10502,6 +10525,7 @@ export namespace Prisma {
     note?: true
     isBookmarked?: true
     isIgnored?: true
+    submissionCount?: true
     _all?: true
   }
 
@@ -10543,6 +10567,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: UserTaskMetadataAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserTaskMetadataSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserTaskMetadataMinAggregateInputType
@@ -10573,6 +10609,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserTaskMetadataCountAggregateInputType | true
+    _avg?: UserTaskMetadataAvgAggregateInputType
+    _sum?: UserTaskMetadataSumAggregateInputType
     _min?: UserTaskMetadataMinAggregateInputType
     _max?: UserTaskMetadataMaxAggregateInputType
   }
@@ -10584,7 +10622,10 @@ export namespace Prisma {
     note: JsonValue | null
     isBookmarked: boolean
     isIgnored: boolean
+    submissionCount: number
     _count: UserTaskMetadataCountAggregateOutputType | null
+    _avg: UserTaskMetadataAvgAggregateOutputType | null
+    _sum: UserTaskMetadataSumAggregateOutputType | null
     _min: UserTaskMetadataMinAggregateOutputType | null
     _max: UserTaskMetadataMaxAggregateOutputType | null
   }
@@ -10610,6 +10651,7 @@ export namespace Prisma {
     note?: boolean
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     practiceTask?: boolean | PracticeTaskDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userTaskMetadata"]>
@@ -10621,6 +10663,7 @@ export namespace Prisma {
     note?: boolean
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     practiceTask?: boolean | PracticeTaskDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userTaskMetadata"]>
@@ -10632,6 +10675,7 @@ export namespace Prisma {
     note?: boolean
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: boolean
   }
 
   export type UserTaskMetadataInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10656,6 +10700,7 @@ export namespace Prisma {
       note: Prisma.JsonValue | null
       isBookmarked: boolean
       isIgnored: boolean
+      submissionCount: number
     }, ExtArgs["result"]["userTaskMetadata"]>
     composites: {}
   }
@@ -11084,6 +11129,7 @@ export namespace Prisma {
     readonly note: FieldRef<"UserTaskMetadata", 'Json'>
     readonly isBookmarked: FieldRef<"UserTaskMetadata", 'Boolean'>
     readonly isIgnored: FieldRef<"UserTaskMetadata", 'Boolean'>
+    readonly submissionCount: FieldRef<"UserTaskMetadata", 'Int'>
   }
     
 
@@ -12569,7 +12615,8 @@ export namespace Prisma {
     practiceTaskId: 'practiceTaskId',
     note: 'note',
     isBookmarked: 'isBookmarked',
-    isIgnored: 'isIgnored'
+    isIgnored: 'isIgnored',
+    submissionCount: 'submissionCount'
   };
 
   export type UserTaskMetadataScalarFieldEnum = (typeof UserTaskMetadataScalarFieldEnum)[keyof typeof UserTaskMetadataScalarFieldEnum]
@@ -13393,6 +13440,7 @@ export namespace Prisma {
     note?: JsonNullableFilter<"UserTaskMetadata">
     isBookmarked?: BoolFilter<"UserTaskMetadata"> | boolean
     isIgnored?: BoolFilter<"UserTaskMetadata"> | boolean
+    submissionCount?: IntFilter<"UserTaskMetadata"> | number
     user?: XOR<UserRelationFilter, UserWhereInput>
     practiceTask?: XOR<PracticeTaskRelationFilter, PracticeTaskWhereInput>
   }
@@ -13404,6 +13452,7 @@ export namespace Prisma {
     note?: SortOrderInput | SortOrder
     isBookmarked?: SortOrder
     isIgnored?: SortOrder
+    submissionCount?: SortOrder
     user?: UserOrderByWithRelationInput
     practiceTask?: PracticeTaskOrderByWithRelationInput
   }
@@ -13418,6 +13467,7 @@ export namespace Prisma {
     note?: JsonNullableFilter<"UserTaskMetadata">
     isBookmarked?: BoolFilter<"UserTaskMetadata"> | boolean
     isIgnored?: BoolFilter<"UserTaskMetadata"> | boolean
+    submissionCount?: IntFilter<"UserTaskMetadata"> | number
     user?: XOR<UserRelationFilter, UserWhereInput>
     practiceTask?: XOR<PracticeTaskRelationFilter, PracticeTaskWhereInput>
   }, "id">
@@ -13429,9 +13479,12 @@ export namespace Prisma {
     note?: SortOrderInput | SortOrder
     isBookmarked?: SortOrder
     isIgnored?: SortOrder
+    submissionCount?: SortOrder
     _count?: UserTaskMetadataCountOrderByAggregateInput
+    _avg?: UserTaskMetadataAvgOrderByAggregateInput
     _max?: UserTaskMetadataMaxOrderByAggregateInput
     _min?: UserTaskMetadataMinOrderByAggregateInput
+    _sum?: UserTaskMetadataSumOrderByAggregateInput
   }
 
   export type UserTaskMetadataScalarWhereWithAggregatesInput = {
@@ -13444,6 +13497,7 @@ export namespace Prisma {
     note?: JsonNullableWithAggregatesFilter<"UserTaskMetadata">
     isBookmarked?: BoolWithAggregatesFilter<"UserTaskMetadata"> | boolean
     isIgnored?: BoolWithAggregatesFilter<"UserTaskMetadata"> | boolean
+    submissionCount?: IntWithAggregatesFilter<"UserTaskMetadata"> | number
   }
 
   export type UserSubmitTaskWhereInput = {
@@ -14187,6 +14241,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: number
     user: UserCreateNestedOneWithoutUserTaskMetadatasInput
     practiceTask: PracticeTaskCreateNestedOneWithoutUserTaskMetadatasInput
   }
@@ -14198,6 +14253,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: number
   }
 
   export type UserTaskMetadataUpdateInput = {
@@ -14205,6 +14261,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: BoolFieldUpdateOperationsInput | boolean
     isIgnored?: BoolFieldUpdateOperationsInput | boolean
+    submissionCount?: IntFieldUpdateOperationsInput | number
     user?: UserUpdateOneRequiredWithoutUserTaskMetadatasNestedInput
     practiceTask?: PracticeTaskUpdateOneRequiredWithoutUserTaskMetadatasNestedInput
   }
@@ -14216,6 +14273,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: BoolFieldUpdateOperationsInput | boolean
     isIgnored?: BoolFieldUpdateOperationsInput | boolean
+    submissionCount?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserTaskMetadataCreateManyInput = {
@@ -14225,6 +14283,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: number
   }
 
   export type UserTaskMetadataUpdateManyMutationInput = {
@@ -14232,6 +14291,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: BoolFieldUpdateOperationsInput | boolean
     isIgnored?: BoolFieldUpdateOperationsInput | boolean
+    submissionCount?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserTaskMetadataUncheckedUpdateManyInput = {
@@ -14241,6 +14301,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: BoolFieldUpdateOperationsInput | boolean
     isIgnored?: BoolFieldUpdateOperationsInput | boolean
+    submissionCount?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserSubmitTaskCreateInput = {
@@ -15007,6 +15068,11 @@ export namespace Prisma {
     note?: SortOrder
     isBookmarked?: SortOrder
     isIgnored?: SortOrder
+    submissionCount?: SortOrder
+  }
+
+  export type UserTaskMetadataAvgOrderByAggregateInput = {
+    submissionCount?: SortOrder
   }
 
   export type UserTaskMetadataMaxOrderByAggregateInput = {
@@ -15015,6 +15081,7 @@ export namespace Prisma {
     practiceTaskId?: SortOrder
     isBookmarked?: SortOrder
     isIgnored?: SortOrder
+    submissionCount?: SortOrder
   }
 
   export type UserTaskMetadataMinOrderByAggregateInput = {
@@ -15023,6 +15090,11 @@ export namespace Prisma {
     practiceTaskId?: SortOrder
     isBookmarked?: SortOrder
     isIgnored?: SortOrder
+    submissionCount?: SortOrder
+  }
+
+  export type UserTaskMetadataSumOrderByAggregateInput = {
+    submissionCount?: SortOrder
   }
 
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -16586,6 +16658,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: number
     practiceTask: PracticeTaskCreateNestedOneWithoutUserTaskMetadatasInput
   }
 
@@ -16595,6 +16668,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: number
   }
 
   export type UserTaskMetadataCreateOrConnectWithoutUserInput = {
@@ -16873,6 +16947,7 @@ export namespace Prisma {
     note?: JsonNullableFilter<"UserTaskMetadata">
     isBookmarked?: BoolFilter<"UserTaskMetadata"> | boolean
     isIgnored?: BoolFilter<"UserTaskMetadata"> | boolean
+    submissionCount?: IntFilter<"UserTaskMetadata"> | number
   }
 
   export type UserCreateWithoutUserStatusesInput = {
@@ -17980,6 +18055,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: number
     user: UserCreateNestedOneWithoutUserTaskMetadatasInput
   }
 
@@ -17989,6 +18065,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: number
   }
 
   export type UserTaskMetadataCreateOrConnectWithoutPracticeTaskInput = {
@@ -18659,6 +18736,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: number
   }
 
   export type PostUpdateWithoutUserInput = {
@@ -18922,6 +19000,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: BoolFieldUpdateOperationsInput | boolean
     isIgnored?: BoolFieldUpdateOperationsInput | boolean
+    submissionCount?: IntFieldUpdateOperationsInput | number
     practiceTask?: PracticeTaskUpdateOneRequiredWithoutUserTaskMetadatasNestedInput
   }
 
@@ -18931,6 +19010,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: BoolFieldUpdateOperationsInput | boolean
     isIgnored?: BoolFieldUpdateOperationsInput | boolean
+    submissionCount?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserTaskMetadataUncheckedUpdateManyWithoutUserInput = {
@@ -18939,6 +19019,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: BoolFieldUpdateOperationsInput | boolean
     isIgnored?: BoolFieldUpdateOperationsInput | boolean
+    submissionCount?: IntFieldUpdateOperationsInput | number
   }
 
   export type ReactionCreateManyPostInput = {
@@ -19200,6 +19281,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: number
   }
 
   export type UserSubmitTaskUpdateWithoutPracticeTaskInput = {
@@ -19240,6 +19322,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: BoolFieldUpdateOperationsInput | boolean
     isIgnored?: BoolFieldUpdateOperationsInput | boolean
+    submissionCount?: IntFieldUpdateOperationsInput | number
     user?: UserUpdateOneRequiredWithoutUserTaskMetadatasNestedInput
   }
 
@@ -19249,6 +19332,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: BoolFieldUpdateOperationsInput | boolean
     isIgnored?: BoolFieldUpdateOperationsInput | boolean
+    submissionCount?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserTaskMetadataUncheckedUpdateManyWithoutPracticeTaskInput = {
@@ -19257,6 +19341,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: BoolFieldUpdateOperationsInput | boolean
     isIgnored?: BoolFieldUpdateOperationsInput | boolean
+    submissionCount?: IntFieldUpdateOperationsInput | number
   }
 
 

@@ -1,0 +1,10 @@
+# types
+type UserTaskMetadata {
+  id: String
+  user: User
+  practiceTaskId: String
+  note: String
+  isBookmarked: Boolean
+  isIgnored: Boolean
+  isRevisionRequired: Boolean
+}
