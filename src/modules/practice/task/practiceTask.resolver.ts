@@ -35,42 +35,37 @@ export class PracticeTaskResolver {
     @User() user: IUser,
   ) {
     // Getting all practice tasks
-    const allPracticeTasks = await this.practiceTaskService.findAll({
-      practiceSetId,
-      status: status.LIVE,
-    });
-
-    // Extracting practiceTask Ids
-    const practiceTaskIds = allPracticeTasks.map((set) => set.id);
-    const promises = [];
-
-    // For each practiceTask getting the userSubmitTask
-    practiceTaskIds.forEach((taskId) => {
-      promises.push(
-        this.userSubmitTaskService.findOne(
-          {
-            practiceTaskId: taskId,
-            userId: user.id,
+    const allPracticeTasks = await this.practiceTaskService.findAll(
+      {
+        practiceSetId,
+        status: status.LIVE,
+      },
+      {
+        include: {
+          user: true,
+          userSubmitTasks: {
+            where: { userId: user.id },
+            take: 1,
+            orderBy: { createdAt: 'desc' },
           },
-          {
-            orderBy: {
-              submittedAt: 'desc',
-            },
+          userTaskMetadatas: {
+            where: { userId: user.id },
           },
-        ),
-      );
-    });
-
-    const practiceTasks = await Promise.all(promises);
+        },
+      },
+    );
 
     // Mapping practiceTask with userSubmitTask
     // If user has submitted the practiceTask then isCurrentUserSubmitted will be the submittedAt date
-    return allPracticeTasks.map((set, index) => {
+    let data = allPracticeTasks.map((set: any) => {
       return {
         ...set,
-        submittedAt: practiceTasks[index]?.submittedAt,
+        submittedAt: set?.userSubmitTasks?.[0]?.submittedAt,
+        userTaskMetadata: set?.userTaskMetadatas?.[0],
       };
     });
+
+    return data;
   }
 
   /**

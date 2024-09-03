@@ -7,4 +7,5 @@ type UserTaskMetadata {
   isBookmarked: Boolean
   isIgnored: Boolean
   isRevisionRequired: Boolean
+  submissionCount: Int
 }
