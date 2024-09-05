@@ -1,0 +1,21 @@
+# inputs
+input TaskTagInput {
+  name: String
+}
+
+# types
+type TaskTag {
+  id: String
+  name: String
+}
+
+# Queries
+type Query {
+  getTags: [TaskTag]
+}
+
+# Mutations
+type Mutation {
+  createATaskTag(tagData: TaskTagInput): TaskTag
+  deleteATaskTag(id: String): String
+}

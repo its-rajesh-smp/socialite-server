@@ -5,6 +5,7 @@ import { PracticeSetService } from '../practiceSet/practiceSet.service';
 import { UserSubmitTaskService } from '../userSubmitTask/userSubmitTask.service';
 import { PracticeTaskResolver } from './practiceTask.resolver';
 import { PracticeTaskService } from './practiceTask.service';
+import { TaskTagService } from '../taskTag/taskTag.service';
 
 @Module({
   imports: [],
@@ -15,6 +16,7 @@ import { PracticeTaskService } from './practiceTask.service';
     PracticeTaskResolver,
     PracticeSetService,
     UserSubmitTaskService,
+    TaskTagService,
   ],
   exports: [],
 })

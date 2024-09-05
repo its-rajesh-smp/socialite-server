@@ -214,6 +214,12 @@ exports.Prisma.UserTaskMetadataScalarFieldEnum = {
   submissionCount: 'submissionCount'
 };
 
+exports.Prisma.TaskTagScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name'
+};
+
 exports.Prisma.UserSubmitTaskScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -287,6 +293,7 @@ exports.Prisma.ModelName = {
   UserPracticeSet: 'UserPracticeSet',
   PracticeTask: 'PracticeTask',
   UserTaskMetadata: 'UserTaskMetadata',
+  TaskTag: 'TaskTag',
   UserSubmitTask: 'UserSubmitTask'
 };
 

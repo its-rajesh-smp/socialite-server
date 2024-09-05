@@ -5,6 +5,7 @@ import { User } from '../../../common/decorators/user.decorator';
 import IUser from '../../../common/types/user';
 import { AuthGuard } from '../../auth/guards/auth.guard';
 import { PracticeSetService } from '../practiceSet/practiceSet.service';
+import { TaskTagService } from '../taskTag/taskTag.service';
 import { UserSubmitTaskService } from '../userSubmitTask/userSubmitTask.service';
 import {
   CreatePracticeTaskDto,
@@ -21,6 +22,7 @@ export class PracticeTaskResolver {
     private readonly practiceTaskService: PracticeTaskService,
     private readonly practiceSetService: PracticeSetService,
     private readonly userSubmitTaskService: UserSubmitTaskService,
+    private readonly taskTagService: TaskTagService,
   ) {}
 
   /**
@@ -34,25 +36,29 @@ export class PracticeTaskResolver {
     @Args('practiceSetId') practiceSetId: string,
     @User() user: IUser,
   ) {
-    // Getting all practice tasks
-    const allPracticeTasks = await this.practiceTaskService.findAll(
-      {
-        practiceSetId,
-        status: status.LIVE,
-      },
-      {
-        include: {
-          user: true,
-          userSubmitTasks: {
-            where: { userId: user.id },
-            take: 1,
-            orderBy: { createdAt: 'desc' },
-          },
-          userTaskMetadatas: {
-            where: { userId: user.id },
-          },
+    const condition = {
+      practiceSetId,
+      status: status.LIVE,
+    };
+
+    const options = {
+      include: {
+        user: true,
+        userSubmitTasks: {
+          where: { userId: user.id },
+          take: 1,
+          orderBy: { createdAt: 'desc' },
+        },
+        userTaskMetadatas: {
+          where: { userId: user.id },
         },
       },
+    };
+
+    // Getting all practice tasks
+    const allPracticeTasks = await this.practiceTaskService.findAll(
+      condition,
+      options,
     );
 
     // Mapping practiceTask with userSubmitTask
@@ -76,29 +82,34 @@ export class PracticeTaskResolver {
   @Query('getAPracticeTask')
   @UseGuards(AuthGuard)
   async getAPracticeTask(@Args('id') id: string, @User() user: IUser) {
+    const options = {
+      include: {
+        user: true,
+        userSubmitTasks: {
+          where: { userId: user.id },
+          take: 1,
+          orderBy: { createdAt: 'desc' },
+        },
+        taskTags: true,
+      },
+    };
+
+    const condition = {
+      id,
+      status: status.LIVE,
+    };
+
     // Getting practice task and user submit task
-    const [practiceTask, userSubmitTask] = await Promise.all([
-      await this.practiceTaskService.findOne({
-        id,
-        status: status.LIVE,
-      }),
-      await this.userSubmitTaskService.findOne(
-        {
-          practiceTaskId: id,
-          userId: user.id,
-        },
-        {
-          orderBy: {
-            submittedAt: 'desc',
-          },
-        },
-      ),
-    ]);
+    const practiceTask = await this.practiceTaskService.findOne(
+      condition,
+      options,
+    );
 
     // If user has submitted the practice task then isCurrentUserSubmitted will be the submittedAt date
     return {
       ...practiceTask,
-      submittedAt: userSubmitTask?.submittedAt,
+      submittedAt: practiceTask.userSubmitTasks?.[0]?.submittedAt,
+      userTaskMetadata: practiceTask?.userTaskMetadatas?.[0],
     };
   }
 
@@ -145,20 +156,39 @@ export class PracticeTaskResolver {
     @Args('practiceTaskData') practiceTaskData: UpdatePracticeTaskDto,
     @User() user: IUser,
   ) {
-    const { id } = practiceTaskData;
+    const { id, taskTags } = practiceTaskData;
 
-    const practiceTask = await this.practiceTaskService.findOne({
-      id,
-    });
+    const practiceTask = await this.practiceTaskService.findOne(
+      {
+        id,
+      },
+      {
+        include: {
+          taskTags: true,
+        },
+      },
+    );
 
     // check if practice task belongs to user
     if (practiceTask?.userId !== user.id) {
       throw new Error('You are not authorized to update this practice task');
     }
 
-    console.log(practiceTaskData);
+    const [tagsToConnect, tagsToDisconnect] = this.getTagsToUpdateAndDelete(
+      practiceTask.taskTags,
+      taskTags,
+    );
 
-    return await this.practiceTaskService.updateOne({ id }, practiceTaskData);
+    return await this.practiceTaskService.updateOne(
+      { id },
+      {
+        ...practiceTaskData,
+        taskTags: {
+          connect: tagsToConnect,
+          disconnect: tagsToDisconnect,
+        },
+      },
+    );
   }
 
   /**
@@ -187,5 +217,29 @@ export class PracticeTaskResolver {
     );
 
     return id;
+  }
+
+  /**
+   * helper function to get tags to connect and disconnect
+   * @param currentTags
+   * @param updatedTags
+   * @returns
+   */
+  getTagsToUpdateAndDelete(currentTags, updatedTags) {
+    // Create a set of current tag IDs
+    const currentTagIds = new Set(currentTags.map((tag) => tag.id));
+
+    // Create sets for the new tag IDs
+    const newTagIds = new Set(updatedTags.map((tag) => tag.id));
+
+    // Determine which tags to connect and which to disconnect
+    const tagsToConnect = updatedTags.filter(
+      (tag) => !currentTagIds.has(tag.id),
+    );
+    const tagsToDisconnect = currentTags.filter(
+      (tag) => !newTagIds.has(tag.id),
+    );
+
+    return [tagsToConnect, tagsToDisconnect];
   }
 }

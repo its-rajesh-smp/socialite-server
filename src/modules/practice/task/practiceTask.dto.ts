@@ -1,5 +1,10 @@
 import { IsNotEmpty } from 'class-validator';
 
+interface ITaskTags {
+  id: string;
+  name: string;
+}
+
 /**
  * Dto for create practice task
  */
@@ -32,4 +37,6 @@ export class UpdatePracticeTaskDto {
   visibility: string;
 
   taskType: string;
+
+  taskTags: ITaskTags[];
 }
