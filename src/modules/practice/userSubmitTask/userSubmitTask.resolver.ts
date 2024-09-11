@@ -91,13 +91,41 @@ export class UserSubmitTaskResolver {
     const { id: userPracticeSetId } = userPracticeSet;
     const { id: userId } = user;
 
-    const submittedTask = await this.userSubmitTaskService.create({
+    // creating user submit task
+    await this.userSubmitTaskService.create({
       userId,
       practiceSetId,
       userPracticeSetId,
       ...submitTaskData,
     });
 
-    return submittedTask;
+    const options = {
+      include: {
+        user: true,
+        userSubmitTasks: {
+          where: { userId },
+          take: 1,
+          orderBy: { createdAt: 'desc' },
+        },
+        userTaskMetadatas: {
+          where: { userId },
+        },
+      },
+    };
+
+    const condition = {
+      id: submitTaskData.practiceTaskId,
+    };
+
+    // Getting practice task and user submit task
+    const currTask = await this.practiceTaskService.findOne(condition, options);
+
+    const updatedTask = {
+      ...currTask,
+      submittedAt: currTask.userSubmitTasks?.[0]?.submittedAt,
+      userTaskMetadata: currTask?.userTaskMetadatas?.[0],
+    };
+
+    return updatedTask;
   }
 }

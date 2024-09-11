@@ -21,6 +21,8 @@ export class CreatePracticeTaskDto {
   description: string;
 
   visibility: string;
+
+  taskTags: ITaskTags[];
 }
 
 /**

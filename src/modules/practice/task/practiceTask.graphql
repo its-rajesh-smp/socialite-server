@@ -10,6 +10,8 @@ input CreatePracticeTaskInput {
   description: String
   visibility: String
   taskType: String
+  questionLink: String
+  taskTags: [TaskTagInput]
 }
 
 input UpdatePracticeTaskInput {
@@ -18,6 +20,7 @@ input UpdatePracticeTaskInput {
   description: String
   visibility: String
   taskType: String
+  questionLink: String
   taskTags: [TaskTagInput]
 }
 
@@ -27,6 +30,7 @@ type PracticeTask {
   index: String
   practiceSetId: String
   title: String
+  questionLink: String
   description: String
   taskType: String
   visibility: String

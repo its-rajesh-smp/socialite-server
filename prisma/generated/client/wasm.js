@@ -200,6 +200,7 @@ exports.Prisma.PracticeTaskScalarFieldEnum = {
   completionCount: 'completionCount',
   status: 'status',
   taskType: 'taskType',
+  questionLink: 'questionLink',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -280,7 +281,8 @@ exports.Status = exports.$Enums.Status = {
 
 exports.TaskType = exports.$Enums.TaskType = {
   RESOURCE: 'RESOURCE',
-  CODING: 'CODING'
+  CODING: 'CODING',
+  LINK: 'LINK'
 };
 
 exports.Prisma.ModelName = {

@@ -5,8 +5,6 @@ import { User } from '../../../common/decorators/user.decorator';
 import IUser from '../../../common/types/user';
 import { AuthGuard } from '../../auth/guards/auth.guard';
 import { PracticeSetService } from '../practiceSet/practiceSet.service';
-import { TaskTagService } from '../taskTag/taskTag.service';
-import { UserSubmitTaskService } from '../userSubmitTask/userSubmitTask.service';
 import {
   CreatePracticeTaskDto,
   UpdatePracticeTaskDto,
@@ -21,8 +19,6 @@ export class PracticeTaskResolver {
   constructor(
     private readonly practiceTaskService: PracticeTaskService,
     private readonly practiceSetService: PracticeSetService,
-    private readonly userSubmitTaskService: UserSubmitTaskService,
-    private readonly taskTagService: TaskTagService,
   ) {}
 
   /**
@@ -44,6 +40,7 @@ export class PracticeTaskResolver {
     const options = {
       include: {
         user: true,
+        taskTags: true,
         userSubmitTasks: {
           where: { userId: user.id },
           take: 1,
@@ -125,7 +122,7 @@ export class PracticeTaskResolver {
     @User() user: IUser,
     @Args('practiceTaskData') practiceTaskData: CreatePracticeTaskDto,
   ) {
-    const { practiceSetId } = practiceTaskData;
+    const { practiceSetId, taskTags } = practiceTaskData;
 
     const practiceSet = await this.practiceSetService.findOne({
       id: practiceSetId,
@@ -136,12 +133,28 @@ export class PracticeTaskResolver {
       throw new Error('You are not authorized to create this practice task');
     }
 
+    const [tagsToConnect] = this.getTagsToUpdateAndDelete([], taskTags);
+
     const newTaskData = {
       ...practiceTaskData,
       userId: user.id,
+      taskTags: {
+        connect: tagsToConnect,
+      },
     };
 
-    return await this.practiceTaskService.create(newTaskData);
+    let practiceTask = await this.practiceTaskService.create(newTaskData);
+
+    const options = {
+      include: {
+        taskTags: true,
+      },
+    };
+
+    return await this.practiceTaskService.findOne(
+      { id: practiceTask.id },
+      options,
+    );
   }
 
   /**
