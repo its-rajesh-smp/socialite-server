@@ -9691,7 +9691,7 @@ export namespace Prisma {
     completionCount: number
     status: $Enums.Status
     taskType: $Enums.TaskType
-    questionLink: string
+    questionLink: string | null
     createdAt: Date
     updatedAt: Date
     _count: PracticeTaskCountAggregateOutputType | null
@@ -9804,7 +9804,7 @@ export namespace Prisma {
       completionCount: number
       status: $Enums.Status
       taskType: $Enums.TaskType
-      questionLink: string
+      questionLink: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["practiceTask"]>
@@ -14516,7 +14516,7 @@ export namespace Prisma {
     completionCount?: IntFilter<"PracticeTask"> | number
     status?: EnumStatusFilter<"PracticeTask"> | $Enums.Status
     taskType?: EnumTaskTypeFilter<"PracticeTask"> | $Enums.TaskType
-    questionLink?: StringFilter<"PracticeTask"> | string
+    questionLink?: StringNullableFilter<"PracticeTask"> | string | null
     createdAt?: DateTimeFilter<"PracticeTask"> | Date | string
     updatedAt?: DateTimeFilter<"PracticeTask"> | Date | string
     user?: XOR<UserRelationFilter, UserWhereInput>
@@ -14537,7 +14537,7 @@ export namespace Prisma {
     completionCount?: SortOrder
     status?: SortOrder
     taskType?: SortOrder
-    questionLink?: SortOrder
+    questionLink?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -14561,7 +14561,7 @@ export namespace Prisma {
     completionCount?: IntFilter<"PracticeTask"> | number
     status?: EnumStatusFilter<"PracticeTask"> | $Enums.Status
     taskType?: EnumTaskTypeFilter<"PracticeTask"> | $Enums.TaskType
-    questionLink?: StringFilter<"PracticeTask"> | string
+    questionLink?: StringNullableFilter<"PracticeTask"> | string | null
     createdAt?: DateTimeFilter<"PracticeTask"> | Date | string
     updatedAt?: DateTimeFilter<"PracticeTask"> | Date | string
     user?: XOR<UserRelationFilter, UserWhereInput>
@@ -14582,7 +14582,7 @@ export namespace Prisma {
     completionCount?: SortOrder
     status?: SortOrder
     taskType?: SortOrder
-    questionLink?: SortOrder
+    questionLink?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: PracticeTaskCountOrderByAggregateInput
@@ -14606,7 +14606,7 @@ export namespace Prisma {
     completionCount?: IntWithAggregatesFilter<"PracticeTask"> | number
     status?: EnumStatusWithAggregatesFilter<"PracticeTask"> | $Enums.Status
     taskType?: EnumTaskTypeWithAggregatesFilter<"PracticeTask"> | $Enums.TaskType
-    questionLink?: StringWithAggregatesFilter<"PracticeTask"> | string
+    questionLink?: StringNullableWithAggregatesFilter<"PracticeTask"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"PracticeTask"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"PracticeTask"> | Date | string
   }
@@ -15367,7 +15367,7 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
-    questionLink: string
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutPracticeTasksInput
@@ -15388,7 +15388,7 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
-    questionLink: string
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userSubmitTasks?: UserSubmitTaskUncheckedCreateNestedManyWithoutPracticeTaskInput
@@ -15405,7 +15405,7 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    questionLink?: StringFieldUpdateOperationsInput | string
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutPracticeTasksNestedInput
@@ -15426,7 +15426,7 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    questionLink?: StringFieldUpdateOperationsInput | string
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userSubmitTasks?: UserSubmitTaskUncheckedUpdateManyWithoutPracticeTaskNestedInput
@@ -15445,7 +15445,7 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
-    questionLink: string
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -15459,7 +15459,7 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    questionLink?: StringFieldUpdateOperationsInput | string
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15475,7 +15475,7 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    questionLink?: StringFieldUpdateOperationsInput | string
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -18016,7 +18016,7 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
-    questionLink: string
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     practiceSet: PracticeSetCreateNestedOneWithoutPracticeTasksInput
@@ -18035,7 +18035,7 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
-    questionLink: string
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userSubmitTasks?: UserSubmitTaskUncheckedCreateNestedManyWithoutPracticeTaskInput
@@ -18338,7 +18338,7 @@ export namespace Prisma {
     completionCount?: IntFilter<"PracticeTask"> | number
     status?: EnumStatusFilter<"PracticeTask"> | $Enums.Status
     taskType?: EnumTaskTypeFilter<"PracticeTask"> | $Enums.TaskType
-    questionLink?: StringFilter<"PracticeTask"> | string
+    questionLink?: StringNullableFilter<"PracticeTask"> | string | null
     createdAt?: DateTimeFilter<"PracticeTask"> | Date | string
     updatedAt?: DateTimeFilter<"PracticeTask"> | Date | string
   }
@@ -19029,7 +19029,7 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
-    questionLink: string
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutPracticeTasksInput
@@ -19048,7 +19048,7 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
-    questionLink: string
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userSubmitTasks?: UserSubmitTaskUncheckedCreateNestedManyWithoutPracticeTaskInput
@@ -19817,7 +19817,7 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
-    questionLink: string
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutPracticeTasksInput
@@ -19837,7 +19837,7 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
-    questionLink: string
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userSubmitTasks?: UserSubmitTaskUncheckedCreateNestedManyWithoutPracticeTaskInput
@@ -19916,7 +19916,7 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    questionLink?: StringFieldUpdateOperationsInput | string
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutPracticeTasksNestedInput
@@ -19936,7 +19936,7 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    questionLink?: StringFieldUpdateOperationsInput | string
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userSubmitTasks?: UserSubmitTaskUncheckedUpdateManyWithoutPracticeTaskNestedInput
@@ -19993,7 +19993,7 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
-    questionLink: string
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutPracticeTasksInput
@@ -20013,7 +20013,7 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
-    questionLink: string
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userSubmitTasks?: UserSubmitTaskUncheckedCreateNestedManyWithoutPracticeTaskInput
@@ -20175,7 +20175,7 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
-    questionLink: string
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutPracticeTasksInput
@@ -20195,7 +20195,7 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
-    questionLink: string
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userTaskMetadatas?: UserTaskMetadataUncheckedCreateNestedManyWithoutPracticeTaskInput
@@ -20336,7 +20336,7 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    questionLink?: StringFieldUpdateOperationsInput | string
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutPracticeTasksNestedInput
@@ -20356,7 +20356,7 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    questionLink?: StringFieldUpdateOperationsInput | string
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userTaskMetadatas?: UserTaskMetadataUncheckedUpdateManyWithoutPracticeTaskNestedInput
@@ -20447,7 +20447,7 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
-    questionLink: string
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -20649,7 +20649,7 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    questionLink?: StringFieldUpdateOperationsInput | string
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     practiceSet?: PracticeSetUpdateOneRequiredWithoutPracticeTasksNestedInput
@@ -20668,7 +20668,7 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    questionLink?: StringFieldUpdateOperationsInput | string
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userSubmitTasks?: UserSubmitTaskUncheckedUpdateManyWithoutPracticeTaskNestedInput
@@ -20686,7 +20686,7 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    questionLink?: StringFieldUpdateOperationsInput | string
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -20866,7 +20866,7 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
-    questionLink: string
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -20897,7 +20897,7 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    questionLink?: StringFieldUpdateOperationsInput | string
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutPracticeTasksNestedInput
@@ -20916,7 +20916,7 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    questionLink?: StringFieldUpdateOperationsInput | string
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userSubmitTasks?: UserSubmitTaskUncheckedUpdateManyWithoutPracticeTaskNestedInput
@@ -20934,7 +20934,7 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    questionLink?: StringFieldUpdateOperationsInput | string
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -21143,7 +21143,7 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    questionLink?: StringFieldUpdateOperationsInput | string
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutPracticeTasksNestedInput
@@ -21163,7 +21163,7 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    questionLink?: StringFieldUpdateOperationsInput | string
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userSubmitTasks?: UserSubmitTaskUncheckedUpdateManyWithoutPracticeTaskNestedInput
@@ -21181,7 +21181,7 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    questionLink?: StringFieldUpdateOperationsInput | string
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
