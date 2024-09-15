@@ -1,8 +1,8 @@
-import { User } from '@common/decorators/user.decorator';
 import IUser from '@common/types/user';
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { AuthGuard } from 'src/modules/auth/guards/auth.guard';
+import { User } from '../../../common/decorators/user.decorator';
+import { AuthGuard } from '../../auth/guards/auth.guard';
 import { TaskTagService } from './taskTag.service';
 
 /**
