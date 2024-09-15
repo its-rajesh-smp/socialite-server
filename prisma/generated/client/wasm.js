@@ -200,6 +200,7 @@ exports.Prisma.PracticeTaskScalarFieldEnum = {
   completionCount: 'completionCount',
   status: 'status',
   taskType: 'taskType',
+  questionLink: 'questionLink',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -210,7 +211,14 @@ exports.Prisma.UserTaskMetadataScalarFieldEnum = {
   practiceTaskId: 'practiceTaskId',
   note: 'note',
   isBookmarked: 'isBookmarked',
-  isIgnored: 'isIgnored'
+  isIgnored: 'isIgnored',
+  submissionCount: 'submissionCount'
+};
+
+exports.Prisma.TaskTagScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name'
 };
 
 exports.Prisma.UserSubmitTaskScalarFieldEnum = {
@@ -273,7 +281,8 @@ exports.Status = exports.$Enums.Status = {
 
 exports.TaskType = exports.$Enums.TaskType = {
   RESOURCE: 'RESOURCE',
-  CODING: 'CODING'
+  CODING: 'CODING',
+  LINK: 'LINK'
 };
 
 exports.Prisma.ModelName = {
@@ -286,6 +295,7 @@ exports.Prisma.ModelName = {
   UserPracticeSet: 'UserPracticeSet',
   PracticeTask: 'PracticeTask',
   UserTaskMetadata: 'UserTaskMetadata',
+  TaskTag: 'TaskTag',
   UserSubmitTask: 'UserSubmitTask'
 };
 

@@ -1,11 +1,17 @@
+input TaskTagInput {
+  id: String
+  name: String
+}
+
 # Inputs
 input CreatePracticeTaskInput {
   practiceSetId: String
   title: String
-  link: String
   description: String
   visibility: String
   taskType: String
+  questionLink: String
+  taskTags: [TaskTagInput]
 }
 
 input UpdatePracticeTaskInput {
@@ -14,6 +20,8 @@ input UpdatePracticeTaskInput {
   description: String
   visibility: String
   taskType: String
+  questionLink: String
+  taskTags: [TaskTagInput]
 }
 
 # Types
@@ -22,6 +30,7 @@ type PracticeTask {
   index: String
   practiceSetId: String
   title: String
+  questionLink: String
   description: String
   taskType: String
   visibility: String
@@ -29,6 +38,8 @@ type PracticeTask {
   updatedAt: String
   submittedAt: String
   user: User
+  userTaskMetadata: UserTaskMetadata
+  taskTags: [TaskTag]
 }
 
 # Queries

@@ -5,6 +5,7 @@ import IUser from '../../../common/types/user';
 import { AuthGuard } from '../../auth/guards/auth.guard';
 import { PracticeTaskService } from '../task/practiceTask.service';
 import { UserPracticeSetService } from '../userPracticeSet/userPracticeSet.service';
+import { UserTaskMetadataService } from '../userTaskMetadata/userTaskMetadata.service';
 import { CreateUserSubmitTaskDto } from './userSubmitTask.dto';
 import { UserSubmitTaskService } from './userSubmitTask.service';
 
@@ -17,6 +18,7 @@ export class UserSubmitTaskResolver {
     private readonly practiceTaskService: PracticeTaskService,
     private readonly userPracticeSetService: UserPracticeSetService,
     private readonly userSubmitTaskService: UserSubmitTaskService,
+    private readonly userTaskMetadataService: UserTaskMetadataService,
   ) {}
 
   /**
@@ -31,9 +33,15 @@ export class UserSubmitTaskResolver {
     @User() user: IUser,
     @Args('submitTaskData') submitTaskData: CreateUserSubmitTaskDto,
   ) {
-    const practiceTask = await this.practiceTaskService.findOne({
-      id: submitTaskData.practiceTaskId,
-    });
+    const [practiceTask, userTaskMetadata] = await Promise.all([
+      this.practiceTaskService.findOne({
+        id: submitTaskData.practiceTaskId,
+      }),
+      this.userTaskMetadataService.findOne({
+        userId: user.id,
+        practiceTaskId: submitTaskData.practiceTaskId,
+      }),
+    ]);
 
     if (!practiceTask) {
       throw new Error('Practice task not found');
@@ -44,11 +52,21 @@ export class UserSubmitTaskResolver {
       practiceSetId: practiceTask.practiceSetId,
     };
 
+    const userTaskMetadataPayload = {
+      submissionCount: (userTaskMetadata?.submissionCount ?? 0) + 1,
+    };
+
     // getting a user practice set  if not exists, then forking the practice set
-    const userPracticeSet = await this.userPracticeSetService.findOneOrCreate(
-      userPracticeSetPayload,
-      userPracticeSetPayload,
-    );
+    const [userPracticeSet] = await Promise.all([
+      this.userPracticeSetService.findOneOrCreate(
+        userPracticeSetPayload,
+        userPracticeSetPayload,
+      ),
+      this.userTaskMetadataService.createOrUpdateOne(
+        { userId: user.id, practiceTaskId: practiceTask.id },
+        userTaskMetadataPayload,
+      ),
+    ]);
 
     return await this.handelSubmitResourceTask(
       submitTaskData,
@@ -73,13 +91,41 @@ export class UserSubmitTaskResolver {
     const { id: userPracticeSetId } = userPracticeSet;
     const { id: userId } = user;
 
-    const submittedTask = await this.userSubmitTaskService.create({
+    // creating user submit task
+    await this.userSubmitTaskService.create({
       userId,
       practiceSetId,
       userPracticeSetId,
       ...submitTaskData,
     });
 
-    return submittedTask;
+    const options = {
+      include: {
+        user: true,
+        userSubmitTasks: {
+          where: { userId },
+          take: 1,
+          orderBy: { createdAt: 'desc' },
+        },
+        userTaskMetadatas: {
+          where: { userId },
+        },
+      },
+    };
+
+    const condition = {
+      id: submitTaskData.practiceTaskId,
+    };
+
+    // Getting practice task and user submit task
+    const currTask = await this.practiceTaskService.findOne(condition, options);
+
+    const updatedTask = {
+      ...currTask,
+      submittedAt: currTask.userSubmitTasks?.[0]?.submittedAt,
+      userTaskMetadata: currTask?.userTaskMetadatas?.[0],
+    };
+
+    return updatedTask;
   }
 }

@@ -59,6 +59,11 @@ export type PracticeTask = $Result.DefaultSelection<Prisma.$PracticeTaskPayload>
  */
 export type UserTaskMetadata = $Result.DefaultSelection<Prisma.$UserTaskMetadataPayload>
 /**
+ * Model TaskTag
+ * 
+ */
+export type TaskTag = $Result.DefaultSelection<Prisma.$TaskTagPayload>
+/**
  * Model UserSubmitTask
  * 
  */
@@ -96,7 +101,8 @@ export type Status = (typeof Status)[keyof typeof Status]
 
 export const TaskType: {
   RESOURCE: 'RESOURCE',
-  CODING: 'CODING'
+  CODING: 'CODING',
+  LINK: 'LINK'
 };
 
 export type TaskType = (typeof TaskType)[keyof typeof TaskType]
@@ -330,6 +336,16 @@ export class PrismaClient<
     * ```
     */
   get userTaskMetadata(): Prisma.UserTaskMetadataDelegate<ExtArgs>;
+
+  /**
+   * `prisma.taskTag`: Exposes CRUD operations for the **TaskTag** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TaskTags
+    * const taskTags = await prisma.taskTag.findMany()
+    * ```
+    */
+  get taskTag(): Prisma.TaskTagDelegate<ExtArgs>;
 
   /**
    * `prisma.userSubmitTask`: Exposes CRUD operations for the **UserSubmitTask** model.
@@ -826,6 +842,7 @@ export namespace Prisma {
     UserPracticeSet: 'UserPracticeSet',
     PracticeTask: 'PracticeTask',
     UserTaskMetadata: 'UserTaskMetadata',
+    TaskTag: 'TaskTag',
     UserSubmitTask: 'UserSubmitTask'
   };
 
@@ -843,7 +860,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
-      modelProps: 'user' | 'userStatus' | 'post' | 'reaction' | 'comment' | 'practiceSet' | 'userPracticeSet' | 'practiceTask' | 'userTaskMetadata' | 'userSubmitTask'
+      modelProps: 'user' | 'userStatus' | 'post' | 'reaction' | 'comment' | 'practiceSet' | 'userPracticeSet' | 'practiceTask' | 'userTaskMetadata' | 'taskTag' | 'userSubmitTask'
       txIsolationLevel: Prisma.TransactionIsolationLevel
     },
     model: {
@@ -1477,6 +1494,76 @@ export namespace Prisma {
           }
         }
       }
+      TaskTag: {
+        payload: Prisma.$TaskTagPayload<ExtArgs>
+        fields: Prisma.TaskTagFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TaskTagFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$TaskTagPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TaskTagFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$TaskTagPayload>
+          }
+          findFirst: {
+            args: Prisma.TaskTagFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$TaskTagPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TaskTagFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$TaskTagPayload>
+          }
+          findMany: {
+            args: Prisma.TaskTagFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$TaskTagPayload>[]
+          }
+          create: {
+            args: Prisma.TaskTagCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$TaskTagPayload>
+          }
+          createMany: {
+            args: Prisma.TaskTagCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TaskTagCreateManyAndReturnArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$TaskTagPayload>[]
+          }
+          delete: {
+            args: Prisma.TaskTagDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$TaskTagPayload>
+          }
+          update: {
+            args: Prisma.TaskTagUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$TaskTagPayload>
+          }
+          deleteMany: {
+            args: Prisma.TaskTagDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TaskTagUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.TaskTagUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$TaskTagPayload>
+          }
+          aggregate: {
+            args: Prisma.TaskTagAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateTaskTag>
+          }
+          groupBy: {
+            args: Prisma.TaskTagGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<TaskTagGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TaskTagCountArgs<ExtArgs>,
+            result: $Utils.Optional<TaskTagCountAggregateOutputType> | number
+          }
+        }
+      }
       UserSubmitTask: {
         payload: Prisma.$UserSubmitTaskPayload<ExtArgs>
         fields: Prisma.UserSubmitTaskFieldRefs
@@ -1716,6 +1803,7 @@ export namespace Prisma {
     userSubmitTasks: number
     userPracticeSets: number
     userTaskMetadatas: number
+    taskTag: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1728,6 +1816,7 @@ export namespace Prisma {
     userSubmitTasks?: boolean | UserCountOutputTypeCountUserSubmitTasksArgs
     userPracticeSets?: boolean | UserCountOutputTypeCountUserPracticeSetsArgs
     userTaskMetadatas?: boolean | UserCountOutputTypeCountUserTaskMetadatasArgs
+    taskTag?: boolean | UserCountOutputTypeCountTaskTagArgs
   }
 
   // Custom InputTypes
@@ -1802,6 +1891,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountUserTaskMetadatasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserTaskMetadataWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTaskTagArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TaskTagWhereInput
   }
 
 
@@ -1932,11 +2028,13 @@ export namespace Prisma {
   export type PracticeTaskCountOutputType = {
     userSubmitTasks: number
     userTaskMetadatas: number
+    taskTags: number
   }
 
   export type PracticeTaskCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     userSubmitTasks?: boolean | PracticeTaskCountOutputTypeCountUserSubmitTasksArgs
     userTaskMetadatas?: boolean | PracticeTaskCountOutputTypeCountUserTaskMetadatasArgs
+    taskTags?: boolean | PracticeTaskCountOutputTypeCountTaskTagsArgs
   }
 
   // Custom InputTypes
@@ -1962,6 +2060,44 @@ export namespace Prisma {
    */
   export type PracticeTaskCountOutputTypeCountUserTaskMetadatasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserTaskMetadataWhereInput
+  }
+
+  /**
+   * PracticeTaskCountOutputType without action
+   */
+  export type PracticeTaskCountOutputTypeCountTaskTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TaskTagWhereInput
+  }
+
+
+  /**
+   * Count Type TaskTagCountOutputType
+   */
+
+  export type TaskTagCountOutputType = {
+    PracticeTask: number
+  }
+
+  export type TaskTagCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    PracticeTask?: boolean | TaskTagCountOutputTypeCountPracticeTaskArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * TaskTagCountOutputType without action
+   */
+  export type TaskTagCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskTagCountOutputType
+     */
+    select?: TaskTagCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * TaskTagCountOutputType without action
+   */
+  export type TaskTagCountOutputTypeCountPracticeTaskArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PracticeTaskWhereInput
   }
 
 
@@ -2150,6 +2286,7 @@ export namespace Prisma {
     userSubmitTasks?: boolean | User$userSubmitTasksArgs<ExtArgs>
     userPracticeSets?: boolean | User$userPracticeSetsArgs<ExtArgs>
     userTaskMetadatas?: boolean | User$userTaskMetadatasArgs<ExtArgs>
+    taskTag?: boolean | User$taskTagArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2181,6 +2318,7 @@ export namespace Prisma {
     userSubmitTasks?: boolean | User$userSubmitTasksArgs<ExtArgs>
     userPracticeSets?: boolean | User$userPracticeSetsArgs<ExtArgs>
     userTaskMetadatas?: boolean | User$userTaskMetadatasArgs<ExtArgs>
+    taskTag?: boolean | User$taskTagArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2197,6 +2335,7 @@ export namespace Prisma {
       userSubmitTasks: Prisma.$UserSubmitTaskPayload<ExtArgs>[]
       userPracticeSets: Prisma.$UserPracticeSetPayload<ExtArgs>[]
       userTaskMetadatas: Prisma.$UserTaskMetadataPayload<ExtArgs>[]
+      taskTag: Prisma.$TaskTagPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2612,6 +2751,8 @@ export namespace Prisma {
     userPracticeSets<T extends User$userPracticeSetsArgs<ExtArgs> = {}>(args?: Subset<T, User$userPracticeSetsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPracticeSetPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     userTaskMetadatas<T extends User$userTaskMetadatasArgs<ExtArgs> = {}>(args?: Subset<T, User$userTaskMetadatasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserTaskMetadataPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    taskTag<T extends User$taskTagArgs<ExtArgs> = {}>(args?: Subset<T, User$taskTagArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskTagPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -3138,6 +3279,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserTaskMetadataScalarFieldEnum | UserTaskMetadataScalarFieldEnum[]
+  }
+
+  /**
+   * User.taskTag
+   */
+  export type User$taskTagArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskTag
+     */
+    select?: TaskTagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskTagInclude<ExtArgs> | null
+    where?: TaskTagWhereInput
+    orderBy?: TaskTagOrderByWithRelationInput | TaskTagOrderByWithRelationInput[]
+    cursor?: TaskTagWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TaskTagScalarFieldEnum | TaskTagScalarFieldEnum[]
   }
 
   /**
@@ -9338,6 +9499,7 @@ export namespace Prisma {
     completionCount: number | null
     status: $Enums.Status | null
     taskType: $Enums.TaskType | null
+    questionLink: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -9352,6 +9514,7 @@ export namespace Prisma {
     completionCount: number | null
     status: $Enums.Status | null
     taskType: $Enums.TaskType | null
+    questionLink: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -9367,6 +9530,7 @@ export namespace Prisma {
     completionCount: number
     status: number
     taskType: number
+    questionLink: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -9393,6 +9557,7 @@ export namespace Prisma {
     completionCount?: true
     status?: true
     taskType?: true
+    questionLink?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -9407,6 +9572,7 @@ export namespace Prisma {
     completionCount?: true
     status?: true
     taskType?: true
+    questionLink?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -9422,6 +9588,7 @@ export namespace Prisma {
     completionCount?: true
     status?: true
     taskType?: true
+    questionLink?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -9524,6 +9691,7 @@ export namespace Prisma {
     completionCount: number
     status: $Enums.Status
     taskType: $Enums.TaskType
+    questionLink: string | null
     createdAt: Date
     updatedAt: Date
     _count: PracticeTaskCountAggregateOutputType | null
@@ -9558,12 +9726,14 @@ export namespace Prisma {
     completionCount?: boolean
     status?: boolean
     taskType?: boolean
+    questionLink?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     practiceSet?: boolean | PracticeSetDefaultArgs<ExtArgs>
     userSubmitTasks?: boolean | PracticeTask$userSubmitTasksArgs<ExtArgs>
     userTaskMetadatas?: boolean | PracticeTask$userTaskMetadatasArgs<ExtArgs>
+    taskTags?: boolean | PracticeTask$taskTagsArgs<ExtArgs>
     _count?: boolean | PracticeTaskCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["practiceTask"]>
 
@@ -9578,6 +9748,7 @@ export namespace Prisma {
     completionCount?: boolean
     status?: boolean
     taskType?: boolean
+    questionLink?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -9595,6 +9766,7 @@ export namespace Prisma {
     completionCount?: boolean
     status?: boolean
     taskType?: boolean
+    questionLink?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -9604,6 +9776,7 @@ export namespace Prisma {
     practiceSet?: boolean | PracticeSetDefaultArgs<ExtArgs>
     userSubmitTasks?: boolean | PracticeTask$userSubmitTasksArgs<ExtArgs>
     userTaskMetadatas?: boolean | PracticeTask$userTaskMetadatasArgs<ExtArgs>
+    taskTags?: boolean | PracticeTask$taskTagsArgs<ExtArgs>
     _count?: boolean | PracticeTaskCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PracticeTaskIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9618,6 +9791,7 @@ export namespace Prisma {
       practiceSet: Prisma.$PracticeSetPayload<ExtArgs>
       userSubmitTasks: Prisma.$UserSubmitTaskPayload<ExtArgs>[]
       userTaskMetadatas: Prisma.$UserTaskMetadataPayload<ExtArgs>[]
+      taskTags: Prisma.$TaskTagPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       index: number
@@ -9630,6 +9804,7 @@ export namespace Prisma {
       completionCount: number
       status: $Enums.Status
       taskType: $Enums.TaskType
+      questionLink: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["practiceTask"]>
@@ -10030,6 +10205,8 @@ export namespace Prisma {
 
     userTaskMetadatas<T extends PracticeTask$userTaskMetadatasArgs<ExtArgs> = {}>(args?: Subset<T, PracticeTask$userTaskMetadatasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserTaskMetadataPayload<ExtArgs>, T, 'findMany'> | Null>;
 
+    taskTags<T extends PracticeTask$taskTagsArgs<ExtArgs> = {}>(args?: Subset<T, PracticeTask$taskTagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskTagPayload<ExtArgs>, T, 'findMany'> | Null>;
+
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10068,6 +10245,7 @@ export namespace Prisma {
     readonly completionCount: FieldRef<"PracticeTask", 'Int'>
     readonly status: FieldRef<"PracticeTask", 'Status'>
     readonly taskType: FieldRef<"PracticeTask", 'TaskType'>
+    readonly questionLink: FieldRef<"PracticeTask", 'String'>
     readonly createdAt: FieldRef<"PracticeTask", 'DateTime'>
     readonly updatedAt: FieldRef<"PracticeTask", 'DateTime'>
   }
@@ -10428,6 +10606,26 @@ export namespace Prisma {
   }
 
   /**
+   * PracticeTask.taskTags
+   */
+  export type PracticeTask$taskTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskTag
+     */
+    select?: TaskTagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskTagInclude<ExtArgs> | null
+    where?: TaskTagWhereInput
+    orderBy?: TaskTagOrderByWithRelationInput | TaskTagOrderByWithRelationInput[]
+    cursor?: TaskTagWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TaskTagScalarFieldEnum | TaskTagScalarFieldEnum[]
+  }
+
+  /**
    * PracticeTask without action
    */
   export type PracticeTaskDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10448,8 +10646,18 @@ export namespace Prisma {
 
   export type AggregateUserTaskMetadata = {
     _count: UserTaskMetadataCountAggregateOutputType | null
+    _avg: UserTaskMetadataAvgAggregateOutputType | null
+    _sum: UserTaskMetadataSumAggregateOutputType | null
     _min: UserTaskMetadataMinAggregateOutputType | null
     _max: UserTaskMetadataMaxAggregateOutputType | null
+  }
+
+  export type UserTaskMetadataAvgAggregateOutputType = {
+    submissionCount: number | null
+  }
+
+  export type UserTaskMetadataSumAggregateOutputType = {
+    submissionCount: number | null
   }
 
   export type UserTaskMetadataMinAggregateOutputType = {
@@ -10458,6 +10666,7 @@ export namespace Prisma {
     practiceTaskId: string | null
     isBookmarked: boolean | null
     isIgnored: boolean | null
+    submissionCount: number | null
   }
 
   export type UserTaskMetadataMaxAggregateOutputType = {
@@ -10466,6 +10675,7 @@ export namespace Prisma {
     practiceTaskId: string | null
     isBookmarked: boolean | null
     isIgnored: boolean | null
+    submissionCount: number | null
   }
 
   export type UserTaskMetadataCountAggregateOutputType = {
@@ -10475,9 +10685,18 @@ export namespace Prisma {
     note: number
     isBookmarked: number
     isIgnored: number
+    submissionCount: number
     _all: number
   }
 
+
+  export type UserTaskMetadataAvgAggregateInputType = {
+    submissionCount?: true
+  }
+
+  export type UserTaskMetadataSumAggregateInputType = {
+    submissionCount?: true
+  }
 
   export type UserTaskMetadataMinAggregateInputType = {
     id?: true
@@ -10485,6 +10704,7 @@ export namespace Prisma {
     practiceTaskId?: true
     isBookmarked?: true
     isIgnored?: true
+    submissionCount?: true
   }
 
   export type UserTaskMetadataMaxAggregateInputType = {
@@ -10493,6 +10713,7 @@ export namespace Prisma {
     practiceTaskId?: true
     isBookmarked?: true
     isIgnored?: true
+    submissionCount?: true
   }
 
   export type UserTaskMetadataCountAggregateInputType = {
@@ -10502,6 +10723,7 @@ export namespace Prisma {
     note?: true
     isBookmarked?: true
     isIgnored?: true
+    submissionCount?: true
     _all?: true
   }
 
@@ -10543,6 +10765,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: UserTaskMetadataAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserTaskMetadataSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserTaskMetadataMinAggregateInputType
@@ -10573,6 +10807,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserTaskMetadataCountAggregateInputType | true
+    _avg?: UserTaskMetadataAvgAggregateInputType
+    _sum?: UserTaskMetadataSumAggregateInputType
     _min?: UserTaskMetadataMinAggregateInputType
     _max?: UserTaskMetadataMaxAggregateInputType
   }
@@ -10584,7 +10820,10 @@ export namespace Prisma {
     note: JsonValue | null
     isBookmarked: boolean
     isIgnored: boolean
+    submissionCount: number
     _count: UserTaskMetadataCountAggregateOutputType | null
+    _avg: UserTaskMetadataAvgAggregateOutputType | null
+    _sum: UserTaskMetadataSumAggregateOutputType | null
     _min: UserTaskMetadataMinAggregateOutputType | null
     _max: UserTaskMetadataMaxAggregateOutputType | null
   }
@@ -10610,6 +10849,7 @@ export namespace Prisma {
     note?: boolean
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     practiceTask?: boolean | PracticeTaskDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userTaskMetadata"]>
@@ -10621,6 +10861,7 @@ export namespace Prisma {
     note?: boolean
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     practiceTask?: boolean | PracticeTaskDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userTaskMetadata"]>
@@ -10632,6 +10873,7 @@ export namespace Prisma {
     note?: boolean
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: boolean
   }
 
   export type UserTaskMetadataInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10656,6 +10898,7 @@ export namespace Prisma {
       note: Prisma.JsonValue | null
       isBookmarked: boolean
       isIgnored: boolean
+      submissionCount: number
     }, ExtArgs["result"]["userTaskMetadata"]>
     composites: {}
   }
@@ -11084,6 +11327,7 @@ export namespace Prisma {
     readonly note: FieldRef<"UserTaskMetadata", 'Json'>
     readonly isBookmarked: FieldRef<"UserTaskMetadata", 'Boolean'>
     readonly isIgnored: FieldRef<"UserTaskMetadata", 'Boolean'>
+    readonly submissionCount: FieldRef<"UserTaskMetadata", 'Int'>
   }
     
 
@@ -11413,6 +11657,968 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserTaskMetadataInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model TaskTag
+   */
+
+  export type AggregateTaskTag = {
+    _count: TaskTagCountAggregateOutputType | null
+    _min: TaskTagMinAggregateOutputType | null
+    _max: TaskTagMaxAggregateOutputType | null
+  }
+
+  export type TaskTagMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    name: string | null
+  }
+
+  export type TaskTagMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    name: string | null
+  }
+
+  export type TaskTagCountAggregateOutputType = {
+    id: number
+    userId: number
+    name: number
+    _all: number
+  }
+
+
+  export type TaskTagMinAggregateInputType = {
+    id?: true
+    userId?: true
+    name?: true
+  }
+
+  export type TaskTagMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    name?: true
+  }
+
+  export type TaskTagCountAggregateInputType = {
+    id?: true
+    userId?: true
+    name?: true
+    _all?: true
+  }
+
+  export type TaskTagAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TaskTag to aggregate.
+     */
+    where?: TaskTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TaskTags to fetch.
+     */
+    orderBy?: TaskTagOrderByWithRelationInput | TaskTagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TaskTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TaskTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TaskTags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TaskTags
+    **/
+    _count?: true | TaskTagCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TaskTagMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TaskTagMaxAggregateInputType
+  }
+
+  export type GetTaskTagAggregateType<T extends TaskTagAggregateArgs> = {
+        [P in keyof T & keyof AggregateTaskTag]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTaskTag[P]>
+      : GetScalarType<T[P], AggregateTaskTag[P]>
+  }
+
+
+
+
+  export type TaskTagGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TaskTagWhereInput
+    orderBy?: TaskTagOrderByWithAggregationInput | TaskTagOrderByWithAggregationInput[]
+    by: TaskTagScalarFieldEnum[] | TaskTagScalarFieldEnum
+    having?: TaskTagScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TaskTagCountAggregateInputType | true
+    _min?: TaskTagMinAggregateInputType
+    _max?: TaskTagMaxAggregateInputType
+  }
+
+  export type TaskTagGroupByOutputType = {
+    id: string
+    userId: string
+    name: string
+    _count: TaskTagCountAggregateOutputType | null
+    _min: TaskTagMinAggregateOutputType | null
+    _max: TaskTagMaxAggregateOutputType | null
+  }
+
+  type GetTaskTagGroupByPayload<T extends TaskTagGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TaskTagGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TaskTagGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TaskTagGroupByOutputType[P]>
+            : GetScalarType<T[P], TaskTagGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TaskTagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    name?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    PracticeTask?: boolean | TaskTag$PracticeTaskArgs<ExtArgs>
+    _count?: boolean | TaskTagCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["taskTag"]>
+
+  export type TaskTagSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    name?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["taskTag"]>
+
+  export type TaskTagSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    name?: boolean
+  }
+
+  export type TaskTagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    PracticeTask?: boolean | TaskTag$PracticeTaskArgs<ExtArgs>
+    _count?: boolean | TaskTagCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type TaskTagIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $TaskTagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TaskTag"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      PracticeTask: Prisma.$PracticeTaskPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      name: string
+    }, ExtArgs["result"]["taskTag"]>
+    composites: {}
+  }
+
+  type TaskTagGetPayload<S extends boolean | null | undefined | TaskTagDefaultArgs> = $Result.GetResult<Prisma.$TaskTagPayload, S>
+
+  type TaskTagCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<TaskTagFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: TaskTagCountAggregateInputType | true
+    }
+
+  export interface TaskTagDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TaskTag'], meta: { name: 'TaskTag' } }
+    /**
+     * Find zero or one TaskTag that matches the filter.
+     * @param {TaskTagFindUniqueArgs} args - Arguments to find a TaskTag
+     * @example
+     * // Get one TaskTag
+     * const taskTag = await prisma.taskTag.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends TaskTagFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, TaskTagFindUniqueArgs<ExtArgs>>
+    ): Prisma__TaskTagClient<$Result.GetResult<Prisma.$TaskTagPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one TaskTag that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {TaskTagFindUniqueOrThrowArgs} args - Arguments to find a TaskTag
+     * @example
+     * // Get one TaskTag
+     * const taskTag = await prisma.taskTag.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends TaskTagFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, TaskTagFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__TaskTagClient<$Result.GetResult<Prisma.$TaskTagPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first TaskTag that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskTagFindFirstArgs} args - Arguments to find a TaskTag
+     * @example
+     * // Get one TaskTag
+     * const taskTag = await prisma.taskTag.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends TaskTagFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, TaskTagFindFirstArgs<ExtArgs>>
+    ): Prisma__TaskTagClient<$Result.GetResult<Prisma.$TaskTagPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first TaskTag that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskTagFindFirstOrThrowArgs} args - Arguments to find a TaskTag
+     * @example
+     * // Get one TaskTag
+     * const taskTag = await prisma.taskTag.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends TaskTagFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, TaskTagFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__TaskTagClient<$Result.GetResult<Prisma.$TaskTagPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more TaskTags that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskTagFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TaskTags
+     * const taskTags = await prisma.taskTag.findMany()
+     * 
+     * // Get first 10 TaskTags
+     * const taskTags = await prisma.taskTag.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const taskTagWithIdOnly = await prisma.taskTag.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends TaskTagFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, TaskTagFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskTagPayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a TaskTag.
+     * @param {TaskTagCreateArgs} args - Arguments to create a TaskTag.
+     * @example
+     * // Create one TaskTag
+     * const TaskTag = await prisma.taskTag.create({
+     *   data: {
+     *     // ... data to create a TaskTag
+     *   }
+     * })
+     * 
+    **/
+    create<T extends TaskTagCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, TaskTagCreateArgs<ExtArgs>>
+    ): Prisma__TaskTagClient<$Result.GetResult<Prisma.$TaskTagPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many TaskTags.
+     * @param {TaskTagCreateManyArgs} args - Arguments to create many TaskTags.
+     * @example
+     * // Create many TaskTags
+     * const taskTag = await prisma.taskTag.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+    **/
+    createMany<T extends TaskTagCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, TaskTagCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TaskTags and returns the data saved in the database.
+     * @param {TaskTagCreateManyAndReturnArgs} args - Arguments to create many TaskTags.
+     * @example
+     * // Create many TaskTags
+     * const taskTag = await prisma.taskTag.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TaskTags and only return the `id`
+     * const taskTagWithIdOnly = await prisma.taskTag.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+    **/
+    createManyAndReturn<T extends TaskTagCreateManyAndReturnArgs<ExtArgs>>(
+      args?: SelectSubset<T, TaskTagCreateManyAndReturnArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskTagPayload<ExtArgs>, T, 'createManyAndReturn'>>
+
+    /**
+     * Delete a TaskTag.
+     * @param {TaskTagDeleteArgs} args - Arguments to delete one TaskTag.
+     * @example
+     * // Delete one TaskTag
+     * const TaskTag = await prisma.taskTag.delete({
+     *   where: {
+     *     // ... filter to delete one TaskTag
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends TaskTagDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, TaskTagDeleteArgs<ExtArgs>>
+    ): Prisma__TaskTagClient<$Result.GetResult<Prisma.$TaskTagPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one TaskTag.
+     * @param {TaskTagUpdateArgs} args - Arguments to update one TaskTag.
+     * @example
+     * // Update one TaskTag
+     * const taskTag = await prisma.taskTag.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends TaskTagUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, TaskTagUpdateArgs<ExtArgs>>
+    ): Prisma__TaskTagClient<$Result.GetResult<Prisma.$TaskTagPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more TaskTags.
+     * @param {TaskTagDeleteManyArgs} args - Arguments to filter TaskTags to delete.
+     * @example
+     * // Delete a few TaskTags
+     * const { count } = await prisma.taskTag.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends TaskTagDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, TaskTagDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TaskTags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskTagUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TaskTags
+     * const taskTag = await prisma.taskTag.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends TaskTagUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, TaskTagUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one TaskTag.
+     * @param {TaskTagUpsertArgs} args - Arguments to update or create a TaskTag.
+     * @example
+     * // Update or create a TaskTag
+     * const taskTag = await prisma.taskTag.upsert({
+     *   create: {
+     *     // ... data to create a TaskTag
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TaskTag we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends TaskTagUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, TaskTagUpsertArgs<ExtArgs>>
+    ): Prisma__TaskTagClient<$Result.GetResult<Prisma.$TaskTagPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of TaskTags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskTagCountArgs} args - Arguments to filter TaskTags to count.
+     * @example
+     * // Count the number of TaskTags
+     * const count = await prisma.taskTag.count({
+     *   where: {
+     *     // ... the filter for the TaskTags we want to count
+     *   }
+     * })
+    **/
+    count<T extends TaskTagCountArgs>(
+      args?: Subset<T, TaskTagCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TaskTagCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TaskTag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskTagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TaskTagAggregateArgs>(args: Subset<T, TaskTagAggregateArgs>): Prisma.PrismaPromise<GetTaskTagAggregateType<T>>
+
+    /**
+     * Group by TaskTag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskTagGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TaskTagGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TaskTagGroupByArgs['orderBy'] }
+        : { orderBy?: TaskTagGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TaskTagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTaskTagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TaskTag model
+   */
+  readonly fields: TaskTagFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TaskTag.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TaskTagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
+    PracticeTask<T extends TaskTag$PracticeTaskArgs<ExtArgs> = {}>(args?: Subset<T, TaskTag$PracticeTaskArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PracticeTaskPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the TaskTag model
+   */ 
+  interface TaskTagFieldRefs {
+    readonly id: FieldRef<"TaskTag", 'String'>
+    readonly userId: FieldRef<"TaskTag", 'String'>
+    readonly name: FieldRef<"TaskTag", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TaskTag findUnique
+   */
+  export type TaskTagFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskTag
+     */
+    select?: TaskTagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskTagInclude<ExtArgs> | null
+    /**
+     * Filter, which TaskTag to fetch.
+     */
+    where: TaskTagWhereUniqueInput
+  }
+
+  /**
+   * TaskTag findUniqueOrThrow
+   */
+  export type TaskTagFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskTag
+     */
+    select?: TaskTagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskTagInclude<ExtArgs> | null
+    /**
+     * Filter, which TaskTag to fetch.
+     */
+    where: TaskTagWhereUniqueInput
+  }
+
+  /**
+   * TaskTag findFirst
+   */
+  export type TaskTagFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskTag
+     */
+    select?: TaskTagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskTagInclude<ExtArgs> | null
+    /**
+     * Filter, which TaskTag to fetch.
+     */
+    where?: TaskTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TaskTags to fetch.
+     */
+    orderBy?: TaskTagOrderByWithRelationInput | TaskTagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TaskTags.
+     */
+    cursor?: TaskTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TaskTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TaskTags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TaskTags.
+     */
+    distinct?: TaskTagScalarFieldEnum | TaskTagScalarFieldEnum[]
+  }
+
+  /**
+   * TaskTag findFirstOrThrow
+   */
+  export type TaskTagFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskTag
+     */
+    select?: TaskTagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskTagInclude<ExtArgs> | null
+    /**
+     * Filter, which TaskTag to fetch.
+     */
+    where?: TaskTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TaskTags to fetch.
+     */
+    orderBy?: TaskTagOrderByWithRelationInput | TaskTagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TaskTags.
+     */
+    cursor?: TaskTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TaskTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TaskTags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TaskTags.
+     */
+    distinct?: TaskTagScalarFieldEnum | TaskTagScalarFieldEnum[]
+  }
+
+  /**
+   * TaskTag findMany
+   */
+  export type TaskTagFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskTag
+     */
+    select?: TaskTagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskTagInclude<ExtArgs> | null
+    /**
+     * Filter, which TaskTags to fetch.
+     */
+    where?: TaskTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TaskTags to fetch.
+     */
+    orderBy?: TaskTagOrderByWithRelationInput | TaskTagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TaskTags.
+     */
+    cursor?: TaskTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TaskTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TaskTags.
+     */
+    skip?: number
+    distinct?: TaskTagScalarFieldEnum | TaskTagScalarFieldEnum[]
+  }
+
+  /**
+   * TaskTag create
+   */
+  export type TaskTagCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskTag
+     */
+    select?: TaskTagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskTagInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TaskTag.
+     */
+    data: XOR<TaskTagCreateInput, TaskTagUncheckedCreateInput>
+  }
+
+  /**
+   * TaskTag createMany
+   */
+  export type TaskTagCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TaskTags.
+     */
+    data: TaskTagCreateManyInput | TaskTagCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TaskTag createManyAndReturn
+   */
+  export type TaskTagCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskTag
+     */
+    select?: TaskTagSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many TaskTags.
+     */
+    data: TaskTagCreateManyInput | TaskTagCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskTagIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TaskTag update
+   */
+  export type TaskTagUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskTag
+     */
+    select?: TaskTagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskTagInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TaskTag.
+     */
+    data: XOR<TaskTagUpdateInput, TaskTagUncheckedUpdateInput>
+    /**
+     * Choose, which TaskTag to update.
+     */
+    where: TaskTagWhereUniqueInput
+  }
+
+  /**
+   * TaskTag updateMany
+   */
+  export type TaskTagUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TaskTags.
+     */
+    data: XOR<TaskTagUpdateManyMutationInput, TaskTagUncheckedUpdateManyInput>
+    /**
+     * Filter which TaskTags to update
+     */
+    where?: TaskTagWhereInput
+  }
+
+  /**
+   * TaskTag upsert
+   */
+  export type TaskTagUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskTag
+     */
+    select?: TaskTagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskTagInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TaskTag to update in case it exists.
+     */
+    where: TaskTagWhereUniqueInput
+    /**
+     * In case the TaskTag found by the `where` argument doesn't exist, create a new TaskTag with this data.
+     */
+    create: XOR<TaskTagCreateInput, TaskTagUncheckedCreateInput>
+    /**
+     * In case the TaskTag was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TaskTagUpdateInput, TaskTagUncheckedUpdateInput>
+  }
+
+  /**
+   * TaskTag delete
+   */
+  export type TaskTagDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskTag
+     */
+    select?: TaskTagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskTagInclude<ExtArgs> | null
+    /**
+     * Filter which TaskTag to delete.
+     */
+    where: TaskTagWhereUniqueInput
+  }
+
+  /**
+   * TaskTag deleteMany
+   */
+  export type TaskTagDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TaskTags to delete
+     */
+    where?: TaskTagWhereInput
+  }
+
+  /**
+   * TaskTag.PracticeTask
+   */
+  export type TaskTag$PracticeTaskArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PracticeTask
+     */
+    select?: PracticeTaskSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PracticeTaskInclude<ExtArgs> | null
+    where?: PracticeTaskWhereInput
+    orderBy?: PracticeTaskOrderByWithRelationInput | PracticeTaskOrderByWithRelationInput[]
+    cursor?: PracticeTaskWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PracticeTaskScalarFieldEnum | PracticeTaskScalarFieldEnum[]
+  }
+
+  /**
+   * TaskTag without action
+   */
+  export type TaskTagDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskTag
+     */
+    select?: TaskTagSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskTagInclude<ExtArgs> | null
   }
 
 
@@ -12556,6 +13762,7 @@ export namespace Prisma {
     completionCount: 'completionCount',
     status: 'status',
     taskType: 'taskType',
+    questionLink: 'questionLink',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -12569,10 +13776,20 @@ export namespace Prisma {
     practiceTaskId: 'practiceTaskId',
     note: 'note',
     isBookmarked: 'isBookmarked',
-    isIgnored: 'isIgnored'
+    isIgnored: 'isIgnored',
+    submissionCount: 'submissionCount'
   };
 
   export type UserTaskMetadataScalarFieldEnum = (typeof UserTaskMetadataScalarFieldEnum)[keyof typeof UserTaskMetadataScalarFieldEnum]
+
+
+  export const TaskTagScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    name: 'name'
+  };
+
+  export type TaskTagScalarFieldEnum = (typeof TaskTagScalarFieldEnum)[keyof typeof TaskTagScalarFieldEnum]
 
 
   export const UserSubmitTaskScalarFieldEnum: {
@@ -12791,6 +14008,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskListRelationFilter
     userPracticeSets?: UserPracticeSetListRelationFilter
     userTaskMetadatas?: UserTaskMetadataListRelationFilter
+    taskTag?: TaskTagListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -12809,6 +14027,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskOrderByRelationAggregateInput
     userPracticeSets?: UserPracticeSetOrderByRelationAggregateInput
     userTaskMetadatas?: UserTaskMetadataOrderByRelationAggregateInput
+    taskTag?: TaskTagOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -12830,6 +14049,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskListRelationFilter
     userPracticeSets?: UserPracticeSetListRelationFilter
     userTaskMetadatas?: UserTaskMetadataListRelationFilter
+    taskTag?: TaskTagListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -13296,12 +14516,14 @@ export namespace Prisma {
     completionCount?: IntFilter<"PracticeTask"> | number
     status?: EnumStatusFilter<"PracticeTask"> | $Enums.Status
     taskType?: EnumTaskTypeFilter<"PracticeTask"> | $Enums.TaskType
+    questionLink?: StringNullableFilter<"PracticeTask"> | string | null
     createdAt?: DateTimeFilter<"PracticeTask"> | Date | string
     updatedAt?: DateTimeFilter<"PracticeTask"> | Date | string
     user?: XOR<UserRelationFilter, UserWhereInput>
     practiceSet?: XOR<PracticeSetRelationFilter, PracticeSetWhereInput>
     userSubmitTasks?: UserSubmitTaskListRelationFilter
     userTaskMetadatas?: UserTaskMetadataListRelationFilter
+    taskTags?: TaskTagListRelationFilter
   }
 
   export type PracticeTaskOrderByWithRelationInput = {
@@ -13315,12 +14537,14 @@ export namespace Prisma {
     completionCount?: SortOrder
     status?: SortOrder
     taskType?: SortOrder
+    questionLink?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
     practiceSet?: PracticeSetOrderByWithRelationInput
     userSubmitTasks?: UserSubmitTaskOrderByRelationAggregateInput
     userTaskMetadatas?: UserTaskMetadataOrderByRelationAggregateInput
+    taskTags?: TaskTagOrderByRelationAggregateInput
   }
 
   export type PracticeTaskWhereUniqueInput = Prisma.AtLeast<{
@@ -13337,12 +14561,14 @@ export namespace Prisma {
     completionCount?: IntFilter<"PracticeTask"> | number
     status?: EnumStatusFilter<"PracticeTask"> | $Enums.Status
     taskType?: EnumTaskTypeFilter<"PracticeTask"> | $Enums.TaskType
+    questionLink?: StringNullableFilter<"PracticeTask"> | string | null
     createdAt?: DateTimeFilter<"PracticeTask"> | Date | string
     updatedAt?: DateTimeFilter<"PracticeTask"> | Date | string
     user?: XOR<UserRelationFilter, UserWhereInput>
     practiceSet?: XOR<PracticeSetRelationFilter, PracticeSetWhereInput>
     userSubmitTasks?: UserSubmitTaskListRelationFilter
     userTaskMetadatas?: UserTaskMetadataListRelationFilter
+    taskTags?: TaskTagListRelationFilter
   }, "id">
 
   export type PracticeTaskOrderByWithAggregationInput = {
@@ -13356,6 +14582,7 @@ export namespace Prisma {
     completionCount?: SortOrder
     status?: SortOrder
     taskType?: SortOrder
+    questionLink?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: PracticeTaskCountOrderByAggregateInput
@@ -13379,6 +14606,7 @@ export namespace Prisma {
     completionCount?: IntWithAggregatesFilter<"PracticeTask"> | number
     status?: EnumStatusWithAggregatesFilter<"PracticeTask"> | $Enums.Status
     taskType?: EnumTaskTypeWithAggregatesFilter<"PracticeTask"> | $Enums.TaskType
+    questionLink?: StringNullableWithAggregatesFilter<"PracticeTask"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"PracticeTask"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"PracticeTask"> | Date | string
   }
@@ -13393,6 +14621,7 @@ export namespace Prisma {
     note?: JsonNullableFilter<"UserTaskMetadata">
     isBookmarked?: BoolFilter<"UserTaskMetadata"> | boolean
     isIgnored?: BoolFilter<"UserTaskMetadata"> | boolean
+    submissionCount?: IntFilter<"UserTaskMetadata"> | number
     user?: XOR<UserRelationFilter, UserWhereInput>
     practiceTask?: XOR<PracticeTaskRelationFilter, PracticeTaskWhereInput>
   }
@@ -13404,6 +14633,7 @@ export namespace Prisma {
     note?: SortOrderInput | SortOrder
     isBookmarked?: SortOrder
     isIgnored?: SortOrder
+    submissionCount?: SortOrder
     user?: UserOrderByWithRelationInput
     practiceTask?: PracticeTaskOrderByWithRelationInput
   }
@@ -13418,6 +14648,7 @@ export namespace Prisma {
     note?: JsonNullableFilter<"UserTaskMetadata">
     isBookmarked?: BoolFilter<"UserTaskMetadata"> | boolean
     isIgnored?: BoolFilter<"UserTaskMetadata"> | boolean
+    submissionCount?: IntFilter<"UserTaskMetadata"> | number
     user?: XOR<UserRelationFilter, UserWhereInput>
     practiceTask?: XOR<PracticeTaskRelationFilter, PracticeTaskWhereInput>
   }, "id">
@@ -13429,9 +14660,12 @@ export namespace Prisma {
     note?: SortOrderInput | SortOrder
     isBookmarked?: SortOrder
     isIgnored?: SortOrder
+    submissionCount?: SortOrder
     _count?: UserTaskMetadataCountOrderByAggregateInput
+    _avg?: UserTaskMetadataAvgOrderByAggregateInput
     _max?: UserTaskMetadataMaxOrderByAggregateInput
     _min?: UserTaskMetadataMinOrderByAggregateInput
+    _sum?: UserTaskMetadataSumOrderByAggregateInput
   }
 
   export type UserTaskMetadataScalarWhereWithAggregatesInput = {
@@ -13444,6 +14678,55 @@ export namespace Prisma {
     note?: JsonNullableWithAggregatesFilter<"UserTaskMetadata">
     isBookmarked?: BoolWithAggregatesFilter<"UserTaskMetadata"> | boolean
     isIgnored?: BoolWithAggregatesFilter<"UserTaskMetadata"> | boolean
+    submissionCount?: IntWithAggregatesFilter<"UserTaskMetadata"> | number
+  }
+
+  export type TaskTagWhereInput = {
+    AND?: TaskTagWhereInput | TaskTagWhereInput[]
+    OR?: TaskTagWhereInput[]
+    NOT?: TaskTagWhereInput | TaskTagWhereInput[]
+    id?: StringFilter<"TaskTag"> | string
+    userId?: StringFilter<"TaskTag"> | string
+    name?: StringFilter<"TaskTag"> | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    PracticeTask?: PracticeTaskListRelationFilter
+  }
+
+  export type TaskTagOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    user?: UserOrderByWithRelationInput
+    PracticeTask?: PracticeTaskOrderByRelationAggregateInput
+  }
+
+  export type TaskTagWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: TaskTagWhereInput | TaskTagWhereInput[]
+    OR?: TaskTagWhereInput[]
+    NOT?: TaskTagWhereInput | TaskTagWhereInput[]
+    userId?: StringFilter<"TaskTag"> | string
+    name?: StringFilter<"TaskTag"> | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    PracticeTask?: PracticeTaskListRelationFilter
+  }, "id">
+
+  export type TaskTagOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    _count?: TaskTagCountOrderByAggregateInput
+    _max?: TaskTagMaxOrderByAggregateInput
+    _min?: TaskTagMinOrderByAggregateInput
+  }
+
+  export type TaskTagScalarWhereWithAggregatesInput = {
+    AND?: TaskTagScalarWhereWithAggregatesInput | TaskTagScalarWhereWithAggregatesInput[]
+    OR?: TaskTagScalarWhereWithAggregatesInput[]
+    NOT?: TaskTagScalarWhereWithAggregatesInput | TaskTagScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TaskTag"> | string
+    userId?: StringWithAggregatesFilter<"TaskTag"> | string
+    name?: StringWithAggregatesFilter<"TaskTag"> | string
   }
 
   export type UserSubmitTaskWhereInput = {
@@ -13546,6 +14829,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskCreateNestedManyWithoutUserInput
     userPracticeSets?: UserPracticeSetCreateNestedManyWithoutUserInput
     userTaskMetadatas?: UserTaskMetadataCreateNestedManyWithoutUserInput
+    taskTag?: TaskTagCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -13564,6 +14848,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskUncheckedCreateNestedManyWithoutUserInput
     userPracticeSets?: UserPracticeSetUncheckedCreateNestedManyWithoutUserInput
     userTaskMetadatas?: UserTaskMetadataUncheckedCreateNestedManyWithoutUserInput
+    taskTag?: TaskTagUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -13582,6 +14867,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskUpdateManyWithoutUserNestedInput
     userPracticeSets?: UserPracticeSetUpdateManyWithoutUserNestedInput
     userTaskMetadatas?: UserTaskMetadataUpdateManyWithoutUserNestedInput
+    taskTag?: TaskTagUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -13600,6 +14886,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskUncheckedUpdateManyWithoutUserNestedInput
     userPracticeSets?: UserPracticeSetUncheckedUpdateManyWithoutUserNestedInput
     userTaskMetadatas?: UserTaskMetadataUncheckedUpdateManyWithoutUserNestedInput
+    taskTag?: TaskTagUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -14080,12 +15367,14 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutPracticeTasksInput
     practiceSet: PracticeSetCreateNestedOneWithoutPracticeTasksInput
     userSubmitTasks?: UserSubmitTaskCreateNestedManyWithoutPracticeTaskInput
     userTaskMetadatas?: UserTaskMetadataCreateNestedManyWithoutPracticeTaskInput
+    taskTags?: TaskTagCreateNestedManyWithoutPracticeTaskInput
   }
 
   export type PracticeTaskUncheckedCreateInput = {
@@ -14099,10 +15388,12 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userSubmitTasks?: UserSubmitTaskUncheckedCreateNestedManyWithoutPracticeTaskInput
     userTaskMetadatas?: UserTaskMetadataUncheckedCreateNestedManyWithoutPracticeTaskInput
+    taskTags?: TaskTagUncheckedCreateNestedManyWithoutPracticeTaskInput
   }
 
   export type PracticeTaskUpdateInput = {
@@ -14114,12 +15405,14 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutPracticeTasksNestedInput
     practiceSet?: PracticeSetUpdateOneRequiredWithoutPracticeTasksNestedInput
     userSubmitTasks?: UserSubmitTaskUpdateManyWithoutPracticeTaskNestedInput
     userTaskMetadatas?: UserTaskMetadataUpdateManyWithoutPracticeTaskNestedInput
+    taskTags?: TaskTagUpdateManyWithoutPracticeTaskNestedInput
   }
 
   export type PracticeTaskUncheckedUpdateInput = {
@@ -14133,10 +15426,12 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userSubmitTasks?: UserSubmitTaskUncheckedUpdateManyWithoutPracticeTaskNestedInput
     userTaskMetadatas?: UserTaskMetadataUncheckedUpdateManyWithoutPracticeTaskNestedInput
+    taskTags?: TaskTagUncheckedUpdateManyWithoutPracticeTaskNestedInput
   }
 
   export type PracticeTaskCreateManyInput = {
@@ -14150,6 +15445,7 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14163,6 +15459,7 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14178,6 +15475,7 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14187,6 +15485,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: number
     user: UserCreateNestedOneWithoutUserTaskMetadatasInput
     practiceTask: PracticeTaskCreateNestedOneWithoutUserTaskMetadatasInput
   }
@@ -14198,6 +15497,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: number
   }
 
   export type UserTaskMetadataUpdateInput = {
@@ -14205,6 +15505,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: BoolFieldUpdateOperationsInput | boolean
     isIgnored?: BoolFieldUpdateOperationsInput | boolean
+    submissionCount?: IntFieldUpdateOperationsInput | number
     user?: UserUpdateOneRequiredWithoutUserTaskMetadatasNestedInput
     practiceTask?: PracticeTaskUpdateOneRequiredWithoutUserTaskMetadatasNestedInput
   }
@@ -14216,6 +15517,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: BoolFieldUpdateOperationsInput | boolean
     isIgnored?: BoolFieldUpdateOperationsInput | boolean
+    submissionCount?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserTaskMetadataCreateManyInput = {
@@ -14225,6 +15527,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: number
   }
 
   export type UserTaskMetadataUpdateManyMutationInput = {
@@ -14232,6 +15535,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: BoolFieldUpdateOperationsInput | boolean
     isIgnored?: BoolFieldUpdateOperationsInput | boolean
+    submissionCount?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserTaskMetadataUncheckedUpdateManyInput = {
@@ -14241,6 +15545,52 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: BoolFieldUpdateOperationsInput | boolean
     isIgnored?: BoolFieldUpdateOperationsInput | boolean
+    submissionCount?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type TaskTagCreateInput = {
+    id?: string
+    name: string
+    user: UserCreateNestedOneWithoutTaskTagInput
+    PracticeTask?: PracticeTaskCreateNestedManyWithoutTaskTagsInput
+  }
+
+  export type TaskTagUncheckedCreateInput = {
+    id?: string
+    userId: string
+    name: string
+    PracticeTask?: PracticeTaskUncheckedCreateNestedManyWithoutTaskTagsInput
+  }
+
+  export type TaskTagUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    user?: UserUpdateOneRequiredWithoutTaskTagNestedInput
+    PracticeTask?: PracticeTaskUpdateManyWithoutTaskTagsNestedInput
+  }
+
+  export type TaskTagUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    PracticeTask?: PracticeTaskUncheckedUpdateManyWithoutTaskTagsNestedInput
+  }
+
+  export type TaskTagCreateManyInput = {
+    id?: string
+    userId: string
+    name: string
+  }
+
+  export type TaskTagUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TaskTagUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserSubmitTaskCreateInput = {
@@ -14418,6 +15768,12 @@ export namespace Prisma {
     none?: UserTaskMetadataWhereInput
   }
 
+  export type TaskTagListRelationFilter = {
+    every?: TaskTagWhereInput
+    some?: TaskTagWhereInput
+    none?: TaskTagWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -14456,6 +15812,10 @@ export namespace Prisma {
   }
 
   export type UserTaskMetadataOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TaskTagOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -14938,6 +16298,7 @@ export namespace Prisma {
     completionCount?: SortOrder
     status?: SortOrder
     taskType?: SortOrder
+    questionLink?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -14957,6 +16318,7 @@ export namespace Prisma {
     completionCount?: SortOrder
     status?: SortOrder
     taskType?: SortOrder
+    questionLink?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -14971,6 +16333,7 @@ export namespace Prisma {
     completionCount?: SortOrder
     status?: SortOrder
     taskType?: SortOrder
+    questionLink?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -15007,6 +16370,11 @@ export namespace Prisma {
     note?: SortOrder
     isBookmarked?: SortOrder
     isIgnored?: SortOrder
+    submissionCount?: SortOrder
+  }
+
+  export type UserTaskMetadataAvgOrderByAggregateInput = {
+    submissionCount?: SortOrder
   }
 
   export type UserTaskMetadataMaxOrderByAggregateInput = {
@@ -15015,6 +16383,7 @@ export namespace Prisma {
     practiceTaskId?: SortOrder
     isBookmarked?: SortOrder
     isIgnored?: SortOrder
+    submissionCount?: SortOrder
   }
 
   export type UserTaskMetadataMinOrderByAggregateInput = {
@@ -15023,6 +16392,11 @@ export namespace Prisma {
     practiceTaskId?: SortOrder
     isBookmarked?: SortOrder
     isIgnored?: SortOrder
+    submissionCount?: SortOrder
+  }
+
+  export type UserTaskMetadataSumOrderByAggregateInput = {
+    submissionCount?: SortOrder
   }
 
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -15031,6 +16405,24 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type TaskTagCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+  }
+
+  export type TaskTagMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+  }
+
+  export type TaskTagMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
   }
 
   export type UserPracticeSetRelationFilter = {
@@ -15135,6 +16527,13 @@ export namespace Prisma {
     connect?: UserTaskMetadataWhereUniqueInput | UserTaskMetadataWhereUniqueInput[]
   }
 
+  export type TaskTagCreateNestedManyWithoutUserInput = {
+    create?: XOR<TaskTagCreateWithoutUserInput, TaskTagUncheckedCreateWithoutUserInput> | TaskTagCreateWithoutUserInput[] | TaskTagUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TaskTagCreateOrConnectWithoutUserInput | TaskTagCreateOrConnectWithoutUserInput[]
+    createMany?: TaskTagCreateManyUserInputEnvelope
+    connect?: TaskTagWhereUniqueInput | TaskTagWhereUniqueInput[]
+  }
+
   export type PostUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<PostCreateWithoutUserInput, PostUncheckedCreateWithoutUserInput> | PostCreateWithoutUserInput[] | PostUncheckedCreateWithoutUserInput[]
     connectOrCreate?: PostCreateOrConnectWithoutUserInput | PostCreateOrConnectWithoutUserInput[]
@@ -15196,6 +16595,13 @@ export namespace Prisma {
     connectOrCreate?: UserTaskMetadataCreateOrConnectWithoutUserInput | UserTaskMetadataCreateOrConnectWithoutUserInput[]
     createMany?: UserTaskMetadataCreateManyUserInputEnvelope
     connect?: UserTaskMetadataWhereUniqueInput | UserTaskMetadataWhereUniqueInput[]
+  }
+
+  export type TaskTagUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<TaskTagCreateWithoutUserInput, TaskTagUncheckedCreateWithoutUserInput> | TaskTagCreateWithoutUserInput[] | TaskTagUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TaskTagCreateOrConnectWithoutUserInput | TaskTagCreateOrConnectWithoutUserInput[]
+    createMany?: TaskTagCreateManyUserInputEnvelope
+    connect?: TaskTagWhereUniqueInput | TaskTagWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -15336,6 +16742,20 @@ export namespace Prisma {
     deleteMany?: UserTaskMetadataScalarWhereInput | UserTaskMetadataScalarWhereInput[]
   }
 
+  export type TaskTagUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TaskTagCreateWithoutUserInput, TaskTagUncheckedCreateWithoutUserInput> | TaskTagCreateWithoutUserInput[] | TaskTagUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TaskTagCreateOrConnectWithoutUserInput | TaskTagCreateOrConnectWithoutUserInput[]
+    upsert?: TaskTagUpsertWithWhereUniqueWithoutUserInput | TaskTagUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TaskTagCreateManyUserInputEnvelope
+    set?: TaskTagWhereUniqueInput | TaskTagWhereUniqueInput[]
+    disconnect?: TaskTagWhereUniqueInput | TaskTagWhereUniqueInput[]
+    delete?: TaskTagWhereUniqueInput | TaskTagWhereUniqueInput[]
+    connect?: TaskTagWhereUniqueInput | TaskTagWhereUniqueInput[]
+    update?: TaskTagUpdateWithWhereUniqueWithoutUserInput | TaskTagUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TaskTagUpdateManyWithWhereWithoutUserInput | TaskTagUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TaskTagScalarWhereInput | TaskTagScalarWhereInput[]
+  }
+
   export type PostUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<PostCreateWithoutUserInput, PostUncheckedCreateWithoutUserInput> | PostCreateWithoutUserInput[] | PostUncheckedCreateWithoutUserInput[]
     connectOrCreate?: PostCreateOrConnectWithoutUserInput | PostCreateOrConnectWithoutUserInput[]
@@ -15460,6 +16880,20 @@ export namespace Prisma {
     update?: UserTaskMetadataUpdateWithWhereUniqueWithoutUserInput | UserTaskMetadataUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserTaskMetadataUpdateManyWithWhereWithoutUserInput | UserTaskMetadataUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserTaskMetadataScalarWhereInput | UserTaskMetadataScalarWhereInput[]
+  }
+
+  export type TaskTagUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TaskTagCreateWithoutUserInput, TaskTagUncheckedCreateWithoutUserInput> | TaskTagCreateWithoutUserInput[] | TaskTagUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TaskTagCreateOrConnectWithoutUserInput | TaskTagCreateOrConnectWithoutUserInput[]
+    upsert?: TaskTagUpsertWithWhereUniqueWithoutUserInput | TaskTagUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TaskTagCreateManyUserInputEnvelope
+    set?: TaskTagWhereUniqueInput | TaskTagWhereUniqueInput[]
+    disconnect?: TaskTagWhereUniqueInput | TaskTagWhereUniqueInput[]
+    delete?: TaskTagWhereUniqueInput | TaskTagWhereUniqueInput[]
+    connect?: TaskTagWhereUniqueInput | TaskTagWhereUniqueInput[]
+    update?: TaskTagUpdateWithWhereUniqueWithoutUserInput | TaskTagUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TaskTagUpdateManyWithWhereWithoutUserInput | TaskTagUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TaskTagScalarWhereInput | TaskTagScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutUserStatusesInput = {
@@ -15886,6 +17320,12 @@ export namespace Prisma {
     connect?: UserTaskMetadataWhereUniqueInput | UserTaskMetadataWhereUniqueInput[]
   }
 
+  export type TaskTagCreateNestedManyWithoutPracticeTaskInput = {
+    create?: XOR<TaskTagCreateWithoutPracticeTaskInput, TaskTagUncheckedCreateWithoutPracticeTaskInput> | TaskTagCreateWithoutPracticeTaskInput[] | TaskTagUncheckedCreateWithoutPracticeTaskInput[]
+    connectOrCreate?: TaskTagCreateOrConnectWithoutPracticeTaskInput | TaskTagCreateOrConnectWithoutPracticeTaskInput[]
+    connect?: TaskTagWhereUniqueInput | TaskTagWhereUniqueInput[]
+  }
+
   export type UserSubmitTaskUncheckedCreateNestedManyWithoutPracticeTaskInput = {
     create?: XOR<UserSubmitTaskCreateWithoutPracticeTaskInput, UserSubmitTaskUncheckedCreateWithoutPracticeTaskInput> | UserSubmitTaskCreateWithoutPracticeTaskInput[] | UserSubmitTaskUncheckedCreateWithoutPracticeTaskInput[]
     connectOrCreate?: UserSubmitTaskCreateOrConnectWithoutPracticeTaskInput | UserSubmitTaskCreateOrConnectWithoutPracticeTaskInput[]
@@ -15898,6 +17338,12 @@ export namespace Prisma {
     connectOrCreate?: UserTaskMetadataCreateOrConnectWithoutPracticeTaskInput | UserTaskMetadataCreateOrConnectWithoutPracticeTaskInput[]
     createMany?: UserTaskMetadataCreateManyPracticeTaskInputEnvelope
     connect?: UserTaskMetadataWhereUniqueInput | UserTaskMetadataWhereUniqueInput[]
+  }
+
+  export type TaskTagUncheckedCreateNestedManyWithoutPracticeTaskInput = {
+    create?: XOR<TaskTagCreateWithoutPracticeTaskInput, TaskTagUncheckedCreateWithoutPracticeTaskInput> | TaskTagCreateWithoutPracticeTaskInput[] | TaskTagUncheckedCreateWithoutPracticeTaskInput[]
+    connectOrCreate?: TaskTagCreateOrConnectWithoutPracticeTaskInput | TaskTagCreateOrConnectWithoutPracticeTaskInput[]
+    connect?: TaskTagWhereUniqueInput | TaskTagWhereUniqueInput[]
   }
 
   export type EnumTaskTypeFieldUpdateOperationsInput = {
@@ -15948,6 +17394,19 @@ export namespace Prisma {
     deleteMany?: UserTaskMetadataScalarWhereInput | UserTaskMetadataScalarWhereInput[]
   }
 
+  export type TaskTagUpdateManyWithoutPracticeTaskNestedInput = {
+    create?: XOR<TaskTagCreateWithoutPracticeTaskInput, TaskTagUncheckedCreateWithoutPracticeTaskInput> | TaskTagCreateWithoutPracticeTaskInput[] | TaskTagUncheckedCreateWithoutPracticeTaskInput[]
+    connectOrCreate?: TaskTagCreateOrConnectWithoutPracticeTaskInput | TaskTagCreateOrConnectWithoutPracticeTaskInput[]
+    upsert?: TaskTagUpsertWithWhereUniqueWithoutPracticeTaskInput | TaskTagUpsertWithWhereUniqueWithoutPracticeTaskInput[]
+    set?: TaskTagWhereUniqueInput | TaskTagWhereUniqueInput[]
+    disconnect?: TaskTagWhereUniqueInput | TaskTagWhereUniqueInput[]
+    delete?: TaskTagWhereUniqueInput | TaskTagWhereUniqueInput[]
+    connect?: TaskTagWhereUniqueInput | TaskTagWhereUniqueInput[]
+    update?: TaskTagUpdateWithWhereUniqueWithoutPracticeTaskInput | TaskTagUpdateWithWhereUniqueWithoutPracticeTaskInput[]
+    updateMany?: TaskTagUpdateManyWithWhereWithoutPracticeTaskInput | TaskTagUpdateManyWithWhereWithoutPracticeTaskInput[]
+    deleteMany?: TaskTagScalarWhereInput | TaskTagScalarWhereInput[]
+  }
+
   export type UserSubmitTaskUncheckedUpdateManyWithoutPracticeTaskNestedInput = {
     create?: XOR<UserSubmitTaskCreateWithoutPracticeTaskInput, UserSubmitTaskUncheckedCreateWithoutPracticeTaskInput> | UserSubmitTaskCreateWithoutPracticeTaskInput[] | UserSubmitTaskUncheckedCreateWithoutPracticeTaskInput[]
     connectOrCreate?: UserSubmitTaskCreateOrConnectWithoutPracticeTaskInput | UserSubmitTaskCreateOrConnectWithoutPracticeTaskInput[]
@@ -15974,6 +17433,19 @@ export namespace Prisma {
     update?: UserTaskMetadataUpdateWithWhereUniqueWithoutPracticeTaskInput | UserTaskMetadataUpdateWithWhereUniqueWithoutPracticeTaskInput[]
     updateMany?: UserTaskMetadataUpdateManyWithWhereWithoutPracticeTaskInput | UserTaskMetadataUpdateManyWithWhereWithoutPracticeTaskInput[]
     deleteMany?: UserTaskMetadataScalarWhereInput | UserTaskMetadataScalarWhereInput[]
+  }
+
+  export type TaskTagUncheckedUpdateManyWithoutPracticeTaskNestedInput = {
+    create?: XOR<TaskTagCreateWithoutPracticeTaskInput, TaskTagUncheckedCreateWithoutPracticeTaskInput> | TaskTagCreateWithoutPracticeTaskInput[] | TaskTagUncheckedCreateWithoutPracticeTaskInput[]
+    connectOrCreate?: TaskTagCreateOrConnectWithoutPracticeTaskInput | TaskTagCreateOrConnectWithoutPracticeTaskInput[]
+    upsert?: TaskTagUpsertWithWhereUniqueWithoutPracticeTaskInput | TaskTagUpsertWithWhereUniqueWithoutPracticeTaskInput[]
+    set?: TaskTagWhereUniqueInput | TaskTagWhereUniqueInput[]
+    disconnect?: TaskTagWhereUniqueInput | TaskTagWhereUniqueInput[]
+    delete?: TaskTagWhereUniqueInput | TaskTagWhereUniqueInput[]
+    connect?: TaskTagWhereUniqueInput | TaskTagWhereUniqueInput[]
+    update?: TaskTagUpdateWithWhereUniqueWithoutPracticeTaskInput | TaskTagUpdateWithWhereUniqueWithoutPracticeTaskInput[]
+    updateMany?: TaskTagUpdateManyWithWhereWithoutPracticeTaskInput | TaskTagUpdateManyWithWhereWithoutPracticeTaskInput[]
+    deleteMany?: TaskTagScalarWhereInput | TaskTagScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutUserTaskMetadatasInput = {
@@ -16006,6 +17478,58 @@ export namespace Prisma {
     upsert?: PracticeTaskUpsertWithoutUserTaskMetadatasInput
     connect?: PracticeTaskWhereUniqueInput
     update?: XOR<XOR<PracticeTaskUpdateToOneWithWhereWithoutUserTaskMetadatasInput, PracticeTaskUpdateWithoutUserTaskMetadatasInput>, PracticeTaskUncheckedUpdateWithoutUserTaskMetadatasInput>
+  }
+
+  export type UserCreateNestedOneWithoutTaskTagInput = {
+    create?: XOR<UserCreateWithoutTaskTagInput, UserUncheckedCreateWithoutTaskTagInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTaskTagInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type PracticeTaskCreateNestedManyWithoutTaskTagsInput = {
+    create?: XOR<PracticeTaskCreateWithoutTaskTagsInput, PracticeTaskUncheckedCreateWithoutTaskTagsInput> | PracticeTaskCreateWithoutTaskTagsInput[] | PracticeTaskUncheckedCreateWithoutTaskTagsInput[]
+    connectOrCreate?: PracticeTaskCreateOrConnectWithoutTaskTagsInput | PracticeTaskCreateOrConnectWithoutTaskTagsInput[]
+    connect?: PracticeTaskWhereUniqueInput | PracticeTaskWhereUniqueInput[]
+  }
+
+  export type PracticeTaskUncheckedCreateNestedManyWithoutTaskTagsInput = {
+    create?: XOR<PracticeTaskCreateWithoutTaskTagsInput, PracticeTaskUncheckedCreateWithoutTaskTagsInput> | PracticeTaskCreateWithoutTaskTagsInput[] | PracticeTaskUncheckedCreateWithoutTaskTagsInput[]
+    connectOrCreate?: PracticeTaskCreateOrConnectWithoutTaskTagsInput | PracticeTaskCreateOrConnectWithoutTaskTagsInput[]
+    connect?: PracticeTaskWhereUniqueInput | PracticeTaskWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutTaskTagNestedInput = {
+    create?: XOR<UserCreateWithoutTaskTagInput, UserUncheckedCreateWithoutTaskTagInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTaskTagInput
+    upsert?: UserUpsertWithoutTaskTagInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTaskTagInput, UserUpdateWithoutTaskTagInput>, UserUncheckedUpdateWithoutTaskTagInput>
+  }
+
+  export type PracticeTaskUpdateManyWithoutTaskTagsNestedInput = {
+    create?: XOR<PracticeTaskCreateWithoutTaskTagsInput, PracticeTaskUncheckedCreateWithoutTaskTagsInput> | PracticeTaskCreateWithoutTaskTagsInput[] | PracticeTaskUncheckedCreateWithoutTaskTagsInput[]
+    connectOrCreate?: PracticeTaskCreateOrConnectWithoutTaskTagsInput | PracticeTaskCreateOrConnectWithoutTaskTagsInput[]
+    upsert?: PracticeTaskUpsertWithWhereUniqueWithoutTaskTagsInput | PracticeTaskUpsertWithWhereUniqueWithoutTaskTagsInput[]
+    set?: PracticeTaskWhereUniqueInput | PracticeTaskWhereUniqueInput[]
+    disconnect?: PracticeTaskWhereUniqueInput | PracticeTaskWhereUniqueInput[]
+    delete?: PracticeTaskWhereUniqueInput | PracticeTaskWhereUniqueInput[]
+    connect?: PracticeTaskWhereUniqueInput | PracticeTaskWhereUniqueInput[]
+    update?: PracticeTaskUpdateWithWhereUniqueWithoutTaskTagsInput | PracticeTaskUpdateWithWhereUniqueWithoutTaskTagsInput[]
+    updateMany?: PracticeTaskUpdateManyWithWhereWithoutTaskTagsInput | PracticeTaskUpdateManyWithWhereWithoutTaskTagsInput[]
+    deleteMany?: PracticeTaskScalarWhereInput | PracticeTaskScalarWhereInput[]
+  }
+
+  export type PracticeTaskUncheckedUpdateManyWithoutTaskTagsNestedInput = {
+    create?: XOR<PracticeTaskCreateWithoutTaskTagsInput, PracticeTaskUncheckedCreateWithoutTaskTagsInput> | PracticeTaskCreateWithoutTaskTagsInput[] | PracticeTaskUncheckedCreateWithoutTaskTagsInput[]
+    connectOrCreate?: PracticeTaskCreateOrConnectWithoutTaskTagsInput | PracticeTaskCreateOrConnectWithoutTaskTagsInput[]
+    upsert?: PracticeTaskUpsertWithWhereUniqueWithoutTaskTagsInput | PracticeTaskUpsertWithWhereUniqueWithoutTaskTagsInput[]
+    set?: PracticeTaskWhereUniqueInput | PracticeTaskWhereUniqueInput[]
+    disconnect?: PracticeTaskWhereUniqueInput | PracticeTaskWhereUniqueInput[]
+    delete?: PracticeTaskWhereUniqueInput | PracticeTaskWhereUniqueInput[]
+    connect?: PracticeTaskWhereUniqueInput | PracticeTaskWhereUniqueInput[]
+    update?: PracticeTaskUpdateWithWhereUniqueWithoutTaskTagsInput | PracticeTaskUpdateWithWhereUniqueWithoutTaskTagsInput[]
+    updateMany?: PracticeTaskUpdateManyWithWhereWithoutTaskTagsInput | PracticeTaskUpdateManyWithWhereWithoutTaskTagsInput[]
+    deleteMany?: PracticeTaskScalarWhereInput | PracticeTaskScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutUserSubmitTasksInput = {
@@ -16492,11 +18016,13 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     practiceSet: PracticeSetCreateNestedOneWithoutPracticeTasksInput
     userSubmitTasks?: UserSubmitTaskCreateNestedManyWithoutPracticeTaskInput
     userTaskMetadatas?: UserTaskMetadataCreateNestedManyWithoutPracticeTaskInput
+    taskTags?: TaskTagCreateNestedManyWithoutPracticeTaskInput
   }
 
   export type PracticeTaskUncheckedCreateWithoutUserInput = {
@@ -16509,10 +18035,12 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userSubmitTasks?: UserSubmitTaskUncheckedCreateNestedManyWithoutPracticeTaskInput
     userTaskMetadatas?: UserTaskMetadataUncheckedCreateNestedManyWithoutPracticeTaskInput
+    taskTags?: TaskTagUncheckedCreateNestedManyWithoutPracticeTaskInput
   }
 
   export type PracticeTaskCreateOrConnectWithoutUserInput = {
@@ -16586,6 +18114,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: number
     practiceTask: PracticeTaskCreateNestedOneWithoutUserTaskMetadatasInput
   }
 
@@ -16595,6 +18124,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: number
   }
 
   export type UserTaskMetadataCreateOrConnectWithoutUserInput = {
@@ -16604,6 +18134,28 @@ export namespace Prisma {
 
   export type UserTaskMetadataCreateManyUserInputEnvelope = {
     data: UserTaskMetadataCreateManyUserInput | UserTaskMetadataCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TaskTagCreateWithoutUserInput = {
+    id?: string
+    name: string
+    PracticeTask?: PracticeTaskCreateNestedManyWithoutTaskTagsInput
+  }
+
+  export type TaskTagUncheckedCreateWithoutUserInput = {
+    id?: string
+    name: string
+    PracticeTask?: PracticeTaskUncheckedCreateNestedManyWithoutTaskTagsInput
+  }
+
+  export type TaskTagCreateOrConnectWithoutUserInput = {
+    where: TaskTagWhereUniqueInput
+    create: XOR<TaskTagCreateWithoutUserInput, TaskTagUncheckedCreateWithoutUserInput>
+  }
+
+  export type TaskTagCreateManyUserInputEnvelope = {
+    data: TaskTagCreateManyUserInput | TaskTagCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -16786,6 +18338,7 @@ export namespace Prisma {
     completionCount?: IntFilter<"PracticeTask"> | number
     status?: EnumStatusFilter<"PracticeTask"> | $Enums.Status
     taskType?: EnumTaskTypeFilter<"PracticeTask"> | $Enums.TaskType
+    questionLink?: StringNullableFilter<"PracticeTask"> | string | null
     createdAt?: DateTimeFilter<"PracticeTask"> | Date | string
     updatedAt?: DateTimeFilter<"PracticeTask"> | Date | string
   }
@@ -16873,6 +18426,32 @@ export namespace Prisma {
     note?: JsonNullableFilter<"UserTaskMetadata">
     isBookmarked?: BoolFilter<"UserTaskMetadata"> | boolean
     isIgnored?: BoolFilter<"UserTaskMetadata"> | boolean
+    submissionCount?: IntFilter<"UserTaskMetadata"> | number
+  }
+
+  export type TaskTagUpsertWithWhereUniqueWithoutUserInput = {
+    where: TaskTagWhereUniqueInput
+    update: XOR<TaskTagUpdateWithoutUserInput, TaskTagUncheckedUpdateWithoutUserInput>
+    create: XOR<TaskTagCreateWithoutUserInput, TaskTagUncheckedCreateWithoutUserInput>
+  }
+
+  export type TaskTagUpdateWithWhereUniqueWithoutUserInput = {
+    where: TaskTagWhereUniqueInput
+    data: XOR<TaskTagUpdateWithoutUserInput, TaskTagUncheckedUpdateWithoutUserInput>
+  }
+
+  export type TaskTagUpdateManyWithWhereWithoutUserInput = {
+    where: TaskTagScalarWhereInput
+    data: XOR<TaskTagUpdateManyMutationInput, TaskTagUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type TaskTagScalarWhereInput = {
+    AND?: TaskTagScalarWhereInput | TaskTagScalarWhereInput[]
+    OR?: TaskTagScalarWhereInput[]
+    NOT?: TaskTagScalarWhereInput | TaskTagScalarWhereInput[]
+    id?: StringFilter<"TaskTag"> | string
+    userId?: StringFilter<"TaskTag"> | string
+    name?: StringFilter<"TaskTag"> | string
   }
 
   export type UserCreateWithoutUserStatusesInput = {
@@ -16890,6 +18469,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskCreateNestedManyWithoutUserInput
     userPracticeSets?: UserPracticeSetCreateNestedManyWithoutUserInput
     userTaskMetadatas?: UserTaskMetadataCreateNestedManyWithoutUserInput
+    taskTag?: TaskTagCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserStatusesInput = {
@@ -16907,6 +18487,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskUncheckedCreateNestedManyWithoutUserInput
     userPracticeSets?: UserPracticeSetUncheckedCreateNestedManyWithoutUserInput
     userTaskMetadatas?: UserTaskMetadataUncheckedCreateNestedManyWithoutUserInput
+    taskTag?: TaskTagUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserStatusesInput = {
@@ -16940,6 +18521,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskUpdateManyWithoutUserNestedInput
     userPracticeSets?: UserPracticeSetUpdateManyWithoutUserNestedInput
     userTaskMetadatas?: UserTaskMetadataUpdateManyWithoutUserNestedInput
+    taskTag?: TaskTagUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserStatusesInput = {
@@ -16957,6 +18539,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskUncheckedUpdateManyWithoutUserNestedInput
     userPracticeSets?: UserPracticeSetUncheckedUpdateManyWithoutUserNestedInput
     userTaskMetadatas?: UserTaskMetadataUncheckedUpdateManyWithoutUserNestedInput
+    taskTag?: TaskTagUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ReactionCreateWithoutPostInput = {
@@ -17028,6 +18611,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskCreateNestedManyWithoutUserInput
     userPracticeSets?: UserPracticeSetCreateNestedManyWithoutUserInput
     userTaskMetadatas?: UserTaskMetadataCreateNestedManyWithoutUserInput
+    taskTag?: TaskTagCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPostsInput = {
@@ -17045,6 +18629,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskUncheckedCreateNestedManyWithoutUserInput
     userPracticeSets?: UserPracticeSetUncheckedCreateNestedManyWithoutUserInput
     userTaskMetadatas?: UserTaskMetadataUncheckedCreateNestedManyWithoutUserInput
+    taskTag?: TaskTagUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPostsInput = {
@@ -17110,6 +18695,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskUpdateManyWithoutUserNestedInput
     userPracticeSets?: UserPracticeSetUpdateManyWithoutUserNestedInput
     userTaskMetadatas?: UserTaskMetadataUpdateManyWithoutUserNestedInput
+    taskTag?: TaskTagUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPostsInput = {
@@ -17127,6 +18713,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskUncheckedUpdateManyWithoutUserNestedInput
     userPracticeSets?: UserPracticeSetUncheckedUpdateManyWithoutUserNestedInput
     userTaskMetadatas?: UserTaskMetadataUncheckedUpdateManyWithoutUserNestedInput
+    taskTag?: TaskTagUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutReactionsInput = {
@@ -17144,6 +18731,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskCreateNestedManyWithoutUserInput
     userPracticeSets?: UserPracticeSetCreateNestedManyWithoutUserInput
     userTaskMetadatas?: UserTaskMetadataCreateNestedManyWithoutUserInput
+    taskTag?: TaskTagCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReactionsInput = {
@@ -17161,6 +18749,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskUncheckedCreateNestedManyWithoutUserInput
     userPracticeSets?: UserPracticeSetUncheckedCreateNestedManyWithoutUserInput
     userTaskMetadatas?: UserTaskMetadataUncheckedCreateNestedManyWithoutUserInput
+    taskTag?: TaskTagUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReactionsInput = {
@@ -17223,6 +18812,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskUpdateManyWithoutUserNestedInput
     userPracticeSets?: UserPracticeSetUpdateManyWithoutUserNestedInput
     userTaskMetadatas?: UserTaskMetadataUpdateManyWithoutUserNestedInput
+    taskTag?: TaskTagUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReactionsInput = {
@@ -17240,6 +18830,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskUncheckedUpdateManyWithoutUserNestedInput
     userPracticeSets?: UserPracticeSetUncheckedUpdateManyWithoutUserNestedInput
     userTaskMetadatas?: UserTaskMetadataUncheckedUpdateManyWithoutUserNestedInput
+    taskTag?: TaskTagUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PostUpsertWithoutReactionsInput = {
@@ -17292,6 +18883,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskCreateNestedManyWithoutUserInput
     userPracticeSets?: UserPracticeSetCreateNestedManyWithoutUserInput
     userTaskMetadatas?: UserTaskMetadataCreateNestedManyWithoutUserInput
+    taskTag?: TaskTagCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCommentsInput = {
@@ -17309,6 +18901,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskUncheckedCreateNestedManyWithoutUserInput
     userPracticeSets?: UserPracticeSetUncheckedCreateNestedManyWithoutUserInput
     userTaskMetadatas?: UserTaskMetadataUncheckedCreateNestedManyWithoutUserInput
+    taskTag?: TaskTagUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCommentsInput = {
@@ -17371,6 +18964,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskUpdateManyWithoutUserNestedInput
     userPracticeSets?: UserPracticeSetUpdateManyWithoutUserNestedInput
     userTaskMetadatas?: UserTaskMetadataUpdateManyWithoutUserNestedInput
+    taskTag?: TaskTagUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCommentsInput = {
@@ -17388,6 +18982,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskUncheckedUpdateManyWithoutUserNestedInput
     userPracticeSets?: UserPracticeSetUncheckedUpdateManyWithoutUserNestedInput
     userTaskMetadatas?: UserTaskMetadataUncheckedUpdateManyWithoutUserNestedInput
+    taskTag?: TaskTagUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PostUpsertWithoutCommentsInput = {
@@ -17434,11 +19029,13 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutPracticeTasksInput
     userSubmitTasks?: UserSubmitTaskCreateNestedManyWithoutPracticeTaskInput
     userTaskMetadatas?: UserTaskMetadataCreateNestedManyWithoutPracticeTaskInput
+    taskTags?: TaskTagCreateNestedManyWithoutPracticeTaskInput
   }
 
   export type PracticeTaskUncheckedCreateWithoutPracticeSetInput = {
@@ -17451,10 +19048,12 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userSubmitTasks?: UserSubmitTaskUncheckedCreateNestedManyWithoutPracticeTaskInput
     userTaskMetadatas?: UserTaskMetadataUncheckedCreateNestedManyWithoutPracticeTaskInput
+    taskTags?: TaskTagUncheckedCreateNestedManyWithoutPracticeTaskInput
   }
 
   export type PracticeTaskCreateOrConnectWithoutPracticeSetInput = {
@@ -17538,6 +19137,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskCreateNestedManyWithoutUserInput
     userPracticeSets?: UserPracticeSetCreateNestedManyWithoutUserInput
     userTaskMetadatas?: UserTaskMetadataCreateNestedManyWithoutUserInput
+    taskTag?: TaskTagCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPracticeSetsInput = {
@@ -17555,6 +19155,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskUncheckedCreateNestedManyWithoutUserInput
     userPracticeSets?: UserPracticeSetUncheckedCreateNestedManyWithoutUserInput
     userTaskMetadatas?: UserTaskMetadataUncheckedCreateNestedManyWithoutUserInput
+    taskTag?: TaskTagUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPracticeSetsInput = {
@@ -17636,6 +19237,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskUpdateManyWithoutUserNestedInput
     userPracticeSets?: UserPracticeSetUpdateManyWithoutUserNestedInput
     userTaskMetadatas?: UserTaskMetadataUpdateManyWithoutUserNestedInput
+    taskTag?: TaskTagUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPracticeSetsInput = {
@@ -17653,6 +19255,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskUncheckedUpdateManyWithoutUserNestedInput
     userPracticeSets?: UserPracticeSetUncheckedUpdateManyWithoutUserNestedInput
     userTaskMetadatas?: UserTaskMetadataUncheckedUpdateManyWithoutUserNestedInput
+    taskTag?: TaskTagUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutUserPracticeSetsInput = {
@@ -17670,6 +19273,7 @@ export namespace Prisma {
     practiceTasks?: PracticeTaskCreateNestedManyWithoutUserInput
     userSubmitTasks?: UserSubmitTaskCreateNestedManyWithoutUserInput
     userTaskMetadatas?: UserTaskMetadataCreateNestedManyWithoutUserInput
+    taskTag?: TaskTagCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserPracticeSetsInput = {
@@ -17687,6 +19291,7 @@ export namespace Prisma {
     practiceTasks?: PracticeTaskUncheckedCreateNestedManyWithoutUserInput
     userSubmitTasks?: UserSubmitTaskUncheckedCreateNestedManyWithoutUserInput
     userTaskMetadatas?: UserTaskMetadataUncheckedCreateNestedManyWithoutUserInput
+    taskTag?: TaskTagUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserPracticeSetsInput = {
@@ -17789,6 +19394,7 @@ export namespace Prisma {
     practiceTasks?: PracticeTaskUpdateManyWithoutUserNestedInput
     userSubmitTasks?: UserSubmitTaskUpdateManyWithoutUserNestedInput
     userTaskMetadatas?: UserTaskMetadataUpdateManyWithoutUserNestedInput
+    taskTag?: TaskTagUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserPracticeSetsInput = {
@@ -17806,6 +19412,7 @@ export namespace Prisma {
     practiceTasks?: PracticeTaskUncheckedUpdateManyWithoutUserNestedInput
     userSubmitTasks?: UserSubmitTaskUncheckedUpdateManyWithoutUserNestedInput
     userTaskMetadatas?: UserTaskMetadataUncheckedUpdateManyWithoutUserNestedInput
+    taskTag?: TaskTagUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PracticeSetUpsertWithoutUserPracticeSetsInput = {
@@ -17882,6 +19489,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskCreateNestedManyWithoutUserInput
     userPracticeSets?: UserPracticeSetCreateNestedManyWithoutUserInput
     userTaskMetadatas?: UserTaskMetadataCreateNestedManyWithoutUserInput
+    taskTag?: TaskTagCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPracticeTasksInput = {
@@ -17899,6 +19507,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskUncheckedCreateNestedManyWithoutUserInput
     userPracticeSets?: UserPracticeSetUncheckedCreateNestedManyWithoutUserInput
     userTaskMetadatas?: UserTaskMetadataUncheckedCreateNestedManyWithoutUserInput
+    taskTag?: TaskTagUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPracticeTasksInput = {
@@ -17980,6 +19589,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: number
     user: UserCreateNestedOneWithoutUserTaskMetadatasInput
   }
 
@@ -17989,6 +19599,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: number
   }
 
   export type UserTaskMetadataCreateOrConnectWithoutPracticeTaskInput = {
@@ -17999,6 +19610,23 @@ export namespace Prisma {
   export type UserTaskMetadataCreateManyPracticeTaskInputEnvelope = {
     data: UserTaskMetadataCreateManyPracticeTaskInput | UserTaskMetadataCreateManyPracticeTaskInput[]
     skipDuplicates?: boolean
+  }
+
+  export type TaskTagCreateWithoutPracticeTaskInput = {
+    id?: string
+    name: string
+    user: UserCreateNestedOneWithoutTaskTagInput
+  }
+
+  export type TaskTagUncheckedCreateWithoutPracticeTaskInput = {
+    id?: string
+    userId: string
+    name: string
+  }
+
+  export type TaskTagCreateOrConnectWithoutPracticeTaskInput = {
+    where: TaskTagWhereUniqueInput
+    create: XOR<TaskTagCreateWithoutPracticeTaskInput, TaskTagUncheckedCreateWithoutPracticeTaskInput>
   }
 
   export type UserUpsertWithoutPracticeTasksInput = {
@@ -18027,6 +19655,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskUpdateManyWithoutUserNestedInput
     userPracticeSets?: UserPracticeSetUpdateManyWithoutUserNestedInput
     userTaskMetadatas?: UserTaskMetadataUpdateManyWithoutUserNestedInput
+    taskTag?: TaskTagUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPracticeTasksInput = {
@@ -18044,6 +19673,7 @@ export namespace Prisma {
     userSubmitTasks?: UserSubmitTaskUncheckedUpdateManyWithoutUserNestedInput
     userPracticeSets?: UserPracticeSetUncheckedUpdateManyWithoutUserNestedInput
     userTaskMetadatas?: UserTaskMetadataUncheckedUpdateManyWithoutUserNestedInput
+    taskTag?: TaskTagUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PracticeSetUpsertWithoutPracticeTasksInput = {
@@ -18121,6 +19751,22 @@ export namespace Prisma {
     data: XOR<UserTaskMetadataUpdateManyMutationInput, UserTaskMetadataUncheckedUpdateManyWithoutPracticeTaskInput>
   }
 
+  export type TaskTagUpsertWithWhereUniqueWithoutPracticeTaskInput = {
+    where: TaskTagWhereUniqueInput
+    update: XOR<TaskTagUpdateWithoutPracticeTaskInput, TaskTagUncheckedUpdateWithoutPracticeTaskInput>
+    create: XOR<TaskTagCreateWithoutPracticeTaskInput, TaskTagUncheckedCreateWithoutPracticeTaskInput>
+  }
+
+  export type TaskTagUpdateWithWhereUniqueWithoutPracticeTaskInput = {
+    where: TaskTagWhereUniqueInput
+    data: XOR<TaskTagUpdateWithoutPracticeTaskInput, TaskTagUncheckedUpdateWithoutPracticeTaskInput>
+  }
+
+  export type TaskTagUpdateManyWithWhereWithoutPracticeTaskInput = {
+    where: TaskTagScalarWhereInput
+    data: XOR<TaskTagUpdateManyMutationInput, TaskTagUncheckedUpdateManyWithoutPracticeTaskInput>
+  }
+
   export type UserCreateWithoutUserTaskMetadatasInput = {
     id?: string
     email: string
@@ -18136,6 +19782,7 @@ export namespace Prisma {
     practiceTasks?: PracticeTaskCreateNestedManyWithoutUserInput
     userSubmitTasks?: UserSubmitTaskCreateNestedManyWithoutUserInput
     userPracticeSets?: UserPracticeSetCreateNestedManyWithoutUserInput
+    taskTag?: TaskTagCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserTaskMetadatasInput = {
@@ -18153,6 +19800,7 @@ export namespace Prisma {
     practiceTasks?: PracticeTaskUncheckedCreateNestedManyWithoutUserInput
     userSubmitTasks?: UserSubmitTaskUncheckedCreateNestedManyWithoutUserInput
     userPracticeSets?: UserPracticeSetUncheckedCreateNestedManyWithoutUserInput
+    taskTag?: TaskTagUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserTaskMetadatasInput = {
@@ -18169,11 +19817,13 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutPracticeTasksInput
     practiceSet: PracticeSetCreateNestedOneWithoutPracticeTasksInput
     userSubmitTasks?: UserSubmitTaskCreateNestedManyWithoutPracticeTaskInput
+    taskTags?: TaskTagCreateNestedManyWithoutPracticeTaskInput
   }
 
   export type PracticeTaskUncheckedCreateWithoutUserTaskMetadatasInput = {
@@ -18187,9 +19837,11 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userSubmitTasks?: UserSubmitTaskUncheckedCreateNestedManyWithoutPracticeTaskInput
+    taskTags?: TaskTagUncheckedCreateNestedManyWithoutPracticeTaskInput
   }
 
   export type PracticeTaskCreateOrConnectWithoutUserTaskMetadatasInput = {
@@ -18223,6 +19875,7 @@ export namespace Prisma {
     practiceTasks?: PracticeTaskUpdateManyWithoutUserNestedInput
     userSubmitTasks?: UserSubmitTaskUpdateManyWithoutUserNestedInput
     userPracticeSets?: UserPracticeSetUpdateManyWithoutUserNestedInput
+    taskTag?: TaskTagUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserTaskMetadatasInput = {
@@ -18240,6 +19893,7 @@ export namespace Prisma {
     practiceTasks?: PracticeTaskUncheckedUpdateManyWithoutUserNestedInput
     userSubmitTasks?: UserSubmitTaskUncheckedUpdateManyWithoutUserNestedInput
     userPracticeSets?: UserPracticeSetUncheckedUpdateManyWithoutUserNestedInput
+    taskTag?: TaskTagUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PracticeTaskUpsertWithoutUserTaskMetadatasInput = {
@@ -18262,11 +19916,13 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutPracticeTasksNestedInput
     practiceSet?: PracticeSetUpdateOneRequiredWithoutPracticeTasksNestedInput
     userSubmitTasks?: UserSubmitTaskUpdateManyWithoutPracticeTaskNestedInput
+    taskTags?: TaskTagUpdateManyWithoutPracticeTaskNestedInput
   }
 
   export type PracticeTaskUncheckedUpdateWithoutUserTaskMetadatasInput = {
@@ -18280,9 +19936,156 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userSubmitTasks?: UserSubmitTaskUncheckedUpdateManyWithoutPracticeTaskNestedInput
+    taskTags?: TaskTagUncheckedUpdateManyWithoutPracticeTaskNestedInput
+  }
+
+  export type UserCreateWithoutTaskTagInput = {
+    id?: string
+    email: string
+    password: string
+    name?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: PostCreateNestedManyWithoutUserInput
+    reactions?: ReactionCreateNestedManyWithoutUserInput
+    comments?: CommentCreateNestedManyWithoutUserInput
+    userStatuses?: UserStatusCreateNestedManyWithoutUserInput
+    practiceSets?: PracticeSetCreateNestedManyWithoutUserInput
+    practiceTasks?: PracticeTaskCreateNestedManyWithoutUserInput
+    userSubmitTasks?: UserSubmitTaskCreateNestedManyWithoutUserInput
+    userPracticeSets?: UserPracticeSetCreateNestedManyWithoutUserInput
+    userTaskMetadatas?: UserTaskMetadataCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutTaskTagInput = {
+    id?: string
+    email: string
+    password: string
+    name?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: PostUncheckedCreateNestedManyWithoutUserInput
+    reactions?: ReactionUncheckedCreateNestedManyWithoutUserInput
+    comments?: CommentUncheckedCreateNestedManyWithoutUserInput
+    userStatuses?: UserStatusUncheckedCreateNestedManyWithoutUserInput
+    practiceSets?: PracticeSetUncheckedCreateNestedManyWithoutUserInput
+    practiceTasks?: PracticeTaskUncheckedCreateNestedManyWithoutUserInput
+    userSubmitTasks?: UserSubmitTaskUncheckedCreateNestedManyWithoutUserInput
+    userPracticeSets?: UserPracticeSetUncheckedCreateNestedManyWithoutUserInput
+    userTaskMetadatas?: UserTaskMetadataUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutTaskTagInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTaskTagInput, UserUncheckedCreateWithoutTaskTagInput>
+  }
+
+  export type PracticeTaskCreateWithoutTaskTagsInput = {
+    index?: number
+    id?: string
+    title: string
+    description?: NullableJsonNullValueInput | InputJsonValue
+    visibility: $Enums.Visibility
+    completionCount?: number
+    status?: $Enums.Status
+    taskType: $Enums.TaskType
+    questionLink?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutPracticeTasksInput
+    practiceSet: PracticeSetCreateNestedOneWithoutPracticeTasksInput
+    userSubmitTasks?: UserSubmitTaskCreateNestedManyWithoutPracticeTaskInput
+    userTaskMetadatas?: UserTaskMetadataCreateNestedManyWithoutPracticeTaskInput
+  }
+
+  export type PracticeTaskUncheckedCreateWithoutTaskTagsInput = {
+    index?: number
+    id?: string
+    userId: string
+    practiceSetId: string
+    title: string
+    description?: NullableJsonNullValueInput | InputJsonValue
+    visibility: $Enums.Visibility
+    completionCount?: number
+    status?: $Enums.Status
+    taskType: $Enums.TaskType
+    questionLink?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userSubmitTasks?: UserSubmitTaskUncheckedCreateNestedManyWithoutPracticeTaskInput
+    userTaskMetadatas?: UserTaskMetadataUncheckedCreateNestedManyWithoutPracticeTaskInput
+  }
+
+  export type PracticeTaskCreateOrConnectWithoutTaskTagsInput = {
+    where: PracticeTaskWhereUniqueInput
+    create: XOR<PracticeTaskCreateWithoutTaskTagsInput, PracticeTaskUncheckedCreateWithoutTaskTagsInput>
+  }
+
+  export type UserUpsertWithoutTaskTagInput = {
+    update: XOR<UserUpdateWithoutTaskTagInput, UserUncheckedUpdateWithoutTaskTagInput>
+    create: XOR<UserCreateWithoutTaskTagInput, UserUncheckedCreateWithoutTaskTagInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTaskTagInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTaskTagInput, UserUncheckedUpdateWithoutTaskTagInput>
+  }
+
+  export type UserUpdateWithoutTaskTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUpdateManyWithoutUserNestedInput
+    reactions?: ReactionUpdateManyWithoutUserNestedInput
+    comments?: CommentUpdateManyWithoutUserNestedInput
+    userStatuses?: UserStatusUpdateManyWithoutUserNestedInput
+    practiceSets?: PracticeSetUpdateManyWithoutUserNestedInput
+    practiceTasks?: PracticeTaskUpdateManyWithoutUserNestedInput
+    userSubmitTasks?: UserSubmitTaskUpdateManyWithoutUserNestedInput
+    userPracticeSets?: UserPracticeSetUpdateManyWithoutUserNestedInput
+    userTaskMetadatas?: UserTaskMetadataUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTaskTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUncheckedUpdateManyWithoutUserNestedInput
+    reactions?: ReactionUncheckedUpdateManyWithoutUserNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
+    userStatuses?: UserStatusUncheckedUpdateManyWithoutUserNestedInput
+    practiceSets?: PracticeSetUncheckedUpdateManyWithoutUserNestedInput
+    practiceTasks?: PracticeTaskUncheckedUpdateManyWithoutUserNestedInput
+    userSubmitTasks?: UserSubmitTaskUncheckedUpdateManyWithoutUserNestedInput
+    userPracticeSets?: UserPracticeSetUncheckedUpdateManyWithoutUserNestedInput
+    userTaskMetadatas?: UserTaskMetadataUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type PracticeTaskUpsertWithWhereUniqueWithoutTaskTagsInput = {
+    where: PracticeTaskWhereUniqueInput
+    update: XOR<PracticeTaskUpdateWithoutTaskTagsInput, PracticeTaskUncheckedUpdateWithoutTaskTagsInput>
+    create: XOR<PracticeTaskCreateWithoutTaskTagsInput, PracticeTaskUncheckedCreateWithoutTaskTagsInput>
+  }
+
+  export type PracticeTaskUpdateWithWhereUniqueWithoutTaskTagsInput = {
+    where: PracticeTaskWhereUniqueInput
+    data: XOR<PracticeTaskUpdateWithoutTaskTagsInput, PracticeTaskUncheckedUpdateWithoutTaskTagsInput>
+  }
+
+  export type PracticeTaskUpdateManyWithWhereWithoutTaskTagsInput = {
+    where: PracticeTaskScalarWhereInput
+    data: XOR<PracticeTaskUpdateManyMutationInput, PracticeTaskUncheckedUpdateManyWithoutTaskTagsInput>
   }
 
   export type UserCreateWithoutUserSubmitTasksInput = {
@@ -18300,6 +20103,7 @@ export namespace Prisma {
     practiceTasks?: PracticeTaskCreateNestedManyWithoutUserInput
     userPracticeSets?: UserPracticeSetCreateNestedManyWithoutUserInput
     userTaskMetadatas?: UserTaskMetadataCreateNestedManyWithoutUserInput
+    taskTag?: TaskTagCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserSubmitTasksInput = {
@@ -18317,6 +20121,7 @@ export namespace Prisma {
     practiceTasks?: PracticeTaskUncheckedCreateNestedManyWithoutUserInput
     userPracticeSets?: UserPracticeSetUncheckedCreateNestedManyWithoutUserInput
     userTaskMetadatas?: UserTaskMetadataUncheckedCreateNestedManyWithoutUserInput
+    taskTag?: TaskTagUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserSubmitTasksInput = {
@@ -18370,11 +20175,13 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutPracticeTasksInput
     practiceSet: PracticeSetCreateNestedOneWithoutPracticeTasksInput
     userTaskMetadatas?: UserTaskMetadataCreateNestedManyWithoutPracticeTaskInput
+    taskTags?: TaskTagCreateNestedManyWithoutPracticeTaskInput
   }
 
   export type PracticeTaskUncheckedCreateWithoutUserSubmitTasksInput = {
@@ -18388,9 +20195,11 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userTaskMetadatas?: UserTaskMetadataUncheckedCreateNestedManyWithoutPracticeTaskInput
+    taskTags?: TaskTagUncheckedCreateNestedManyWithoutPracticeTaskInput
   }
 
   export type PracticeTaskCreateOrConnectWithoutUserSubmitTasksInput = {
@@ -18443,6 +20252,7 @@ export namespace Prisma {
     practiceTasks?: PracticeTaskUpdateManyWithoutUserNestedInput
     userPracticeSets?: UserPracticeSetUpdateManyWithoutUserNestedInput
     userTaskMetadatas?: UserTaskMetadataUpdateManyWithoutUserNestedInput
+    taskTag?: TaskTagUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserSubmitTasksInput = {
@@ -18460,6 +20270,7 @@ export namespace Prisma {
     practiceTasks?: PracticeTaskUncheckedUpdateManyWithoutUserNestedInput
     userPracticeSets?: UserPracticeSetUncheckedUpdateManyWithoutUserNestedInput
     userTaskMetadatas?: UserTaskMetadataUncheckedUpdateManyWithoutUserNestedInput
+    taskTag?: TaskTagUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PracticeSetUpsertWithoutUserSubmitTasksInput = {
@@ -18525,11 +20336,13 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutPracticeTasksNestedInput
     practiceSet?: PracticeSetUpdateOneRequiredWithoutPracticeTasksNestedInput
     userTaskMetadatas?: UserTaskMetadataUpdateManyWithoutPracticeTaskNestedInput
+    taskTags?: TaskTagUpdateManyWithoutPracticeTaskNestedInput
   }
 
   export type PracticeTaskUncheckedUpdateWithoutUserSubmitTasksInput = {
@@ -18543,9 +20356,11 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userTaskMetadatas?: UserTaskMetadataUncheckedUpdateManyWithoutPracticeTaskNestedInput
+    taskTags?: TaskTagUncheckedUpdateManyWithoutPracticeTaskNestedInput
   }
 
   export type UserPracticeSetUpsertWithoutUserSubmitTasksInput = {
@@ -18632,6 +20447,7 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -18659,6 +20475,12 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: number
+  }
+
+  export type TaskTagCreateManyUserInput = {
+    id?: string
+    name: string
   }
 
   export type PostUpdateWithoutUserInput = {
@@ -18827,11 +20649,13 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     practiceSet?: PracticeSetUpdateOneRequiredWithoutPracticeTasksNestedInput
     userSubmitTasks?: UserSubmitTaskUpdateManyWithoutPracticeTaskNestedInput
     userTaskMetadatas?: UserTaskMetadataUpdateManyWithoutPracticeTaskNestedInput
+    taskTags?: TaskTagUpdateManyWithoutPracticeTaskNestedInput
   }
 
   export type PracticeTaskUncheckedUpdateWithoutUserInput = {
@@ -18844,10 +20668,12 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userSubmitTasks?: UserSubmitTaskUncheckedUpdateManyWithoutPracticeTaskNestedInput
     userTaskMetadatas?: UserTaskMetadataUncheckedUpdateManyWithoutPracticeTaskNestedInput
+    taskTags?: TaskTagUncheckedUpdateManyWithoutPracticeTaskNestedInput
   }
 
   export type PracticeTaskUncheckedUpdateManyWithoutUserInput = {
@@ -18860,6 +20686,7 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -18922,6 +20749,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: BoolFieldUpdateOperationsInput | boolean
     isIgnored?: BoolFieldUpdateOperationsInput | boolean
+    submissionCount?: IntFieldUpdateOperationsInput | number
     practiceTask?: PracticeTaskUpdateOneRequiredWithoutUserTaskMetadatasNestedInput
   }
 
@@ -18931,6 +20759,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: BoolFieldUpdateOperationsInput | boolean
     isIgnored?: BoolFieldUpdateOperationsInput | boolean
+    submissionCount?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserTaskMetadataUncheckedUpdateManyWithoutUserInput = {
@@ -18939,6 +20768,24 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: BoolFieldUpdateOperationsInput | boolean
     isIgnored?: BoolFieldUpdateOperationsInput | boolean
+    submissionCount?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type TaskTagUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    PracticeTask?: PracticeTaskUpdateManyWithoutTaskTagsNestedInput
+  }
+
+  export type TaskTagUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    PracticeTask?: PracticeTaskUncheckedUpdateManyWithoutTaskTagsNestedInput
+  }
+
+  export type TaskTagUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
   }
 
   export type ReactionCreateManyPostInput = {
@@ -19019,6 +20866,7 @@ export namespace Prisma {
     completionCount?: number
     status?: $Enums.Status
     taskType: $Enums.TaskType
+    questionLink?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -19049,11 +20897,13 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutPracticeTasksNestedInput
     userSubmitTasks?: UserSubmitTaskUpdateManyWithoutPracticeTaskNestedInput
     userTaskMetadatas?: UserTaskMetadataUpdateManyWithoutPracticeTaskNestedInput
+    taskTags?: TaskTagUpdateManyWithoutPracticeTaskNestedInput
   }
 
   export type PracticeTaskUncheckedUpdateWithoutPracticeSetInput = {
@@ -19066,10 +20916,12 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userSubmitTasks?: UserSubmitTaskUncheckedUpdateManyWithoutPracticeTaskNestedInput
     userTaskMetadatas?: UserTaskMetadataUncheckedUpdateManyWithoutPracticeTaskNestedInput
+    taskTags?: TaskTagUncheckedUpdateManyWithoutPracticeTaskNestedInput
   }
 
   export type PracticeTaskUncheckedUpdateManyWithoutPracticeSetInput = {
@@ -19082,6 +20934,7 @@ export namespace Prisma {
     completionCount?: IntFieldUpdateOperationsInput | number
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19200,6 +21053,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: boolean
     isIgnored?: boolean
+    submissionCount?: number
   }
 
   export type UserSubmitTaskUpdateWithoutPracticeTaskInput = {
@@ -19240,6 +21094,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: BoolFieldUpdateOperationsInput | boolean
     isIgnored?: BoolFieldUpdateOperationsInput | boolean
+    submissionCount?: IntFieldUpdateOperationsInput | number
     user?: UserUpdateOneRequiredWithoutUserTaskMetadatasNestedInput
   }
 
@@ -19249,6 +21104,7 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: BoolFieldUpdateOperationsInput | boolean
     isIgnored?: BoolFieldUpdateOperationsInput | boolean
+    submissionCount?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserTaskMetadataUncheckedUpdateManyWithoutPracticeTaskInput = {
@@ -19257,6 +21113,77 @@ export namespace Prisma {
     note?: NullableJsonNullValueInput | InputJsonValue
     isBookmarked?: BoolFieldUpdateOperationsInput | boolean
     isIgnored?: BoolFieldUpdateOperationsInput | boolean
+    submissionCount?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type TaskTagUpdateWithoutPracticeTaskInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    user?: UserUpdateOneRequiredWithoutTaskTagNestedInput
+  }
+
+  export type TaskTagUncheckedUpdateWithoutPracticeTaskInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TaskTagUncheckedUpdateManyWithoutPracticeTaskInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PracticeTaskUpdateWithoutTaskTagsInput = {
+    index?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+    completionCount?: IntFieldUpdateOperationsInput | number
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutPracticeTasksNestedInput
+    practiceSet?: PracticeSetUpdateOneRequiredWithoutPracticeTasksNestedInput
+    userSubmitTasks?: UserSubmitTaskUpdateManyWithoutPracticeTaskNestedInput
+    userTaskMetadatas?: UserTaskMetadataUpdateManyWithoutPracticeTaskNestedInput
+  }
+
+  export type PracticeTaskUncheckedUpdateWithoutTaskTagsInput = {
+    index?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    practiceSetId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+    completionCount?: IntFieldUpdateOperationsInput | number
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userSubmitTasks?: UserSubmitTaskUncheckedUpdateManyWithoutPracticeTaskNestedInput
+    userTaskMetadatas?: UserTaskMetadataUncheckedUpdateManyWithoutPracticeTaskNestedInput
+  }
+
+  export type PracticeTaskUncheckedUpdateManyWithoutTaskTagsInput = {
+    index?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    practiceSetId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+    completionCount?: IntFieldUpdateOperationsInput | number
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    taskType?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    questionLink?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
@@ -19284,6 +21211,10 @@ export namespace Prisma {
      * @deprecated Use PracticeTaskCountOutputTypeDefaultArgs instead
      */
     export type PracticeTaskCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PracticeTaskCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use TaskTagCountOutputTypeDefaultArgs instead
+     */
+    export type TaskTagCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TaskTagCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use UserDefaultArgs instead
      */
@@ -19320,6 +21251,10 @@ export namespace Prisma {
      * @deprecated Use UserTaskMetadataDefaultArgs instead
      */
     export type UserTaskMetadataArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserTaskMetadataDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use TaskTagDefaultArgs instead
+     */
+    export type TaskTagArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TaskTagDefaultArgs<ExtArgs>
     /**
      * @deprecated Use UserSubmitTaskDefaultArgs instead
      */

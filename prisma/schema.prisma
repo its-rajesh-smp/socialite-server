@@ -30,6 +30,7 @@ enum Status {
 enum TaskType {
     RESOURCE
     CODING
+    LINK
 }
 
 
@@ -51,6 +52,7 @@ model User {
     userSubmitTasks UserSubmitTask[]
     userPracticeSets UserPracticeSet[]
     userTaskMetadatas UserTaskMetadata[]
+    taskTag TaskTag[]
 }
 
 model UserStatus {
@@ -157,7 +159,8 @@ model PracticeTask {
     visibility Visibility
     completionCount Int @default(0)
     status Status  @default(LIVE)
-    taskType TaskType
+    taskType TaskType 
+    questionLink String?
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -166,6 +169,7 @@ model PracticeTask {
     practiceSet PracticeSet @relation(fields: [practiceSetId], references: [id], onDelete: Cascade)
     userSubmitTasks UserSubmitTask[]
     userTaskMetadatas UserTaskMetadata[]
+    taskTags TaskTag[]
 }
 
 model UserTaskMetadata {
@@ -177,9 +181,22 @@ model UserTaskMetadata {
     isBookmarked Boolean @default(false)
     isIgnored Boolean @default(false)
 
+    submissionCount Int @default(0)    
+
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-    practiceTask PracticeTask @relation(fields: [practiceTaskId], references: [id], onDelete: Cascade)
+    practiceTask PracticeTask  @relation(fields: [practiceTaskId], references: [id], onDelete: Cascade)
 }
+
+
+model TaskTag{
+    id String @id @default(cuid())
+    userId String
+    name String
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    PracticeTask PracticeTask[]
+}
+
 
 model UserSubmitTask {
     id String @id @default(cuid())

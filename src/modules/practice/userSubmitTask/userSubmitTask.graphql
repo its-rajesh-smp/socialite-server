@@ -18,11 +18,12 @@ type UserSubmitTask {
   practiceSet: PracticeSet
   userPracticeSet: UserPracticeSet
   practiceTask: PracticeTask
+  practiceTaskId: String
 }
 
 # queries
 
 # mutations
 type Mutation {
-  submitUserTask(submitTaskData: UserSubmitTaskInput): UserSubmitTask
+  submitUserTask(submitTaskData: UserSubmitTaskInput): PracticeTask
 }

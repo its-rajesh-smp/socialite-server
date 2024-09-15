@@ -13,22 +13,23 @@ export class PracticeTaskService {
    * @param condition
    * @returns
    */
-  async findAll(condition = {}) {
+  async findAll(condition = {}, options = {}): Promise<any> {
     return await this.prisma.practiceTask.findMany({
       where: condition,
-      include: { user: true },
+      ...options,
     });
   }
 
   /**
    * Function to get a practice task
    * @param condition
+   * @param options
    * @returns
    */
-  async findOne(condition) {
+  async findOne(condition, options = {}): Promise<any> {
     return await this.prisma.practiceTask.findFirst({
       where: condition,
-      include: { user: true },
+      ...options,
     });
   }
 
