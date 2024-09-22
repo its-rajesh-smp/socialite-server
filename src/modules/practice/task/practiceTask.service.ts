@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
+import getPracticeTaskRevisionQuery from './helpers/getPracticeTaskRevisionQuery';
 
 /**
  * Service for practice task
@@ -31,6 +32,19 @@ export class PracticeTaskService {
       where: condition,
       ...options,
     });
+  }
+
+  /**
+   * Function to get all practice tasks for revision
+   * @param userId
+   * @param practiceSetId
+   * @returns
+   */
+  async findPracticeTasksForRevision(userId: string, practiceSetId: string) {
+    const data = await this.prisma.$queryRaw(
+      getPracticeTaskRevisionQuery({ userId, practiceSetId }),
+    );
+    return data as [any];
   }
 
   /**

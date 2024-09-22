@@ -5,6 +5,8 @@ import { User } from '../../../common/decorators/user.decorator';
 import IUser from '../../../common/types/user';
 import { AuthGuard } from '../../auth/guards/auth.guard';
 import { PracticeSetService } from '../practiceSet/practiceSet.service';
+import getPracticeTaskCondition from './helpers/getPracticeTaskCondition';
+import { practiceTaskTabs } from './practiceTask.const';
 import {
   CreatePracticeTaskDto,
   UpdatePracticeTaskDto,
@@ -30,27 +32,51 @@ export class PracticeTaskResolver {
   @UseGuards(AuthGuard)
   async getAllPracticeTasks(
     @Args('practiceSetId') practiceSetId: string,
+    @Args('practiceTaskTabSlug') practiceTaskTabSlug: string,
     @User() user: IUser,
   ) {
+    // Practice task condition
     const condition = {
       practiceSetId,
       status: status.LIVE,
+      ...getPracticeTaskCondition({
+        slug: practiceTaskTabSlug,
+        userId: user.id,
+      }),
     };
 
+    // Practice task options
     const options = {
       include: {
         user: true,
         taskTags: true,
         userSubmitTasks: {
           where: { userId: user.id },
+          orderBy: { submittedAt: 'desc' },
           take: 1,
-          orderBy: { createdAt: 'desc' },
         },
         userTaskMetadatas: {
           where: { userId: user.id },
         },
       },
     };
+
+    /**
+     * If revision tab is selected
+     * then get all practice tasks for revision
+     * for getting extra attributes fetching tasks again
+     */
+    if (practiceTaskTabSlug === practiceTaskTabs.revision) {
+      const revisionTasks =
+        await this.practiceTaskService.findPracticeTasksForRevision(
+          user.id,
+          practiceSetId,
+        );
+
+      condition['id'] = {
+        in: revisionTasks.map((task) => task.id),
+      };
+    }
 
     // Getting all practice tasks
     const allPracticeTasks = await this.practiceTaskService.findAll(

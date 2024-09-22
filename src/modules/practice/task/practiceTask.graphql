@@ -44,7 +44,10 @@ type PracticeTask {
 
 # Queries
 type Query {
-  getAllPracticeTasks(practiceSetId: String): [PracticeTask]
+  getAllPracticeTasks(
+    practiceSetId: String
+    practiceTaskTabSlug: String
+  ): [PracticeTask]
   getAPracticeTask(id: String): PracticeTask
 }
 
